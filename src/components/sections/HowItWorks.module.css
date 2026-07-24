@@ -104,14 +104,14 @@
     box-shadow var(--dur-base) var(--ease-standard);
 }
 .cardInner::before {
-  /* Subtle colored accent tint tied to the step's coded color. */
+  /* Subtle brand-blue tint (one accent site-wide). */
   content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
   background: radial-gradient(
     80% 55% at 0% 0%,
-    color-mix(in srgb, var(--step-fill) 16%, transparent) 0%,
+    color-mix(in srgb, var(--color-accent-fill) 12%, transparent) 0%,
     transparent 55%
   );
   pointer-events: none;
@@ -136,14 +136,14 @@
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-tight);
   line-height: 1;
-  color: var(--step-fill);
+  color: var(--color-accent-fill);
 }
 
 .stepBar {
   width: 2.5rem;
   height: 3px;
   border-radius: 2px;
-  background: var(--step-fill);
+  background: var(--color-accent-fill);
 }
 
 .cardBody {

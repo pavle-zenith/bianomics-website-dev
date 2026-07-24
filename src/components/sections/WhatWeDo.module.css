@@ -17,9 +17,9 @@
 .stack {
   margin-top: var(--space-8);
   list-style: none;
-  /* Keep the container's inline padding; add space below so the last card
-     settles before the next section. */
-  padding-block: 0 var(--space-8);
+  /* Keep the container's inline padding. No extra trailing space: the
+     section's own padding provides the rhythm into the next section. */
+  padding-block: 0;
 }
 
 .stackItem {
@@ -113,6 +113,16 @@
   letter-spacing: var(--tracking-tight);
   line-height: 1;
   color: var(--white);
+}
+
+/* Trademark as a small refined superscript (the raw glyph reads as "TM"). */
+.tm {
+  font-size: 0.32em;
+  font-weight: var(--weight-regular);
+  vertical-align: super;
+  margin-left: 0.15em;
+  letter-spacing: 0;
+  opacity: 0.85;
 }
 
 .labDesc {

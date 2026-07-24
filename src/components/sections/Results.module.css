@@ -81,16 +81,26 @@
   color: color-mix(in srgb, var(--white) 88%, transparent);
 }
 
-/* --- Right: service-colored stat panel --- */
+/* --- Right: stat panel (dark neutral; the service color survives only
+       as a thin coded accent bar along the top) --- */
 .right {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-6);
   padding: clamp(1.75rem, 1rem + 3vw, 2.5rem);
   border-radius: var(--radius-xl);
+  background: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
+  overflow: hidden;
+}
+.right::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
   background: var(--case-fill);
-  color: var(--ink-950);
 }
 
 .metrics {
@@ -103,7 +113,7 @@
   flex-direction: column;
   gap: var(--space-1);
   padding-bottom: var(--space-5);
-  border-bottom: 1px solid color-mix(in srgb, var(--ink-950) 18%, transparent);
+  border-bottom: 1px solid var(--color-border-inverse);
 }
 .metric:last-child {
   padding-bottom: 0;
@@ -114,11 +124,11 @@
   font-weight: var(--weight-extrabold);
   letter-spacing: var(--tracking-tight);
   line-height: 1;
-  color: var(--ink-950);
+  color: var(--color-text-inverse);
 }
 .metricLabel {
   font-size: var(--text-base);
-  color: color-mix(in srgb, var(--ink-950) 72%, transparent);
+  color: var(--color-text-inverse-muted);
 }
 
 /* Snapshot CTA */
@@ -129,12 +139,15 @@
   gap: var(--space-2);
   padding: 0.85em 1.5em;
   border-radius: var(--radius-pill);
-  background: var(--ink-950);
-  color: var(--white);
+  background: var(--color-cta-bg);
+  color: var(--color-cta-fg);
   font-weight: var(--weight-bold);
-  transition: transform var(--dur-fast) var(--ease-standard);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard);
 }
 .cta:hover {
+  background: var(--color-cta-bg-hover);
   transform: translateY(-2px);
 }
 

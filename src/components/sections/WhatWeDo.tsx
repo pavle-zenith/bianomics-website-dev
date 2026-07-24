@@ -59,7 +59,9 @@ export function WhatWeDo({ labs }: { labs: Lab[] }) {
                 </div>
 
                 <div className={styles.cardMain}>
-                  <h3 className={styles.labName}>{lab.name}</h3>
+                  <h3 className={styles.labName}>
+                    <LabName name={lab.name} />
+                  </h3>
                   <p className={styles.labDesc}>{lab.description}</p>
 
                   <ul className={styles.pills}>
@@ -77,5 +79,19 @@ export function WhatWeDo({ labs }: { labs: Lab[] }) {
         ))}
       </ol>
     </section>
+  )
+}
+
+/**
+ * Renders a lab name with the trademark sign as a styled superscript
+ * (the raw ™ glyph at display sizes reads as literal "TM" letters).
+ */
+function LabName({ name }: { name: string }) {
+  if (!name.endsWith('™')) return <>{name}</>
+  return (
+    <>
+      {name.slice(0, -1)}
+      <sup className={styles.tm}>™</sup>
+    </>
   )
 }

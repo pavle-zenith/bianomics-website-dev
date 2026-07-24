@@ -35,9 +35,10 @@
   --color-accent-fill: var(--bondi-blue);
   --color-accent-text: var(--blue-800);
 
-  /* --- Primary call-to-action --- */
-  --color-cta-bg: var(--orange-700); /* darker step so white label passes AA */
-  --color-cta-bg-hover: var(--orange-800);
+  /* --- Primary call-to-action ---
+     One CTA color site-wide: the brand blue (matches the hero pill). */
+  --color-cta-bg: var(--bondi-blue);
+  --color-cta-bg-hover: var(--blue-800);
   --color-cta-fg: var(--white);
 
   /* --- Secondary call-to-action (outline on light) --- */
