@@ -1,0 +1,76 @@
+/* ============================================================
+   SEMANTIC — role tokens. This is what components consume.
+   Maps palette primitives -> meaning, and encodes the WCAG-AA
+   contract in ONE place: text / UI roles point at darker ramp
+   steps, never the raw brand 500 (Gooseberry and Trendy Orange
+   fail AA on white). Re-skin by editing palette.css; the a11y
+   guarantee holds because components only ever see these tokens.
+   ============================================================ */
+
+:root {
+  /* --- Surfaces --- */
+  --color-bg: var(--ink-0); /* light canvas */
+  --color-bg-subtle: var(--ink-50); /* faint section tint */
+  --color-bg-inverse: var(--ink-950); /* the primary dark canvas */
+  --color-surface: var(--ink-0);
+  --color-surface-raised: var(--white);
+
+  /* --- Text on light --- */
+  --color-text: var(--ink-900);
+  --color-text-muted: var(--ink-600);
+  --color-text-subtle: var(--ink-500);
+
+  /* --- Text on dark (inverse surfaces) --- */
+  --color-text-inverse: var(--ink-50);
+  --color-text-inverse-muted: var(--ink-300);
+
+  /* --- Borders / hairlines --- */
+  --color-border: var(--ink-200);
+  --color-border-strong: var(--ink-300);
+  --color-border-inverse: rgb(255 255 255 / 0.14);
+
+  /* --- Brand accents ---
+     *-fill  = decorative fills / large shapes (raw brand OK)
+     *-text  = text / small UI on white (AA-safe darker step) */
+  --color-accent-fill: var(--bondi-blue);
+  --color-accent-text: var(--blue-800);
+
+  /* --- Primary call-to-action --- */
+  --color-cta-bg: var(--orange-700); /* darker step so white label passes AA */
+  --color-cta-bg-hover: var(--orange-800);
+  --color-cta-fg: var(--white);
+
+  /* --- Secondary call-to-action (outline on light) --- */
+  --color-cta-secondary-border: var(--ink-300);
+  --color-cta-secondary-fg: var(--ink-900);
+  --color-cta-secondary-bg-hover: var(--ink-50);
+
+  /* --- Focus ring (AA-safe, visible on light and dark) --- */
+  --color-focus-ring: var(--blue-700);
+  --color-focus-ring-inverse: var(--blue-300);
+
+  /* --- Form states --- */
+  --color-field-bg: var(--white);
+  --color-field-border: var(--ink-300);
+  --color-field-border-focus: var(--blue-700);
+  --color-field-placeholder: var(--ink-400);
+  --color-error: var(--red-700); /* AA on white */
+  --color-error-bg: var(--red-50);
+  --color-success: var(--green-800); /* AA on white */
+
+  /* --- The four labs, as a coded system ---
+     -fill = the lab's signature color for graphics / dots / bars
+     -text = AA-safe text/UI shade of that color on white */
+  --lab-vision-fill: var(--bondi-blue);
+  --lab-vision-text: var(--blue-800);
+  --lab-stage-fill: var(--first-love);
+  --lab-stage-text: var(--red-700);
+  --lab-blueprint-fill: var(--trendy-orange);
+  --lab-blueprint-text: var(--orange-700);
+  --lab-groundwork-fill: var(--gooseberry);
+  --lab-groundwork-text: var(--green-800);
+
+  /* Opportunity Lab (nonprofit arm) — Gooseberry accent per handoff */
+  --opportunity-fill: var(--gooseberry);
+  --opportunity-text: var(--green-800);
+}

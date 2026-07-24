@@ -1,0 +1,154 @@
+.heading {
+  font-size: var(--text-3xl);
+  margin-top: var(--space-3);
+  max-width: 20ch;
+}
+
+.accent {
+  margin-top: var(--space-4);
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  max-width: 40ch;
+}
+
+/* --- Sticky-stack --- */
+.stack {
+  margin-top: var(--space-8);
+  list-style: none;
+  /* Keep the container's inline padding; add space below so the last card
+     settles before the next section. */
+  padding-block: 0 var(--space-8);
+}
+
+.stackItem {
+  position: sticky;
+  /* Each card sticks a bit lower than the previous, so they pile up. */
+  top: calc(6rem + var(--stack-index) * 2.5rem);
+  margin-bottom: var(--space-6);
+}
+.stackItem:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Card --- */
+.card {
+  position: relative;
+  display: flex;
+  min-height: clamp(28rem, 22rem + 22vh, 36rem);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  color: var(--white);
+  isolation: isolate;
+}
+
+.cardBg {
+  object-fit: cover;
+  object-position: center;
+  z-index: -2;
+}
+/* Darken the left where the text sits, for legibility on any texture.
+   The texture is kept subtle: a base wash across the whole card plus a
+   stronger gradient toward the text side. */
+.cardScrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      100deg,
+      rgb(6 7 9 / 0.82) 0%,
+      rgb(6 7 9 / 0.66) 38%,
+      rgb(6 7 9 / 0.42) 70%,
+      rgb(6 7 9 / 0.34) 100%
+    ),
+    rgb(6 7 9 / 0.22);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+  width: 100%;
+  padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.index {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: var(--tracking-wide);
+  color: color-mix(in srgb, var(--white) 75%, transparent);
+}
+
+.mode {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--white);
+  padding: 0.45em 1em;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: var(--radius-pill);
+}
+
+.cardMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.labName {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+  color: var(--white);
+}
+
+.labDesc {
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: color-mix(in srgb, var(--white) 90%, transparent);
+  max-width: 46ch;
+}
+
+/* --- Sub-service pills --- */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.5em 1em 0.5em 0.85em;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(255 255 255 / 0.35);
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(6px);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.pillDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--white);
+  flex: none;
+}

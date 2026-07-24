@@ -1,0 +1,239 @@
+.about {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* --- Intro: eyebrow, then a left title with a CTA on the right --- */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+  text-align: left;
+}
+
+.introRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+@media (min-width: 52rem) {
+  .introRow {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+}
+
+.introCta {
+  flex: none;
+}
+@media (min-width: 52rem) {
+  .introCta {
+    padding-bottom: 0.35rem;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-accent-text);
+}
+.eyebrowDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent-fill);
+}
+
+.introText {
+  font-size: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
+  font-weight: var(--weight-bold);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-wrap: balance;
+  max-width: 34ch;
+}
+
+/* --- Three-card grid --- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* Accent card spans both columns on the tablet 2-col layout. */
+  .ctaCard {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ctaCard {
+    grid-column: auto;
+  }
+}
+
+/* Uniform card height / shape */
+.ctaCard,
+.mediaCard,
+.figureCard {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  min-height: 26rem;
+}
+@media (min-width: 60rem) {
+  .ctaCard,
+  .mediaCard,
+  .figureCard {
+    min-height: 32rem;
+  }
+}
+
+/* --- Card 1: accent CTA --- */
+.ctaCard {
+  background: var(--color-accent-fill);
+  color: var(--ink-950);
+}
+.ctaInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-6);
+  gap: var(--space-5);
+}
+@media (min-width: 40rem) {
+  .ctaInner {
+    padding: var(--space-7);
+  }
+}
+.ctaTitle {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  max-width: 18ch;
+}
+.ctaBigArrow {
+  display: inline-flex;
+  color: color-mix(in srgb, var(--ink-950) 55%, transparent);
+  margin-bottom: auto;
+}
+.ctaPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  align-self: flex-start;
+  padding: 0.75rem 0.75rem 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--ink-950);
+  color: var(--white);
+  font-weight: var(--weight-bold);
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+.ctaPill:hover {
+  transform: translateY(-2px);
+}
+.ctaPillBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--color-accent-fill);
+  color: var(--ink-950);
+}
+
+/* --- Card 2: media + stat --- */
+.mediaCard {
+  background: var(--ink-800);
+}
+.mediaImage {
+  object-fit: cover;
+  object-position: center;
+}
+.mediaScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(6 7 9 / 0.78), rgb(6 7 9 / 0.05) 55%);
+}
+.stat {
+  position: absolute;
+  left: var(--space-6);
+  right: var(--space-6);
+  bottom: var(--space-6);
+  color: var(--white);
+}
+.statValue {
+  font-size: clamp(2.5rem, 1.8rem + 2.6vw, 3.75rem);
+  font-weight: var(--weight-extrabold);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+}
+.statSuffix {
+  font-size: 0.5em;
+  font-weight: var(--weight-bold);
+  margin-left: 0.15em;
+}
+.statLabel {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  color: color-mix(in srgb, var(--white) 88%, transparent);
+  max-width: 24ch;
+}
+
+/* --- Card 3: figure + stat + arrow --- */
+.figureCard {
+  background: var(--blue-50);
+}
+.figureImage {
+  object-fit: cover;
+  object-position: center;
+}
+.figureStat {
+  position: absolute;
+  left: var(--space-6);
+  top: var(--space-6);
+  right: var(--space-6);
+  color: var(--ink-950);
+}
+.figureValue {
+  font-size: clamp(2.5rem, 1.8rem + 2.6vw, 3.75rem);
+  font-weight: var(--weight-extrabold);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+}
+.figureLabel {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: color-mix(in srgb, var(--ink-950) 78%, transparent);
+  max-width: 22ch;
+}
+.figureArrow {
+  position: absolute;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  color: color-mix(in srgb, var(--ink-950) 65%, transparent);
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard);
+}
+.figureArrow:hover {
+  color: var(--ink-950);
+  transform: translateX(4px);
+}

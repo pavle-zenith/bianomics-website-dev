@@ -1,0 +1,13 @@
+/* ============================================================
+   Bianomics — global stylesheet.
+   Single source of truth is the token layer. Import order is the
+   cascade order: primitives -> semantic roles -> scale -> base
+   reset -> utilities. Components use CSS Modules and consume
+   var(--*) tokens only; no hardcoded hex in components.
+   ============================================================ */
+
+@import './tokens/palette.css';
+@import './tokens/semantic.css';
+@import './tokens/scale.css';
+@import './tokens/base.css';
+@import './tokens/utilities.css';

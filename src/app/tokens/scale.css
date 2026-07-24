@@ -1,0 +1,87 @@
+/* ============================================================
+   SCALE — type, space, radii, layout and motion tokens.
+   Fluid clamp() sizing so the editorial large-type direction
+   holds from 360px to wide desktop with one source of truth.
+   ============================================================ */
+
+:root {
+  /* --- Font families (attached via next/font on <html>) --- */
+  --font-body: var(--font-causten), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-quote: var(--font-fitzgerald), Georgia, 'Times New Roman', serif;
+
+  /* --- Fluid type scale (min .. max across ~360 -> 1440px) --- */
+  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-xl: clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.7vw, 2.75rem);
+  --text-3xl: clamp(2.25rem, 1.7rem + 2.7vw, 3.75rem);
+  --text-4xl: clamp(2.75rem, 1.9rem + 4.2vw, 5.25rem);
+  --text-5xl: clamp(3.25rem, 2rem + 6vw, 7rem);
+
+  /* --- Line heights --- */
+  --leading-tight: 1.04;
+  --leading-snug: 1.16;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* --- Letter spacing --- */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.12em; /* eyebrows / lockups */
+
+  /* --- Font weights ---
+     Mapped one notch lighter than their names for a more editorial feel:
+     "bold" renders SemiBold (600), "extrabold" renders Bold (700). Retune
+     the whole site's heaviness here. Causten ships 400/500/600/700/800. */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+  --weight-extrabold: 700;
+  --weight-heading: 600;
+
+  /* --- Spacing scale --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* Vertical rhythm between major sections (fluid) */
+  --section-y: clamp(3rem, 2rem + 4vw, 5.5rem);
+
+  /* --- Layout widths --- */
+  --container-max: 90rem; /* 1440px content max */
+  --container-narrow: 48rem; /* prose / centered blocks */
+  --container-pad: clamp(1.25rem, 0.5rem + 3vw, 3rem);
+
+  /* --- Radii --- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-pill: 999px;
+
+  /* --- Elevation --- */
+  --shadow-sm: 0 1px 2px rgb(13 14 17 / 0.06), 0 1px 3px rgb(13 14 17 / 0.08);
+  --shadow-md: 0 4px 12px rgb(13 14 17 / 0.08), 0 2px 4px rgb(13 14 17 / 0.06);
+  --shadow-lg: 0 18px 48px rgb(13 14 17 / 0.14);
+
+  /* --- Motion --- */
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-reveal: 640ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1); /* restrained ease-out */
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* --- Z-index --- */
+  --z-nav: 100;
+  --z-overlay: 200;
+}

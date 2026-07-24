@@ -1,0 +1,77 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: 1fr 1.05fr;
+    gap: var(--space-9);
+    align-items: start;
+  }
+}
+
+.explainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.heading {
+  font-size: var(--text-3xl);
+  color: var(--color-text-inverse);
+  max-width: 16ch;
+}
+
+.intro {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse-muted);
+  max-width: 46ch;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  color: var(--color-text-inverse);
+  line-height: var(--leading-snug);
+}
+
+.pointMark {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.45em;
+  border-radius: 50%;
+  background: var(--color-accent-fill);
+  flex: none;
+}
+
+.tagline {
+  margin-top: var(--space-4);
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: var(--text-xl);
+  color: var(--color-accent-fill);
+}
+
+.formCard {
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 40rem) {
+  .formCard {
+    padding: var(--space-7);
+  }
+}

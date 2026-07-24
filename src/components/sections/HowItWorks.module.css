@@ -1,0 +1,166 @@
+/* --- Header: title left, description right --- */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+@media (min-width: 52rem) {
+  .head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+}
+
+.headLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.eyebrowPill {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  padding: 0.5em 1.25em;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-inverse);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-inverse-muted);
+}
+
+.heading {
+  font-size: var(--text-3xl);
+  color: var(--color-text-inverse);
+  max-width: 16ch;
+}
+
+.headRight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 34rem;
+}
+@media (min-width: 52rem) {
+  .headRight {
+    text-align: right;
+    align-items: flex-end;
+  }
+}
+
+.headDesc {
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--color-text-inverse-muted);
+  max-width: 40ch;
+}
+
+.framework {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--color-accent-fill);
+}
+
+/* --- Four vertical rectangle cards --- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 34rem) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 62rem) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  height: 100%;
+}
+
+.cardInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  justify-content: space-between;
+  height: 100%;
+  min-height: clamp(20rem, 16rem + 18vh, 26rem);
+  padding: clamp(1.5rem, 1rem + 2vw, 2rem);
+  border-radius: var(--radius-xl);
+  background: var(--white);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+.cardInner::before {
+  /* Subtle colored accent tint tied to the step's coded color. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    80% 55% at 0% 0%,
+    color-mix(in srgb, var(--step-fill) 16%, transparent) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+.cardInner > * {
+  position: relative;
+  z-index: 1;
+}
+.cardInner:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stepNum {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+  color: var(--step-fill);
+}
+
+.stepBar {
+  width: 2.5rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--step-fill);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stepTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+
+.stepText {
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}

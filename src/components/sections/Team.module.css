@@ -1,0 +1,79 @@
+.heading {
+  font-size: var(--text-3xl);
+  margin-top: var(--space-3);
+  max-width: 20ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6) var(--space-5);
+  margin-top: var(--space-7);
+}
+@media (min-width: 40rem) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.photoWrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--ink-100);
+}
+
+.photo {
+  object-fit: cover;
+  object-position: center top;
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+.card:hover .photo {
+  transform: scale(1.03);
+}
+
+/* Social chip in the corner of the image */
+.social {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgb(6 7 9 / 0.55);
+  color: var(--white);
+  backdrop-filter: blur(6px);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard);
+}
+.social:hover {
+  background: var(--color-accent-fill);
+  transform: translateY(-2px);
+}
+
+.name {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.role {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}

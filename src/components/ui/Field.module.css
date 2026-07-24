@@ -1,0 +1,89 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.control {
+  width: 100%;
+  padding: 0.75em 0.9em;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-field-bg);
+  border: 1.5px solid var(--color-field-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+.control::placeholder {
+  color: var(--color-field-placeholder);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--color-field-border-focus);
+  box-shadow: 0 0 0 3px var(--blue-100);
+}
+
+.control[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+.control[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px var(--red-100);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 6rem;
+  line-height: var(--leading-normal);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  appearance: none;
+  padding-right: 2.5em;
+  cursor: pointer;
+}
+
+.chevron {
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.error {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-error);
+}
+
+/* Honeypot — kept out of the layout and off the a11y tree via aria-hidden. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
