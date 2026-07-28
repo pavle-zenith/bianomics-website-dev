@@ -1,10 +1,13 @@
 import type { FaqItem } from '@/content/types'
 import { faqIntro } from '@/content/site'
+import { anchors } from '@/lib/routes'
+import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './Faq.module.css'
 
 /**
- * FAQ: intro text on the left, a card-style accordion on the right.
+ * FAQ: intro and a support prompt on the left, a hairline-divided
+ * accordion on the right. No cards — the rules do the separating.
  * Uses native <details>/<summary> — accessible, keyboard-friendly, no JS.
  */
 export function Faq({ items }: { items: FaqItem[] }) {
@@ -12,13 +15,26 @@ export function Faq({ items }: { items: FaqItem[] }) {
     <section id="faq" className={`${styles.faq} section`} aria-labelledby="faq-heading">
       <div className="container">
         <div className={styles.grid}>
-          {/* Left: intro */}
+          {/* Left: intro + support prompt */}
           <Reveal className={styles.intro}>
             <p className="eyebrow">{faqIntro.eyebrow}</p>
             <h2 id="faq-heading" className={styles.heading}>
               {faqIntro.heading}
             </h2>
-            <p className={styles.description}>{faqIntro.description}</p>
+
+            <div className={styles.support}>
+              <p className={styles.supportHeading}>{faqIntro.support.heading}</p>
+              <p className={styles.supportText}>{faqIntro.support.description}</p>
+              <Button
+                href={anchors.snapshot}
+                variant="secondary"
+                event="cta_secondary_click"
+                location="faq"
+                className={styles.supportCta}
+              >
+                {faqIntro.support.ctaLabel}
+              </Button>
+            </div>
           </Reveal>
 
           {/* Right: accordion */}
@@ -28,9 +44,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
                 <details className={styles.item}>
                   <summary className={styles.question}>
                     <span className={styles.questionText}>{item.question}</span>
-                    <span className={styles.toggle} aria-hidden="true">
-                      <span className={styles.icon} />
-                    </span>
+                    <span className={styles.icon} aria-hidden="true" />
                   </summary>
                   <p className={styles.answer}>{item.answer}</p>
                 </details>

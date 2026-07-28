@@ -3,97 +3,128 @@
   color: var(--color-text);
 }
 
+/* --- Header row: title left, arrow controls right --- */
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
 .heading {
   font-size: var(--text-3xl);
   margin-top: var(--space-3);
   max-width: 20ch;
 }
 
-/* --- Horizontal sticky stack --- */
-.trackViewport {
-  margin-top: var(--space-7);
+.controls {
+  display: flex;
+  gap: var(--space-3);
+  flex: none;
+  padding-bottom: 0.35rem;
 }
 
-/* Mobile: a plain vertical list. */
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard),
+    opacity var(--dur-fast) var(--ease-standard);
+}
+.arrow:hover:not(:disabled) {
+  background: var(--color-cta-bg);
+  border-color: var(--color-cta-bg);
+  color: var(--color-cta-fg);
+}
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* --- Track: runs off the right edge of the viewport --- */
 .track {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  padding-inline: var(--container-pad);
+  gap: var(--space-4);
+  margin-top: var(--space-7);
   list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  /* Start at the container's left edge, but let cards bleed off the right.
+     scroll-padding keeps snapped cards aligned to that same edge. */
+  padding-inline-start: max(
+    var(--container-pad),
+    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+  );
+  padding-inline-end: var(--container-pad);
+  scroll-padding-inline-start: max(
+    var(--container-pad),
+    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+  );
+  padding-bottom: var(--space-2);
+}
+.track::-webkit-scrollbar {
+  display: none;
 }
 
 .card {
   flex: none;
-}
-
-.cardInner {
+  width: clamp(13rem, 10rem + 12vw, 19rem);
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
-/* Square headshots */
+/* Label above the photo, right-aligned. */
+.label {
+  text-align: right;
+  min-width: 0;
+  overflow: hidden;
+}
+.name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+.role {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
 .photoWrap {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--ink-100);
+  border-radius: var(--radius-sm);
 }
 .photo {
   object-fit: cover;
   object-position: center top;
+  /* Grayscale, warming to color on hover. */
+  filter: grayscale(1);
+  transition:
+    filter var(--dur-base) var(--ease-standard),
+    transform var(--dur-base) var(--ease-standard);
 }
-
-.name {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
-.role {
-  font-size: var(--text-base);
-  color: var(--color-text-muted);
+.card:hover .photo {
+  filter: grayscale(0);
+  transform: scale(1.03);
 }
 
 @media (min-width: 48rem) {
-  /* Horizontal row that runs off the right edge. Each card sticks at the
-     left container edge as it arrives, so later cards slide over earlier
-     ones and they pile up instead of scrolling away. */
-  .trackViewport {
-    overflow-x: clip;
-  }
-
-  .track {
-    flex-direction: row;
-    gap: 0;
-    width: max-content;
-    padding-inline: 0;
-    /* Start the row at the container's left edge. */
-    margin-inline-start: max(
-      var(--container-pad),
-      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-    );
-  }
-
-  .card {
-    position: sticky;
-    /* Every card parks at the same left edge; source order does the stacking. */
-    left: max(
-      var(--container-pad),
-      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-    );
-    width: clamp(14rem, 11rem + 7vw, 18rem);
-    margin-right: var(--space-5);
-  }
-
-  .cardInner {
-    /* Opaque so a card fully covers the one it stacks onto. */
-    background: var(--color-bg);
-    padding-right: var(--space-5);
-  }
-
   .photoWrap {
-    box-shadow: 0 0 0 1px var(--color-border);
+    aspect-ratio: 3 / 4;
   }
 }

@@ -1,6 +1,5 @@
 import type { StaticImageData } from 'next/image'
 import { team } from '@/content/site'
-import { Reveal } from '@/components/ui/Reveal'
 import { TeamTrack } from './TeamTrack'
 import styles from './Team.module.css'
 
@@ -18,21 +17,17 @@ const photos: Record<string, StaticImageData> = {
 
 /**
  * Team — square headshots on a horizontal track that runs off the right edge,
- * scrubbed into view (and stacked on narrow screens) as the section scrolls.
+ * paged with the arrow controls beside the title.
  */
 export function Team() {
   return (
     <section id="team" className={`${styles.team} section`} aria-labelledby="team-heading">
-      <div className="container">
-        <Reveal>
-          <p className="eyebrow">{team.eyebrow}</p>
-          <h2 id="team-heading" className={styles.heading}>
-            {team.heading}
-          </h2>
-        </Reveal>
-      </div>
-
-      <TeamTrack members={team.members} photos={photos} />
+      <TeamTrack
+        members={team.members}
+        photos={photos}
+        eyebrow={team.eyebrow}
+        heading={team.heading}
+      />
     </section>
   )
 }

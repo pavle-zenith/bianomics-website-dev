@@ -13,6 +13,8 @@ type CtaLocation =
   | 'hero'
   | 'what-we-do'
   | 'why-different'
+  | 'faq'
+  | 'opportunity-lab'
   | 'snapshot'
   | 'closing'
   | 'footer'

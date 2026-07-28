@@ -222,6 +222,19 @@ export const opportunityLab = {
   name: 'Opportunity Lab',
   description:
     'Our nonprofit arm funds this work for organizations that are doing good in the world and could not otherwise afford it. When you work with us, you help make that possible.',
+  eyebrow: 'The nonprofit arm',
+  /** Bento heading, set above the grid. */
+  heading: 'Good work, funded',
+  /** Caption pinned to the image panel. */
+  imageCaption: 'Funded work',
+  /** Right panel: who the funded work is for, plus the way in. */
+  mission: {
+    eyebrow: "Who it's for",
+    heading: 'Organizations doing good that cannot otherwise afford this work',
+    description:
+      'If that sounds like you, or like someone you know, tell us. We review every organization that comes our way.',
+    ctaLabel: 'Start with a Snapshot',
+  },
 } as const
 
 /** FAQ section intro copy. */
@@ -230,6 +243,12 @@ export const faqIntro = {
   heading: 'The things people usually ask',
   description:
     'Short answers to the real hesitations. If your question is not here, the free Snapshot is the simplest way to get a straight answer.',
+  /** Small support prompt under the heading, beside the accordion. */
+  support: {
+    heading: 'Still have questions?',
+    description: 'Ask us directly and we will give you a straight answer.',
+    ctaLabel: 'Get in touch',
+  },
 } as const
 
 /** Snapshot section copy (locked). */
