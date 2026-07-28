@@ -22,7 +22,6 @@ export function WhatWeDo({ labs }: { labs: Lab[] }) {
     <section id="what-we-do" className="section" aria-labelledby="what-heading">
       <div className="container">
         <Reveal>
-          <p className="eyebrow">What we do</p>
           <h2 id="what-heading" className={styles.heading}>
             Four practices, built to work as one team
           </h2>

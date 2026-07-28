@@ -18,10 +18,6 @@ export function About() {
     <section id="about" className={`${styles.about} section`} aria-labelledby="about-heading">
       <div className="container">
         <Reveal className={styles.intro}>
-          <p className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} aria-hidden="true" />
-            {about.eyebrow}
-          </p>
           <div className={styles.introRow}>
             <h2 id="about-heading" className={styles.introText}>
               {about.intro}
@@ -47,13 +43,17 @@ export function About() {
 
           {/* Card 2 — team imagery with a stat overlay */}
           <Reveal delay={0.08} className={styles.mediaCard}>
-            <Image
-              src={teamImg}
-              alt={about.media.imageAlt}
-              fill
-              sizes="(min-width: 60rem) 33vw, 100vw"
-              className={styles.mediaImage}
-            />
+            {/* The image fills this wrapper, not the Reveal: framer-motion's
+                inline transform would otherwise become the containing block. */}
+            <div className={styles.cardFill}>
+              <Image
+                src={teamImg}
+                alt={about.media.imageAlt}
+                fill
+                sizes="(min-width: 60rem) 33vw, 100vw"
+                className={styles.mediaImage}
+              />
+            </div>
             <div className={styles.mediaScrim} aria-hidden="true" />
             <div className={styles.stat}>
               <p className={styles.statValue}>
@@ -66,13 +66,15 @@ export function About() {
 
           {/* Card 3 — abstract figure with a stat overlay */}
           <Reveal delay={0.16} className={styles.figureCard}>
-            <Image
-              src={figureImg}
-              alt={about.figure.imageAlt}
-              fill
-              sizes="(min-width: 60rem) 33vw, 100vw"
-              className={styles.figureImage}
-            />
+            <div className={styles.cardFill}>
+              <Image
+                src={figureImg}
+                alt={about.figure.imageAlt}
+                fill
+                sizes="(min-width: 60rem) 33vw, 100vw"
+                className={styles.figureImage}
+              />
+            </div>
             <div className={styles.figureStat}>
               <p className={styles.figureValue}>{about.figure.stat}</p>
               <p className={styles.figureLabel}>{about.figure.label}</p>

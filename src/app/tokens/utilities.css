@@ -23,6 +23,25 @@
   padding-block: var(--section-y);
 }
 
+/* Where two same-canvas sections meet, the two full paddings stack into a
+   gap twice the intended size. Halve the shared boundary so the rhythm reads
+   as one break. Sections that change canvas (.section-tinted/.section-inverse)
+   are excluded — there the full padding gives the color band room to breathe. */
+.section + .section:not(.section-tinted):not(.section-inverse) {
+  padding-top: calc(var(--section-y) / 2);
+}
+.section:not(.section-tinted):not(.section-inverse):has(
+    + .section:not(.section-tinted):not(.section-inverse)
+  ) {
+  padding-bottom: calc(var(--section-y) / 2);
+}
+
+/* Canvas-changing sections: marks a background shift so the rule above
+   keeps full padding on both sides of the transition. */
+.section-tinted {
+  background-color: var(--color-bg-subtle);
+}
+
 /* Dark-canvas section: flips text roles so children inherit inverse colors */
 .section-inverse {
   background-color: var(--color-bg-inverse);

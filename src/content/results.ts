@@ -6,6 +6,9 @@ import type { ResultsContent } from './types'
  * and layout are final; replace the client names, copy, metrics, and the
  * background textures in public/results/ with real content before launch.
  * Testimonials remain empty until approved quotes land.
+ *
+ * case-4 reuses the case-1 texture — there are only three images in
+ * public/results/. Add a fourth before launch.
  */
 export const results: ResultsContent = {
   caseStudies: [
@@ -50,6 +53,20 @@ export const results: ResultsContent = {
         { value: '90 days', label: 'To a working system' },
       ],
       services: ['Project management', 'Operations systems', 'Team training', 'Workflow design'],
+    },
+    {
+      id: 'case-4',
+      client: 'Paso del Norte Institute',
+      title: 'A team that could finally tell its own story',
+      intro:
+        'We built the internal playbook and trained the people who use it, so the message holds when we are not in the room.',
+      texture: 'case-1',
+      color: 'groundwork',
+      metrics: [
+        { value: '4 teams', label: 'Trained on the new system' },
+        { value: '2x', label: 'Faster campaign turnaround' },
+      ],
+      services: ['Team training', 'Messaging', 'Internal comms', 'Workshops'],
     },
   ],
   testimonials: [],

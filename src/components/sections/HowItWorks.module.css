@@ -1,9 +1,13 @@
+.how {
+  overflow: hidden;
+}
+
 /* --- Header: title left, description right --- */
 .head {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-8);
 }
 @media (min-width: 52rem) {
   .head {
@@ -20,21 +24,9 @@
   gap: var(--space-4);
 }
 
-.eyebrowPill {
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  padding: 0.5em 1.25em;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--color-border);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-muted);
-}
-
 .heading {
   font-size: var(--text-3xl);
-  color: var(--color-text);
+  color: var(--color-text-inverse);
   max-width: 16ch;
 }
 
@@ -54,7 +46,7 @@
 .headDesc {
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
-  color: var(--color-text-muted);
+  color: var(--color-text-inverse-muted);
   max-width: 40ch;
 }
 
@@ -62,119 +54,110 @@
   font-family: var(--font-quote);
   font-style: italic;
   font-size: var(--text-lg);
-  color: var(--color-accent-text);
+  color: var(--color-accent-fill);
 }
 
-/* --- Four vertical rectangle cards --- */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-5);
-}
-@media (min-width: 34rem) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (min-width: 62rem) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.card {
-  height: 100%;
-}
-
-.cardInner {
+/* --- Track: the path layered behind the steps --- */
+.track {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  justify-content: space-between;
-  height: 100%;
-  min-height: clamp(20rem, 16rem + 18vh, 26rem);
-  padding: clamp(1.5rem, 1rem + 2vw, 2rem);
-  border-radius: var(--radius-xl);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  overflow: hidden;
-  transition:
-    transform var(--dur-base) var(--ease-standard),
-    border-color var(--dur-base) var(--ease-standard);
 }
-.cardInner::before {
-  /* Subtle tint in the step's own accent color. */
-  content: '';
+
+.pathWrap {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(
-    80% 55% at 0% 0%,
-    color-mix(in srgb, var(--step-fill) 14%, transparent) 0%,
-    transparent 55%
-  );
   pointer-events: none;
 }
-.cardInner > * {
+/* Below 52rem the steps stack in one column, so the winding path would
+   cut through them. Hide it and let the steps carry the section. */
+@media (max-width: 51.999rem) {
+  .pathWrap {
+    display: none;
+  }
+}
+
+.pathSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.pathTrack {
+  stroke: rgb(255 255 255 / 0.14);
+  stroke-width: 1.5;
+}
+
+.pathFill {
+  stroke: var(--color-accent-fill);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.pathNode {
+  fill: var(--color-accent-fill);
+}
+
+/* --- Steps, alternating either side of the path --- */
+.steps {
   position: relative;
   z-index: 1;
-}
-.cardInner:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--step-fill) 45%, var(--color-border));
-}
-
-.cardTop {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-8);
+  list-style: none;
 }
 
-.stepNum {
-  font-size: var(--text-3xl);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
-  line-height: 1;
-  color: var(--step-fill);
+.step {
+  display: flex;
 }
 
-.stepBar {
-  width: 2.5rem;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--step-fill);
+@media (min-width: 52rem) {
+  .steps {
+    gap: 0;
+  }
+  .step {
+    /* One step per path bend: matches ProcessPath's STEP_H rhythm. */
+    min-height: 16rem;
+    align-items: center;
+    width: 50%;
+  }
+  /* Odd steps sit right of the path, even steps left. */
+  .step:nth-child(odd) {
+    margin-left: auto;
+    padding-left: var(--space-7);
+  }
+  .step:nth-child(even) {
+    padding-right: var(--space-7);
+    text-align: right;
+  }
+  .step:nth-child(even) .stepInner {
+    align-items: flex-end;
+  }
 }
 
-.cardBody {
+.stepInner {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-3);
 }
 
-.stepTitle {
+.stepNum {
+  font-family: var(--font-quote);
+  font-style: italic;
   font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
+  color: var(--color-accent-fill);
+}
+
+.stepTitle {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
-  color: var(--color-text);
+  color: var(--color-text-inverse);
+  max-width: 18ch;
 }
 
 .stepText {
-  font-size: var(--text-base);
-  line-height: var(--leading-snug);
-  color: var(--color-text-muted);
-}
-
-/* Give each step a distinct accent so the four practices stay legible. */
-.card:nth-child(1) .cardInner {
-  --step-fill: var(--bondi-blue);
-}
-.card:nth-child(2) .cardInner {
-  --step-fill: var(--first-love);
-}
-.card:nth-child(3) .cardInner {
-  --step-fill: var(--trendy-orange);
-}
-.card:nth-child(4) .cardInner {
-  --step-fill: var(--green-700);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse-muted);
+  max-width: 34ch;
 }

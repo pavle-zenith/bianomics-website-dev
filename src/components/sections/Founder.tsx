@@ -28,13 +28,18 @@ export function Founder() {
               A word from our founder
             </h2>
 
-            <blockquote className={styles.quote}>
-              &ldquo;{founder.promise}&rdquo;
-            </blockquote>
+            {/* Quote and attribution sit at the foot of the panel. */}
+            <div className={styles.bodyFoot}>
+              <blockquote className={styles.quote}>
+                &ldquo;{founder.promise}&rdquo;
+              </blockquote>
 
-            <div className={styles.attribution}>
-              <p className={styles.name}>{founder.name}</p>
-              <p className={styles.role}>{founder.role}</p>
+              {founder.note ? <p className={styles.note}>{founder.note}</p> : null}
+
+              <div className={styles.attribution}>
+                <p className={styles.name}>{founder.name}</p>
+                <p className={styles.role}>{founder.role}</p>
+              </div>
             </div>
           </div>
         </Reveal>

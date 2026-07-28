@@ -22,12 +22,7 @@ const photos: Record<string, StaticImageData> = {
 export function Team() {
   return (
     <section id="team" className={`${styles.team} section`} aria-labelledby="team-heading">
-      <TeamTrack
-        members={team.members}
-        photos={photos}
-        eyebrow={team.eyebrow}
-        heading={team.heading}
-      />
+      <TeamTrack members={team.members} photos={photos} heading={team.heading} />
     </section>
   )
 }

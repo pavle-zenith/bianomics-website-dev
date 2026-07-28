@@ -17,7 +17,6 @@ export function Faq({ items }: { items: FaqItem[] }) {
         <div className={styles.grid}>
           {/* Left: intro + support prompt */}
           <Reveal className={styles.intro}>
-            <p className="eyebrow">{faqIntro.eyebrow}</p>
             <h2 id="faq-heading" className={styles.heading}>
               {faqIntro.heading}
             </h2>

@@ -7,14 +7,13 @@ export function Snapshot() {
   return (
     <section
       id="snapshot"
-      className={`${styles.snapshot} section`}
+      className={`${styles.snapshot} section section-tinted`}
       aria-labelledby="snapshot-heading"
     >
       <div className="container">
         <div className={styles.grid}>
           {/* Left: the offer explainer. */}
           <Reveal className={styles.explainer}>
-            <p className="eyebrow">The Snapshot</p>
             <h2 id="snapshot-heading" className={styles.heading}>
               A free, senior read of where you stand
             </h2>

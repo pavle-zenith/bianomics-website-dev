@@ -1,16 +1,24 @@
-import type { CSSProperties } from 'react'
 import { steps, brand } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
+import { ProcessPath } from './ProcessPath'
 import styles from './HowItWorks.module.css'
 
+/**
+ * How it works — an inverted section. A brand-colored path winds down the
+ * middle and fills as you scroll, with the four steps set alternately to
+ * either side of it.
+ */
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="section" aria-labelledby="how-heading">
+    <section
+      id="how-it-works"
+      className={`${styles.how} section section-inverse`}
+      aria-labelledby="how-heading"
+    >
       <div className="container">
         {/* Header: title left, description right. */}
         <Reveal className={styles.head}>
           <div className={styles.headLeft}>
-            <span className={styles.eyebrowPill}>How it works</span>
             <h2 id="how-heading" className={styles.heading}>
               From a free read to work that holds
             </h2>
@@ -24,38 +32,24 @@ export function HowItWorks() {
           </div>
         </Reveal>
 
-        {/* Four vertical rectangle cards. */}
-        <ol className={styles.grid}>
-          {steps.map((step, i) => (
-            <Reveal
-              as="li"
-              key={step.n}
-              delay={i * 0.08}
-              className={styles.card}
-              distance={32}
-            >
-              <article
-                className={styles.cardInner}
-                style={
-                  {
-                    ['--step-fill' as string]: `var(--lab-${step.color}-fill)`,
-                  } as CSSProperties
-                }
-              >
-                <div className={styles.cardTop}>
+        {/* The path, with the steps laid alongside it. */}
+        <div className={styles.track}>
+          <ProcessPath steps={steps} />
+
+          <ol className={styles.steps}>
+            {steps.map((step) => (
+              <li key={step.n} className={styles.step}>
+                <Reveal className={styles.stepInner} distance={32}>
                   <span className={styles.stepNum}>
                     {String(step.n).padStart(2, '0')}
                   </span>
-                  <span className={styles.stepBar} aria-hidden="true" />
-                </div>
-                <div className={styles.cardBody}>
                   <h3 className={styles.stepTitle}>{step.title}</h3>
                   <p className={styles.stepText}>{step.description}</p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </ol>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   )

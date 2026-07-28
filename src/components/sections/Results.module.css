@@ -1,134 +1,77 @@
 .heading {
   font-size: var(--text-3xl);
-  margin-top: var(--space-3);
   max-width: 20ch;
 }
 
-/* --- Case studies, stacked --- */
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+/* --- Case studies, one per row --- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
   margin-top: var(--space-7);
 }
 
 .card {
-  height: 100%;
+  display: flex;
 }
 
+/* Each card is one image; all copy sits over it. */
 .cardInner {
-  display: grid;
-  grid-template-columns: 1fr;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--ink-900);
+  isolation: isolate;
 }
-@media (min-width: 60rem) {
+
+/* Image layer. Separate from the animated wrapper so next/image's `fill`
+   resolves against a stable containing block. */
+.cardFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+/* Full-width rows read as a wide band rather than a tall block. */
+@media (min-width: 52rem) {
   .cardInner {
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
+    aspect-ratio: 21 / 9;
   }
 }
 
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: clamp(1.75rem, 1rem + 3vw, 3rem);
-}
-
-/* Client logo replaces the eyebrow. The supplied mark is white-on-transparent,
-   so invert it for the light card. */
-.clientLogo {
-  height: 1.25rem;
-  width: auto;
-  filter: invert(1);
-  align-self: flex-start;
-}
-
-.title {
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-heading);
-  line-height: var(--leading-tight);
-  color: var(--color-text);
-  max-width: 20ch;
-}
-
-.intro {
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  color: var(--color-text-muted);
-  max-width: 44ch;
-}
-
-/* Metrics row */
-.metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-7);
-  margin-top: var(--space-2);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border);
-}
-.metric {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-.metricValue {
-  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: var(--tracking-tight);
-  line-height: 1;
-  color: var(--case-fill);
-}
-.metricLabel {
-  font-size: var(--text-base);
-  color: var(--color-text-muted);
-  max-width: 22ch;
-}
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  align-self: flex-start;
-  margin-top: auto;
-  padding: 0.85em 1.5em;
-  border-radius: var(--radius-pill);
-  background: var(--color-cta-bg);
-  color: var(--color-cta-fg);
-  font-weight: var(--weight-bold);
-  transition:
-    background-color var(--dur-fast) var(--ease-standard),
-    transform var(--dur-fast) var(--ease-standard);
-}
-.cta:hover {
-  background: var(--color-cta-bg-hover);
-  transform: translateY(-2px);
-}
-
-/* --- Media half --- */
-.cardMedia {
-  position: relative;
-  min-height: clamp(16rem, 12rem + 18vh, 24rem);
-}
 .mediaImage {
   object-fit: cover;
   object-position: center;
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+.cardInner:hover .mediaImage {
+  transform: scale(1.03);
 }
 
-/* Services provided — overlaid on the thumbnail, bottom-right. */
+/* Gradient that carries the copy at the foot of the image. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgb(6 7 9 / 0.88) 0%,
+    rgb(6 7 9 / 0.55) 38%,
+    rgb(6 7 9 / 0.05) 70%
+  );
+}
+
+/* --- Services: glass chips, top-left --- */
 .servicePills {
   position: absolute;
-  right: var(--space-5);
-  bottom: var(--space-5);
-  left: var(--space-5);
+  top: var(--space-6);
+  left: var(--space-6);
+  right: var(--space-6);
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   gap: var(--space-2);
 }
 .servicePill {
@@ -137,11 +80,13 @@
   gap: var(--space-2);
   padding: 0.45em 0.9em;
   border-radius: var(--radius-sm);
-  border: 1px solid rgb(255 255 255 / 0.25);
-  background: rgb(6 7 9 / 0.55);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(10px);
   font-size: var(--text-sm);
   font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   color: var(--white);
   white-space: nowrap;
 }
@@ -152,6 +97,32 @@
   border-radius: 50%;
   background: var(--case-fill);
   flex: none;
+}
+
+/* --- Caption: title + intro over the gradient --- */
+.caption {
+  position: absolute;
+  left: var(--space-6);
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-snug);
+  color: var(--white);
+}
+
+.intro {
+  line-height: var(--leading-snug);
+  color: color-mix(in srgb, var(--white) 82%, transparent);
+  max-width: 46ch;
+  text-wrap: pretty;
 }
 
 /* --- Empty state --- */

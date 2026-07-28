@@ -85,8 +85,14 @@ export interface NavLink {
 
 export interface FitSituation {
   id: string
+  /** Small lead-in line above the role, e.g. "Recognition for". */
+  lead: string
   title: string
   description: string
+  /** Which coded accent the card carries. */
+  color: LabColorKey
+  /** Photo key, resolved to public/serve/<photo>.webp. */
+  photo: 'founders' | 'people-leaders' | 'operators'
 }
 
 export interface Step {

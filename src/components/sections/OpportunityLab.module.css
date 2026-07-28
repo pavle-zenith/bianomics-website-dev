@@ -2,102 +2,83 @@
   margin-bottom: var(--space-7);
 }
 
+/* Full-width title, set to break across two lines. */
 .sectionHeading {
   font-size: var(--text-3xl);
-  max-width: 18ch;
+  max-width: 24ch;
 }
 
-/* --- Bento: copy | image | mission --- */
-.bento {
+/* --- Split band: 60% content / 40% image, flush, one shared radius --- */
+.split {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
 }
 @media (min-width: 60rem) {
-  .bento {
-    grid-template-columns: 1fr 1.45fr 1fr;
+  .split {
+    grid-template-columns: 60% 40%;
     align-items: stretch;
-    /* Tall center panel sets the row height; side panels stretch to match. */
-    min-height: 34rem;
+    min-height: 36rem;
   }
 }
 
-/* Side panels: content sits at the bottom, as in the reference. */
-.panel {
+/* --- 60%: dark content panel --- */
+.content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: var(--space-7);
-  padding: var(--space-6);
-  background: var(--color-bg-subtle);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  gap: var(--space-8);
+  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
+  background: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
 }
 
-.panelBody {
+.contentTop,
+.contentFoot {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-3);
 }
 
-.dot {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  background: var(--opportunity-fill);
-  flex: none;
-}
-
-/* Small dotted mark, echoing the reference's grid glyph. */
-.mark {
-  width: 1.75rem;
-  height: 1.75rem;
-  flex: none;
-  background-image: radial-gradient(
-    var(--opportunity-fill) 40%,
-    transparent 42%
-  );
-  background-size: 0.58rem 0.58rem;
-}
-
-.name {
-  font-size: var(--text-2xl);
-  line-height: var(--leading-snug);
-}
-
-.text {
-  line-height: var(--leading-relaxed);
-  color: var(--color-text-muted);
-  max-width: 42ch;
-}
-
-.missionEyebrow {
+.ethosEyebrow,
+.footEyebrow {
   font-size: var(--text-sm);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: var(--color-text-inverse-muted);
 }
 
-.missionHeading {
+/* The panel's anchor: the ethos statement. Set a step below the section
+   title so the panel reads as content inside the section, not a rival to it. */
+.statement {
   font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
-  max-width: 22ch;
+  color: var(--color-text-inverse);
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.footText {
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse-muted);
+  max-width: 44ch;
 }
 
 .cta {
   margin-top: var(--space-3);
 }
 
-/* --- Center image panel --- */
+/* --- 40%: image, flush to the panel --- */
 .media {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-xl);
   background: var(--color-bg-subtle);
   /* Drives height on mobile, where the grid rows are auto. */
-  min-height: 22rem;
+  min-height: 20rem;
 }
 @media (min-width: 60rem) {
   .media {
@@ -107,20 +88,4 @@
 
 .mediaImage {
   object-fit: cover;
-}
-
-/* Caption pill, bottom-right of the image. */
-.mediaCaption {
-  position: absolute;
-  right: var(--space-4);
-  bottom: var(--space-4);
-  padding: 0.5rem 0.9rem;
-  border-radius: var(--radius-pill);
-  background: rgb(0 0 0 / 0.55);
-  color: var(--white);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  backdrop-filter: blur(4px);
 }

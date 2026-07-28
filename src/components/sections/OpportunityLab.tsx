@@ -10,11 +10,13 @@ import styles from './OpportunityLab.module.css'
 import labImage from '../../../public/about/team.png'
 
 /**
- * Opportunity Lab — a three-panel bento: the story on the left, a tall
- * image through the middle, and who the work is for (plus the way in)
- * on the right. Collapses to a single column below 60rem.
+ * Opportunity Lab — a full-width two-line title over a split band:
+ * a dark content panel (60%) beside a flush image (40%). The two
+ * halves share one row and one radius, reading as a single object.
  */
 export function OpportunityLab() {
+  const { ethos } = opportunityLab
+
   return (
     <section
       id="opportunity-lab"
@@ -23,53 +25,44 @@ export function OpportunityLab() {
     >
       <div className="container">
         <Reveal className={styles.intro}>
-          <p className="eyebrow">{opportunityLab.eyebrow}</p>
           <h2 id="opportunity-heading" className={styles.sectionHeading}>
             {opportunityLab.heading}
           </h2>
         </Reveal>
 
-        <div className={styles.bento}>
-          {/* Left: the story */}
-          <Reveal className={styles.panel}>
-            <span className={styles.dot} aria-hidden="true" />
-            <div className={styles.panelBody}>
-              <h3 className={styles.name}>{opportunityLab.name}</h3>
-              <p className={styles.text}>{opportunityLab.description}</p>
+        <Reveal className={styles.split}>
+          {/* 60% — dark content panel */}
+          <div className={styles.content}>
+            <div className={styles.contentTop}>
+              <p className={styles.ethosEyebrow}>{ethos.eyebrow}</p>
+              <p className={styles.statement}>{ethos.statement}</p>
             </div>
-          </Reveal>
 
-          {/* Center: image */}
-          <Reveal className={styles.media} delay={0.06}>
-            <Image
-              src={labImage}
-              alt=""
-              fill
-              sizes="(min-width: 60rem) 45vw, 100vw"
-              className={styles.mediaImage}
-            />
-            <span className={styles.mediaCaption}>{opportunityLab.imageCaption}</span>
-          </Reveal>
-
-          {/* Right: who it's for + the way in */}
-          <Reveal className={styles.panel} delay={0.12}>
-            <span className={styles.mark} aria-hidden="true" />
-            <div className={styles.panelBody}>
-              <p className={styles.missionEyebrow}>{opportunityLab.mission.eyebrow}</p>
-              <h3 className={styles.missionHeading}>{opportunityLab.mission.heading}</h3>
-              <p className={styles.text}>{opportunityLab.mission.description}</p>
+            <div className={styles.contentFoot}>
+              <p className={styles.footEyebrow}>{ethos.footEyebrow}</p>
+              <p className={styles.footText}>{ethos.footText}</p>
               <Button
                 href={anchors.snapshot}
-                variant="secondary"
                 event="cta_secondary_click"
                 location="opportunity-lab"
                 className={styles.cta}
               >
-                {opportunityLab.mission.ctaLabel}
+                {ethos.ctaLabel}
               </Button>
             </div>
-          </Reveal>
-        </div>
+          </div>
+
+          {/* 40% — image */}
+          <div className={styles.media}>
+            <Image
+              src={labImage}
+              alt=""
+              fill
+              sizes="(min-width: 60rem) 40vw, 100vw"
+              className={styles.mediaImage}
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   )

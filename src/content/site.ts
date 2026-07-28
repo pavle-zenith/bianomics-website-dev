@@ -16,6 +16,9 @@ export const brand = {
 
 /** Contact + external links. */
 export const contact = {
+  /** Footer headline, set in two tones: muted lead-in, then bright. */
+  invitationLead: "Let's build something",
+  invitationRest: 'worth talking about',
   phone: '(915) 252-0712',
   phoneHref: 'tel:+19152520712',
   email: 'hello@bianomics.com',
@@ -64,22 +67,31 @@ export const about = {
 /** Who we work with — three "is this you" fit situations. */
 export const fitSituations: FitSituation[] = [
   {
-    id: 'underrated',
-    title: 'You are doing real work that people should know about',
+    id: 'founders',
+    lead: 'Recognition for',
+    title: 'Founders and leaders',
     description:
-      'The results are there, but the outside world still sees an older, smaller version of you. The story has not caught up to the substance.',
+      'The results are there. The story has not caught up to the substance yet.',
+    color: 'vision',
+    photo: 'founders',
   },
   {
-    id: 'stretched-vendors',
-    title: 'You are stretched across too many vendors',
+    id: 'people-leaders',
+    lead: 'Steadier support for',
+    title: 'People leaders',
     description:
-      'A designer here, an events company there, a consultant for operations. Nothing connects, and you are the one holding it all together.',
+      'A capable team, stretched thin. Clearer systems, not another push.',
+    color: 'stage',
+    photo: 'people-leaders',
   },
   {
-    id: 'people-stretched',
-    title: 'Your people are stretched thin',
+    id: 'operators',
+    lead: 'One connected system for',
+    title: 'Operators',
     description:
-      'The team is capable and tired. They need clearer systems and steadier support, not another tool or another push.',
+      'A designer here, an events company there. We make the parts connect.',
+    color: 'blueprint',
+    photo: 'operators',
   },
 ]
 
@@ -145,8 +157,10 @@ export const founder = {
   role: 'Founder',
   promise:
     'Clients work with senior people, not juniors handed the account. The person you meet is the person doing the work.',
-  // Personal note / short clip slot — pending real content (plan open item #4).
-  note: '',
+  // MOCK COPY — written as a stand-in to fill the layout. Replace with
+  // Bianca's own words before launch (plan open item #4).
+  note:
+    'I started Bianomics after watching too many good organizations get handed a strategy deck and left to figure out the rest. The work that changes things is not the pitch, it is the follow-through. So we built a practice around senior people who stay on the account from the first conversation to the last deliverable.',
 } as const
 
 /**
@@ -223,16 +237,17 @@ export const opportunityLab = {
   description:
     'Our nonprofit arm funds this work for organizations that are doing good in the world and could not otherwise afford it. When you work with us, you help make that possible.',
   eyebrow: 'The nonprofit arm',
-  /** Bento heading, set above the grid. */
-  heading: 'Good work, funded',
-  /** Caption pinned to the image panel. */
-  imageCaption: 'Funded work',
-  /** Right panel: who the funded work is for, plus the way in. */
-  mission: {
-    eyebrow: "Who it's for",
-    heading: 'Organizations doing good that cannot otherwise afford this work',
-    description:
-      'If that sounds like you, or like someone you know, tell us. We review every organization that comes our way.',
+  /** Full-width, two-line section title above the split. */
+  heading: 'We fund the work for organizations doing good in the world.',
+  /** Dark content panel (60%): the ethos statement and the way in. */
+  ethos: {
+    eyebrow: 'Our ethos',
+    statement:
+      'Good communications should not be a luxury. Our nonprofit arm underwrites the work for organizations that could not otherwise afford it.',
+    /** Who qualifies, set at the foot of the panel. */
+    footEyebrow: "Who it's for",
+    footText:
+      'Organizations doing good that cannot otherwise afford this work. If that sounds like you, or like someone you know, tell us.',
     ctaLabel: 'Start with a Snapshot',
   },
 } as const

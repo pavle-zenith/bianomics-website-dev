@@ -10,26 +10,27 @@
 }
 @media (min-width: 52rem) {
   .card {
-    grid-template-columns: minmax(14rem, 20rem) 1fr;
+    grid-template-columns: minmax(13rem, 18rem) 1fr;
     align-items: stretch;
   }
 }
 
-/* --- Portrait --- */
+/* --- Portrait: a tall rectangle, not a square --- */
 .portrait {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4;
   border-radius: var(--radius-lg);
   background: linear-gradient(160deg, var(--ink-700), var(--ink-800));
   overflow: hidden;
 }
 @media (min-width: 52rem) {
   .portrait {
+    /* Fills the card's full height, which the taller body copy now drives. */
     aspect-ratio: auto;
     height: 100%;
-    min-height: 20rem;
+    min-height: 28rem;
   }
 }
 .portraitInitials {
@@ -39,13 +40,19 @@
   letter-spacing: var(--tracking-tight);
 }
 
-/* --- Body --- */
+/* --- Body: heading at the top, the word itself at the foot --- */
 .body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--space-5);
+  justify-content: space-between;
+  gap: var(--space-7);
   padding: clamp(1rem, 0.5rem + 2vw, 2.25rem) clamp(0.5rem, 0.3rem + 1.5vw, 2rem);
+}
+
+.bodyFoot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
 .heading {
@@ -60,6 +67,14 @@
   line-height: var(--leading-snug);
   color: var(--color-text-inverse);
   max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* Longer first-person note under the pull-quote. */
+.note {
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse-muted);
+  max-width: 54ch;
   text-wrap: pretty;
 }
 

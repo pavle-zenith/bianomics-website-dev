@@ -1,41 +1,108 @@
-.inner {
+/* Inset panel carrying the texture. */
+.panel {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--ink-950);
+  isolation: isolate;
+  min-height: 26rem;
+}
+@media (min-width: 52rem) {
+  .panel {
+    min-height: 30rem;
+  }
+}
+
+/* Image layer, separate from the animated wrapper so next/image's `fill`
+   resolves against a stable containing block. */
+.fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.bg {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Darkens the texture so the copy and buttons stay legible. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgb(6 7 9 / 0.85) 0%,
+    rgb(6 7 9 / 0.6) 45%,
+    rgb(6 7 9 / 0.35) 100%
+  );
+}
+
+/* Lockup at the top, the ask and actions at the foot. */
+/* Stretches to the panel so the lockup and foot pin to top and bottom. */
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
+}
+
+.lockup {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  color: color-mix(in srgb, var(--white) 70%, transparent);
+}
+
+.foot {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-6);
+}
+@media (min-width: 52rem) {
+  .foot {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-7);
+  }
 }
 
 .heading {
-  font-size: var(--text-4xl);
-  color: var(--color-text-inverse);
-  max-width: 20ch;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  color: var(--white);
+  max-width: 16ch;
+  text-wrap: balance;
 }
 
-.ctaRow {
+.actions {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.reach {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
-  flex-wrap: wrap;
+  flex: none;
+}
+
+/* Outline action, sized to match the Button primitive. */
+.secondary {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-}
-
-.reachLink {
+  padding: 0.85em 1.5em;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgb(255 255 255 / 0.35);
   font-weight: var(--weight-bold);
-  color: var(--color-text-inverse);
-  transition: color var(--dur-fast) var(--ease-standard);
+  color: var(--white);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
 }
-.reachLink:hover {
-  color: var(--color-accent-fill);
-}
-
-.reachSep {
-  color: var(--color-text-inverse-muted);
+.secondary:hover {
+  background: rgb(255 255 255 / 0.1);
+  border-color: rgb(255 255 255 / 0.6);
 }

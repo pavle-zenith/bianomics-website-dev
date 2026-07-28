@@ -105,6 +105,15 @@
   }
 }
 
+/* Fill layer for card images. Sits behind the overlay content and gives
+   next/image's `fill` a reliable containing block of its own. */
+.cardFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
 /* --- Card 1: accent CTA --- */
 .ctaCard {
   background: var(--color-accent-fill);
@@ -171,6 +180,7 @@
 .mediaScrim {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(to top, rgb(6 7 9 / 0.78), rgb(6 7 9 / 0.05) 55%);
 }
 .stat {
@@ -178,6 +188,7 @@
   left: var(--space-6);
   right: var(--space-6);
   bottom: var(--space-6);
+  z-index: 2;
   color: var(--white);
 }
 .statValue {
@@ -211,6 +222,7 @@
   left: var(--space-6);
   top: var(--space-6);
   right: var(--space-6);
+  z-index: 2;
   color: var(--white);
 }
 .figureValue {
@@ -230,6 +242,7 @@
   position: absolute;
   right: var(--space-6);
   bottom: var(--space-6);
+  z-index: 2;
   color: color-mix(in srgb, var(--white) 70%, transparent);
   transition:
     color var(--dur-fast) var(--ease-standard),

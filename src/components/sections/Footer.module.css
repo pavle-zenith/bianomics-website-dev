@@ -1,88 +1,122 @@
 .footer {
+  position: relative;
   background: var(--color-bg-inverse);
   color: var(--color-text-inverse);
-  padding-block: var(--space-8) var(--space-6);
+  padding-block: var(--space-9) var(--space-6);
 }
 
-.top {
+/* --- Top: headline left, link columns right --- */
+.inner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-7);
+  gap: var(--space-8);
 }
-
-@media (min-width: 40rem) {
-  .top {
-    grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: var(--space-6);
+@media (min-width: 60rem) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
   }
 }
 
-.brandCol {
+.lead {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
+/* Two-tone headline: muted lead-in, bright payoff. */
+.headline {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  max-width: 16ch;
+  text-wrap: balance;
 }
 
-.logoImg {
-  height: 1.75rem;
-  width: auto;
-}
-
-.tagline {
-  font-family: var(--font-quote);
-  font-style: italic;
-  font-size: var(--text-lg);
+.headlineLead {
   color: var(--color-text-inverse-muted);
-  max-width: 28ch;
+}
+
+.headlineRest {
+  color: var(--color-text-inverse);
+}
+
+.cta {
+  flex: none;
+}
+
+/* --- Link columns: 2x2 on desktop --- */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-7) var(--space-5);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
 }
 
 .colHead {
   font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
   color: var(--color-text-inverse-muted);
-  margin-bottom: var(--space-4);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
-.link {
+/* Social sits on one line, comma-separated, as in the reference. */
+.inlineList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+}
+.inlineList li:not(:last-child)::after {
+  content: ',';
+  color: var(--color-text-inverse);
+}
+
+.link,
+.navLink {
+  font-weight: var(--weight-bold);
   color: var(--color-text-inverse);
   transition: color var(--dur-fast) var(--ease-standard);
 }
-.link:hover {
+.link:hover,
+.navLink:hover {
   color: var(--color-accent-fill);
 }
 
-.bottom {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border-inverse);
+/* Company / Utility lists are set larger, per the reference. */
+.navLink {
+  font-size: var(--text-lg);
 }
 
+/* --- Legal line above the wordmark --- */
 .legal {
+  margin-top: var(--space-8);
   font-size: var(--text-sm);
   color: var(--color-text-inverse-muted);
 }
 
-.legalLinks {
-  display: flex;
-  gap: var(--space-5);
-  font-size: var(--text-sm);
+/* --- Oversized wordmark, fitted to the content column ---
+   The SVG spans the container's inner width, so the mark's left and right
+   edges line up with the headline and link columns above it. */
+.wordmarkWrap {
+  margin-top: var(--space-6);
+}
+
+/* The lockup spans the full content width; height follows its 5.75:1 ratio. */
+.wordmark {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
 }

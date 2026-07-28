@@ -9,7 +9,6 @@ import styles from './Team.module.css'
 interface TeamTrackProps {
   members: readonly TeamMember[]
   photos: Record<string, StaticImageData>
-  eyebrow: string
   heading: string
 }
 
@@ -18,7 +17,7 @@ interface TeamTrackProps {
  * viewport, paged left/right by the arrow controls beside the title. Native
  * scroll-snap does the movement, so it stays swipeable on touch.
  */
-export function TeamTrack({ members, photos, eyebrow, heading }: TeamTrackProps) {
+export function TeamTrack({ members, photos, heading }: TeamTrackProps) {
   const trackRef = useRef<HTMLUListElement>(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
@@ -49,7 +48,6 @@ export function TeamTrack({ members, photos, eyebrow, heading }: TeamTrackProps)
       <div className="container">
         <Reveal className={styles.head}>
           <div>
-            <p className="eyebrow">{eyebrow}</p>
             <h2 id="team-heading" className={styles.heading}>
               {heading}
             </h2>

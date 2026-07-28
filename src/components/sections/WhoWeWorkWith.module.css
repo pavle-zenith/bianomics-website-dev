@@ -1,14 +1,14 @@
 .heading {
   font-size: var(--text-3xl);
-  margin-top: var(--space-3);
   max-width: 18ch;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-5);
+  gap: var(--space-4);
   margin-top: var(--space-7);
+  list-style: none;
 }
 
 @media (min-width: 52rem) {
@@ -19,28 +19,75 @@
 
 .card {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-6);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
 }
 
-.index {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-accent-text);
+/* Tall photo card; all copy sits over the image. */
+.cardInner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--ink-900);
+  isolation: isolate;
+}
+
+/* Image layer, separate from the animated wrapper so next/image's `fill`
+   resolves against a stable containing block. */
+.cardFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+.cardInner:hover .photo {
+  transform: scale(1.03);
+}
+
+/* Gradient carrying the copy at the foot of the image. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgb(6 7 9 / 0.9) 0%,
+    rgb(6 7 9 / 0.6) 30%,
+    rgb(6 7 9 / 0.05) 62%
+  );
+}
+
+.caption {
+  position: absolute;
+  left: var(--space-6);
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.lead {
+  font-size: var(--text-base);
+  color: color-mix(in srgb, var(--white) 72%, transparent);
 }
 
 .cardTitle {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
+  color: var(--white);
 }
 
-.cardBody {
-  color: var(--color-text-muted);
+.cardText {
+  margin-top: var(--space-2);
   line-height: var(--leading-relaxed);
+  color: color-mix(in srgb, var(--white) 78%, transparent);
+  text-wrap: pretty;
 }
