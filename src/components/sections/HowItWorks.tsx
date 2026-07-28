@@ -1,14 +1,11 @@
+import type { CSSProperties } from 'react'
 import { steps, brand } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './HowItWorks.module.css'
 
 export function HowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="section section-inverse"
-      aria-labelledby="how-heading"
-    >
+    <section id="how-it-works" className="section" aria-labelledby="how-heading">
       <div className="container">
         {/* Header: title left, description right. */}
         <Reveal className={styles.head}>
@@ -37,7 +34,14 @@ export function HowItWorks() {
               className={styles.card}
               distance={32}
             >
-              <article className={styles.cardInner}>
+              <article
+                className={styles.cardInner}
+                style={
+                  {
+                    ['--step-fill' as string]: `var(--lab-${step.color}-fill)`,
+                  } as CSSProperties
+                }
+              >
                 <div className={styles.cardTop}>
                   <span className={styles.stepNum}>
                     {String(step.n).padStart(2, '0')}

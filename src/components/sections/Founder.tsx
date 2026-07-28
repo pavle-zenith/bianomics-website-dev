@@ -3,34 +3,41 @@ import { Reveal } from '@/components/ui/Reveal'
 import styles from './Founder.module.css'
 
 /**
- * Founder section. Portrait and a personal note/clip are pending real
- * content (plan open item #4); the portrait slot renders a labeled
- * placeholder until then.
+ * Founder card: portrait on the left, a word from the founder on the right,
+ * on a single dark panel. The portrait is a labeled placeholder until the
+ * real photograph lands (plan open item #4).
  */
 export function Founder() {
   return (
     <section id="founder" className="section" aria-labelledby="founder-heading">
       <div className="container">
-        <div className={styles.grid}>
-          <Reveal className={styles.portraitWrap}>
-            {/* Portrait slot — swap for <Image> when the photo lands. */}
-            <div className={styles.portrait} role="img" aria-label={`${founder.name}, ${founder.role}`}>
-              <span className={styles.portraitInitials} aria-hidden="true">
-                BC
-              </span>
-            </div>
-          </Reveal>
+        <Reveal className={styles.card}>
+          {/* Portrait slot — swap for <Image> when the photo lands. */}
+          <div
+            className={styles.portrait}
+            role="img"
+            aria-label={`${founder.name}, ${founder.role}`}
+          >
+            <span className={styles.portraitInitials} aria-hidden="true">
+              BC
+            </span>
+          </div>
 
-          <Reveal delay={0.1} className={styles.body}>
-            <p className="eyebrow">The founder</p>
+          <div className={styles.body}>
             <h2 id="founder-heading" className={styles.heading}>
-              {founder.name}
+              A word from our founder
             </h2>
-            <p className={styles.role}>{founder.role}</p>
-            <p className={styles.promise}>{founder.promise}</p>
-            {founder.note ? <p className={styles.note}>{founder.note}</p> : null}
-          </Reveal>
-        </div>
+
+            <blockquote className={styles.quote}>
+              &ldquo;{founder.promise}&rdquo;
+            </blockquote>
+
+            <div className={styles.attribution}>
+              <p className={styles.name}>{founder.name}</p>
+              <p className={styles.role}>{founder.role}</p>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

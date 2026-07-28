@@ -51,7 +51,7 @@ export interface CaseStudyMetric {
 
 export interface CaseStudy {
   id: string
-  /** Client name (shown as the logo/wordmark top-left of the left panel). */
+  /** Client name (tab label and left-panel wordmark). */
   client: string
   /** Headline for the case study (bottom-left of the left panel). */
   title: string
@@ -59,10 +59,12 @@ export interface CaseStudy {
   intro: string
   /** Background texture image key, resolved to public/results/<texture>.png. */
   texture: string
-  /** Which of the four services drives the right panel color. */
+  /** Which of the four services drives the coded accent. */
   color: LabColorKey
   /** Result stats listed on the right panel. */
   metrics: CaseStudyMetric[]
+  /** Services provided on this engagement (shown where a testimonial would go). */
+  services: string[]
 }
 
 /** Results content is pending pre-launch — both arrays may be empty. */

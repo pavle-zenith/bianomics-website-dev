@@ -20,8 +20,8 @@ export const results: ResultsContent = {
       metrics: [
         { value: '3x', label: 'Increase in qualified inbound' },
         { value: '6 states', label: 'Reach after the relaunch' },
-        { value: 'Brand + PR', label: 'Services used' },
       ],
+      services: ['Brand strategy', 'Visual identity', 'Public relations', 'Launch event'],
     },
     {
       id: 'case-2',
@@ -34,8 +34,8 @@ export const results: ResultsContent = {
       metrics: [
         { value: '1,200+', label: 'Attendees across two days' },
         { value: '18', label: 'Press placements earned' },
-        { value: 'Events', label: 'Service used' },
       ],
+      services: ['Event production', 'Press moments', 'Community activation', 'Creative'],
     },
     {
       id: 'case-3',
@@ -48,8 +48,8 @@ export const results: ResultsContent = {
       metrics: [
         { value: '40%', label: 'Faster project delivery' },
         { value: '90 days', label: 'To a working system' },
-        { value: 'Ops + People', label: 'Services used' },
       ],
+      services: ['Project management', 'Operations systems', 'Team training', 'Workflow design'],
     },
   ],
   testimonials: [],

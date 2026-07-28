@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import type { NavLink } from '@/content/types'
 import { brand } from '@/content/site'
 import { anchors } from '@/lib/routes'
 import { track } from '@/lib/analytics'
+import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Nav.module.css'
 
 /**
@@ -28,12 +30,7 @@ export function Nav({ links }: { links: NavLink[] }) {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`${styles.inner} container`}>
         <a href={anchors.hero} className={styles.logo} aria-label={`${brand.name} home`}>
-          <span className={styles.logoMark} aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-              <path d="M12 0c.6 5.4 3 9 9 9-6 .6-8.4 3-9 9-.6-6-3-8.4-9-9 6-.6 8.4-3 9-9Z" />
-            </svg>
-          </span>
-          <span className={styles.logoText}>{brand.name}.</span>
+          <Image src={logo} alt="" priority className={styles.logoImg} />
         </a>
 
         <nav className={styles.desktopNav} aria-label="Primary">

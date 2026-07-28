@@ -1,66 +1,77 @@
-.grid {
+/* Single dark panel: portrait left, founder's word right. */
+.card {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
-  align-items: center;
+  gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  padding: clamp(1rem, 0.7rem + 1vw, 1.5rem);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
 }
-
 @media (min-width: 52rem) {
-  .grid {
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: var(--space-8);
+  .card {
+    grid-template-columns: minmax(14rem, 20rem) 1fr;
+    align-items: stretch;
   }
 }
 
-.portraitWrap {
-  max-width: 22rem;
-}
-
+/* --- Portrait --- */
 .portrait {
-  aspect-ratio: 4 / 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-xl);
-  background: linear-gradient(160deg, var(--blue-100), var(--blue-300));
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, var(--ink-700), var(--ink-800));
   overflow: hidden;
 }
-
+@media (min-width: 52rem) {
+  .portrait {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 20rem;
+  }
+}
 .portraitInitials {
   font-size: var(--text-4xl);
-  font-weight: var(--weight-extrabold);
-  color: var(--color-accent-text);
+  font-weight: var(--weight-bold);
+  color: color-mix(in srgb, var(--white) 55%, transparent);
   letter-spacing: var(--tracking-tight);
 }
 
+/* --- Body --- */
 .body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  justify-content: center;
+  gap: var(--space-5);
+  padding: clamp(1rem, 0.5rem + 2vw, 2.25rem) clamp(0.5rem, 0.3rem + 1.5vw, 2rem);
 }
 
 .heading {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-heading);
+  color: var(--color-text-inverse);
 }
 
-.role {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-}
-
-.promise {
-  margin-top: var(--space-2);
-  font-size: var(--text-xl);
+.quote {
+  font-size: clamp(1.125rem, 1rem + 0.7vw, 1.5rem);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-snug);
-  color: var(--color-text);
-  max-width: 40ch;
+  color: var(--color-text-inverse);
+  max-width: 46ch;
+  text-wrap: pretty;
 }
 
-.note {
-  color: var(--color-text-muted);
-  line-height: var(--leading-relaxed);
-  max-width: 46ch;
+.attribution {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.name {
+  font-weight: var(--weight-bold);
+  color: var(--color-text-inverse);
+}
+.role {
+  color: var(--color-text-inverse-muted);
 }

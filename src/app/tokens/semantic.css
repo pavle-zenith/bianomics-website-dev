@@ -59,17 +59,18 @@
   --color-error-bg: var(--red-50);
   --color-success: var(--green-800); /* AA on white */
 
-  /* --- The four labs, as a coded system ---
+  /* --- The four labs, as a coded system (brandbook mapping) ---
+     Bianomics primary is Bondi Blue; the labs take the accents.
      -fill = the lab's signature color for graphics / dots / bars
      -text = AA-safe text/UI shade of that color on white */
-  --lab-vision-fill: var(--bondi-blue);
-  --lab-vision-text: var(--blue-800);
-  --lab-stage-fill: var(--first-love);
-  --lab-stage-text: var(--red-700);
-  --lab-blueprint-fill: var(--trendy-orange);
-  --lab-blueprint-text: var(--orange-700);
-  --lab-groundwork-fill: var(--gooseberry);
-  --lab-groundwork-text: var(--green-800);
+  --lab-vision-fill: var(--first-love); /* Vision Lab: First Love pink */
+  --lab-vision-text: var(--red-700);
+  --lab-stage-fill: var(--gooseberry); /* Stage: Gooseberry green */
+  --lab-stage-text: var(--green-800);
+  --lab-blueprint-fill: var(--blue-800); /* Blueprint: darker Bondi (#00738B) */
+  --lab-blueprint-text: var(--blue-900);
+  --lab-groundwork-fill: var(--trendy-orange); /* Groundwork: Trendy Orange */
+  --lab-groundwork-text: var(--orange-700);
 
   /* Opportunity Lab (nonprofit arm) — Gooseberry accent per handoff */
   --opportunity-fill: var(--gooseberry);

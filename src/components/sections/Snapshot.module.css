@@ -1,3 +1,7 @@
+.snapshot {
+  background: var(--color-bg-subtle);
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -10,6 +14,11 @@
     gap: var(--space-9);
     align-items: start;
   }
+  /* Keep the explainer alongside the form instead of stranding it at the top. */
+  .explainer {
+    position: sticky;
+    top: 7rem;
+  }
 }
 
 .explainer {
@@ -20,14 +29,14 @@
 
 .heading {
   font-size: var(--text-3xl);
-  color: var(--color-text-inverse);
+  color: var(--color-text);
   max-width: 16ch;
 }
 
 .intro {
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse-muted);
+  color: var(--color-text-muted);
   max-width: 46ch;
 }
 
@@ -42,7 +51,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
-  color: var(--color-text-inverse);
+  color: var(--color-text);
   line-height: var(--leading-snug);
 }
 
@@ -60,7 +69,7 @@
   font-family: var(--font-quote);
   font-style: italic;
   font-size: var(--text-xl);
-  color: var(--color-accent-fill);
+  color: var(--color-accent-text);
 }
 
 .formCard {

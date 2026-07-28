@@ -62,11 +62,11 @@
   --container-narrow: 48rem; /* prose / centered blocks */
   --container-pad: clamp(1.25rem, 0.5rem + 3vw, 3rem);
 
-  /* --- Radii --- */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  /* --- Radii (tight, editorial; large cards sit near-square) --- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
   --radius-pill: 999px;
 
   /* --- Elevation --- */

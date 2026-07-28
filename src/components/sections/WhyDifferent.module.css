@@ -41,11 +41,12 @@
   color: var(--color-text-muted);
 }
 
-/* Bianomics — dark, elevated, the winning side */
+/* Bianomics — the winning side: white, bordered in the brand accent */
 .panelUs {
-  background: var(--color-bg-inverse);
-  color: var(--color-text-inverse);
-  box-shadow: var(--shadow-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 2px solid var(--color-accent-fill);
+  box-shadow: var(--shadow-md);
 }
 @media (min-width: 52rem) {
   .panelUs {
@@ -67,7 +68,7 @@
   color: var(--color-text-subtle);
 }
 .panelUs .panelLabel {
-  color: var(--color-text-inverse);
+  color: var(--color-text);
 }
 .panelDot {
   width: 0.5rem;
@@ -122,7 +123,7 @@
 }
 .panelUs .rowText {
   font-weight: var(--weight-bold);
-  color: var(--color-text-inverse);
+  color: var(--color-text);
 }
 .panelTypical .rowText {
   color: var(--color-text-muted);

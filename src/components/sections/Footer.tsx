@@ -1,7 +1,9 @@
+import Image from 'next/image'
 import type { NavLink } from '@/content/types'
 import { brand, contact } from '@/content/site'
 import { anchors } from '@/lib/routes'
 import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
+import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Footer.module.css'
 
 export function Footer({ links }: { links: NavLink[] }) {
@@ -15,8 +17,7 @@ export function Footer({ links }: { links: NavLink[] }) {
       <div className={`${styles.top} container`}>
         <div className={styles.brandCol}>
           <a href={anchors.hero} className={styles.logo} aria-label={`${brand.name} home`}>
-            <span className={styles.logoDot} aria-hidden="true" />
-            <span>{brand.name}</span>
+            <Image src={logo} alt="" className={styles.logoImg} />
           </a>
           <p className={styles.tagline}>{brand.tagline}</p>
           <AntiAgencyBadge tone="inverse" />

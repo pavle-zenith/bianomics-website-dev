@@ -7,7 +7,7 @@ export function Snapshot() {
   return (
     <section
       id="snapshot"
-      className="section section-inverse"
+      className={`${styles.snapshot} section`}
       aria-labelledby="snapshot-heading"
     >
       <div className="container">

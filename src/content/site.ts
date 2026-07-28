@@ -186,6 +186,34 @@ export const team = {
       photo: 'member-4',
       linkedinUrl: 'https://www.linkedin.com/company/bianomics',
     },
+    {
+      id: 'member-5',
+      name: 'Elena Marquez',
+      role: 'Brand Strategist',
+      photo: 'member-1',
+      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+    },
+    {
+      id: 'member-6',
+      name: 'Andre Salas',
+      role: 'Production Lead',
+      photo: 'member-2',
+      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+    },
+    {
+      id: 'member-7',
+      name: 'Nadia Brooks',
+      role: 'Communications Director',
+      photo: 'member-3',
+      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+    },
+    {
+      id: 'member-8',
+      name: 'Thomas Ellery',
+      role: 'Project Manager',
+      photo: 'member-4',
+      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+    },
   ],
 } as const
 

@@ -4,6 +4,7 @@
   max-width: 20ch;
 }
 
+/* --- Case studies, stacked --- */
 .list {
   display: flex;
   flex-direction: column;
@@ -11,132 +12,90 @@
   margin-top: var(--space-7);
 }
 
-/* Each case study: left rectangle + right square. */
-.pair {
+.card {
+  height: 100%;
+}
+
+.cardInner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-5);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
 }
 @media (min-width: 60rem) {
-  .pair {
-    grid-template-columns: 2fr 1fr;
+  .cardInner {
+    grid-template-columns: 1fr 1fr;
     align-items: stretch;
   }
 }
 
-/* --- Left: texture panel --- */
-.left {
-  position: relative;
+.cardBody {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-8);
-  min-height: clamp(20rem, 16rem + 16vh, 28rem);
+  gap: var(--space-4);
   padding: clamp(1.75rem, 1rem + 3vw, 3rem);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  color: var(--white);
-  isolation: isolate;
-}
-.leftBg {
-  object-fit: cover;
-  object-position: center;
-  z-index: -2;
-}
-.leftScrim {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    120deg,
-    rgb(6 7 9 / 0.28) 0%,
-    rgb(6 7 9 / 0.4) 55%,
-    rgb(6 7 9 / 0.72) 100%
-  );
 }
 
-/* Client logo/wordmark top-left */
-.client {
-  font-size: var(--text-xl);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: var(--tracking-tight);
-  color: var(--white);
+/* Client logo replaces the eyebrow. The supplied mark is white-on-transparent,
+   so invert it for the light card. */
+.clientLogo {
+  height: 1.25rem;
+  width: auto;
+  filter: invert(1);
+  align-self: flex-start;
 }
 
-.leftBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  max-width: 40ch;
-}
 .title {
   font-size: var(--text-2xl);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-heading);
   line-height: var(--leading-tight);
-  color: var(--white);
+  color: var(--color-text);
+  max-width: 20ch;
 }
+
 .intro {
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
-  color: color-mix(in srgb, var(--white) 88%, transparent);
+  color: var(--color-text-muted);
+  max-width: 44ch;
 }
 
-/* --- Right: stat panel (dark neutral; the service color survives only
-       as a thin coded accent bar along the top) --- */
-.right {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-6);
-  padding: clamp(1.75rem, 1rem + 3vw, 2.5rem);
-  border-radius: var(--radius-xl);
-  background: var(--color-bg-inverse);
-  color: var(--color-text-inverse);
-  overflow: hidden;
-}
-.right::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 4px;
-  background: var(--case-fill);
-}
-
+/* Metrics row */
 .metrics {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  margin-top: var(--space-2);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
 }
 .metric {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding-bottom: var(--space-5);
-  border-bottom: 1px solid var(--color-border-inverse);
-}
-.metric:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
 }
 .metricValue {
   font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
   font-weight: var(--weight-extrabold);
   letter-spacing: var(--tracking-tight);
   line-height: 1;
-  color: var(--color-text-inverse);
+  color: var(--case-fill);
 }
 .metricLabel {
   font-size: var(--text-base);
-  color: var(--color-text-inverse-muted);
+  color: var(--color-text-muted);
+  max-width: 22ch;
 }
 
-/* Snapshot CTA */
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
+  align-self: flex-start;
+  margin-top: auto;
   padding: 0.85em 1.5em;
   border-radius: var(--radius-pill);
   background: var(--color-cta-bg);
@@ -149,6 +108,50 @@
 .cta:hover {
   background: var(--color-cta-bg-hover);
   transform: translateY(-2px);
+}
+
+/* --- Media half --- */
+.cardMedia {
+  position: relative;
+  min-height: clamp(16rem, 12rem + 18vh, 24rem);
+}
+.mediaImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Services provided — overlaid on the thumbnail, bottom-right. */
+.servicePills {
+  position: absolute;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  left: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+.servicePill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.45em 0.9em;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgb(255 255 255 / 0.25);
+  background: rgb(6 7 9 / 0.55);
+  backdrop-filter: blur(8px);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+  white-space: nowrap;
+}
+.servicePill::before {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--case-fill);
+  flex: none;
 }
 
 /* --- Empty state --- */

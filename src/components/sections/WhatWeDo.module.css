@@ -15,7 +15,7 @@
 
 /* --- Sticky-stack --- */
 .stack {
-  margin-top: var(--space-8);
+  margin-top: var(--space-7);
   list-style: none;
   /* Keep the container's inline padding. No extra trailing space: the
      section's own padding provides the rhythm into the next section. */

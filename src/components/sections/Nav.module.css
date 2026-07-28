@@ -33,20 +33,12 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  font-weight: var(--weight-extrabold);
-  font-size: var(--text-xl);
-  letter-spacing: var(--tracking-tight);
-  color: var(--color-text-inverse);
   min-width: 0;
   flex: none;
 }
-.logoMark {
-  display: inline-flex;
-  color: var(--color-text-inverse);
-}
-.logoText {
-  white-space: nowrap;
+.logoImg {
+  height: 1.5rem;
+  width: auto;
 }
 
 /* --- Centered link cluster --- */

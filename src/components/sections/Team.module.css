@@ -1,70 +1,49 @@
+.team {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
 .heading {
   font-size: var(--text-3xl);
   margin-top: var(--space-3);
   max-width: 20ch;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6) var(--space-5);
+/* --- Horizontal sticky stack --- */
+.trackViewport {
   margin-top: var(--space-7);
 }
-@media (min-width: 40rem) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (min-width: 60rem) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+
+/* Mobile: a plain vertical list. */
+.track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-inline: var(--container-pad);
+  list-style: none;
 }
 
 .card {
+  flex: none;
+}
+
+.cardInner {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
 
+/* Square headshots */
 .photoWrap {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--ink-100);
 }
-
 .photo {
   object-fit: cover;
   object-position: center top;
-  transition: transform var(--dur-base) var(--ease-standard);
-}
-.card:hover .photo {
-  transform: scale(1.03);
-}
-
-/* Social chip in the corner of the image */
-.social {
-  position: absolute;
-  right: var(--space-3);
-  bottom: var(--space-3);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: rgb(6 7 9 / 0.55);
-  color: var(--white);
-  backdrop-filter: blur(6px);
-  transition:
-    background-color var(--dur-fast) var(--ease-standard),
-    transform var(--dur-fast) var(--ease-standard);
-}
-.social:hover {
-  background: var(--color-accent-fill);
-  transform: translateY(-2px);
 }
 
 .name {
@@ -72,8 +51,49 @@
   font-weight: var(--weight-bold);
   color: var(--color-text);
 }
-
 .role {
   font-size: var(--text-base);
   color: var(--color-text-muted);
+}
+
+@media (min-width: 48rem) {
+  /* Horizontal row that runs off the right edge. Each card sticks at the
+     left container edge as it arrives, so later cards slide over earlier
+     ones and they pile up instead of scrolling away. */
+  .trackViewport {
+    overflow-x: clip;
+  }
+
+  .track {
+    flex-direction: row;
+    gap: 0;
+    width: max-content;
+    padding-inline: 0;
+    /* Start the row at the container's left edge. */
+    margin-inline-start: max(
+      var(--container-pad),
+      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+    );
+  }
+
+  .card {
+    position: sticky;
+    /* Every card parks at the same left edge; source order does the stacking. */
+    left: max(
+      var(--container-pad),
+      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+    );
+    width: clamp(14rem, 11rem + 7vw, 18rem);
+    margin-right: var(--space-5);
+  }
+
+  .cardInner {
+    /* Opaque so a card fully covers the one it stacks onto. */
+    background: var(--color-bg);
+    padding-right: var(--space-5);
+  }
+
+  .photoWrap {
+    box-shadow: 0 0 0 1px var(--color-border);
+  }
 }
