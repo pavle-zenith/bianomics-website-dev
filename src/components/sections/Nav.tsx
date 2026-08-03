@@ -67,75 +67,84 @@ export function Nav({ links }: { links: NavLink[] }) {
       }`}
     >
       <div className={`${styles.inner} container`}>
-        <a href={anchors.hero} className={styles.logo} aria-label={`${brand.name} home`}>
-          <Image src={logo} alt="" priority className={styles.logoImg} />
-        </a>
+        {/* Below the desktop breakpoint this is the single glass shell that
+            holds everything; above it, `display: contents` dissolves it and
+            the logo and actions float as their own shells again. */}
+        <div className={styles.shell}>
+          <a href={anchors.hero} className={styles.logo} aria-label={`${brand.name} home`}>
+            <Image src={logo} alt="" priority className={styles.logoImg} />
+          </a>
 
-        <div className={styles.actions}>
-          {/* Links and the CTA sit inside one floating shell. */}
-          <div className={styles.group}>
-            <nav className={styles.desktopNav} aria-label="Primary">
-              <ul className={styles.links}>
-            {links.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} className={styles.link}>
-                  {link.label}
-                </a>
-              </li>
-            ))}
-              </ul>
-            </nav>
+          <div className={styles.actions}>
+            {/* Links and the CTA sit inside one floating shell. */}
+            <div className={styles.group}>
+              <nav className={styles.desktopNav} aria-label="Primary">
+                <ul className={styles.links}>
+                  {links.map((link) => (
+                    <li key={link.href}>
+                      <a href={link.href} className={styles.link}>
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-            <a
-              href={anchors.snapshot}
-              className={styles.cta}
-              onClick={() => track('cta_primary_click', { location: 'nav' })}
+              <a
+                href={anchors.snapshot}
+                className={styles.cta}
+                onClick={() => track('cta_primary_click', { location: 'nav' })}
+              >
+                Contact Us
+              </a>
+            </div>
+            <button
+              className={styles.menuToggle}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMenuOpen((v) => !v)}
             >
-              Contact Us
-            </a>
+              <span className="visually-hidden">
+                {menuOpen ? 'Close menu' : 'Open menu'}
+              </span>
+              <span className={styles.menuBar} data-open={menuOpen} aria-hidden="true" />
+            </button>
           </div>
-          <button
-            className={styles.menuToggle}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            <span className="visually-hidden">
-              {menuOpen ? 'Close menu' : 'Open menu'}
-            </span>
-            <span className={styles.menuBar} data-open={menuOpen} aria-hidden="true" />
-          </button>
         </div>
       </div>
 
       {menuOpen ? (
-        <nav id="mobile-menu" className={styles.mobileNav} aria-label="Primary mobile">
-          <ul>
-            {links.map((link) => (
-              <li key={link.href}>
+        /* The panel floats on the same inset as the shell so the two read as
+           one piece of chrome rather than a bar with a drawer under it. */
+        <div className={`${styles.mobileNavWrap} container`}>
+          <nav id="mobile-menu" className={styles.mobileNav} aria-label="Primary mobile">
+            <ul>
+              {links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className={styles.mobileLink}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              <li>
                 <a
-                  href={link.href}
-                  className={styles.mobileLink}
-                  onClick={() => setMenuOpen(false)}
+                  href={anchors.snapshot}
+                  className={styles.mobileCta}
+                  onClick={() => {
+                    track('cta_primary_click', { location: 'nav' })
+                    setMenuOpen(false)
+                  }}
                 >
-                  {link.label}
+                  Contact Us
                 </a>
               </li>
-            ))}
-            <li>
-              <a
-                href={anchors.snapshot}
-                className={styles.mobileCta}
-                onClick={() => {
-                  track('cta_primary_click', { location: 'nav' })
-                  setMenuOpen(false)
-                }}
-              >
-                Contact Us
-              </a>
-            </li>
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        </div>
       ) : null}
     </header>
   )

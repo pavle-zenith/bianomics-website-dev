@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { brand, recognitionMarks } from '@/content/site'
+import { brand } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
 import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
 import { HeroCtas } from './HeroCtas'
@@ -59,23 +59,11 @@ export function Hero() {
 
         </div>
 
-        {/* The base: recognition, then a rule, then the subline and the CTA. */}
+        {/* The base: a rule, then the subline and the CTA.
+            The recognition row (trust lead + `recognitionMarks` set in
+            `.trust` / `.trustLead` / `.marks` / `.mark`) is temporarily out at
+            Pavle's request. Its styles are kept so it can be restored here. */}
         <div className={styles.base}>
-          <Reveal delay={0.3} className={styles.trust}>
-            <p className={styles.trustLead}>
-              Trusted work, recognized across the world.
-            </p>
-            <ul className={styles.marks}>
-              {recognitionMarks.map((mark) => (
-                <li key={mark.label}>
-                  <abbr title={mark.full} className={styles.mark}>
-                    {mark.label}
-                  </abbr>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
           <Reveal delay={0.24} className={styles.bottom}>
             <p className={styles.clarifier}>{brand.clarifier}</p>
             <div className={styles.ctaSlot}>

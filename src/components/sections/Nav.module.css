@@ -47,6 +47,39 @@
   padding-block: var(--space-5);
 }
 
+/* --- The mobile shell ---
+   One glass entity holding the logo, the CTA and the toggle. Above the
+   desktop breakpoint it dissolves with `display: contents`, handing its
+   children straight back to `.inner` so they float as separate shells. */
+.shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 0.4rem 0.4rem 0.4rem 0.9rem;
+  border-radius: var(--radius-control);
+  background: var(--nav-shell);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(14px);
+}
+@media (min-width: 62rem) {
+  .shell {
+    display: contents;
+  }
+}
+
+/* Inside the shell the children must not carry glass of their own. */
+@media (max-width: 61.999rem) {
+  .logo,
+  .group {
+    padding: 0;
+    background: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+  }
+}
+
 /* --- Logo ---
    Carries its own shell so it stays legible once the page scrolls and the
    mark sits over light sections rather than the dark hero. */
@@ -141,10 +174,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: var(--radius-field);
-  color: var(--color-text-inverse);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: calc(var(--radius-control) - 0.15rem);
+  /* Follows the shell's tone, so it does not go white-on-white on light. */
+  color: var(--nav-ink);
+}
+.menuToggle:hover {
+  background: var(--nav-hover);
 }
 .menuBar,
 .menuBar::before,
@@ -180,27 +217,34 @@
   transform: translateY(-6px) rotate(-45deg);
 }
 
-/* --- Mobile menu panel --- */
+/* --- Mobile menu panel ---
+   Floats on the same inset as the shell above it, in the same glass, so the
+   open nav reads as one piece of chrome. */
+.mobileNavWrap {
+  margin-top: var(--space-2);
+}
 .mobileNav {
-  background: var(--color-bg-inverse);
-  border-top: 1px solid var(--color-border-inverse);
-  padding: var(--space-4) var(--container-pad) var(--space-6);
+  padding: var(--space-2) var(--space-5) var(--space-5);
+  border-radius: var(--radius-control);
+  background: var(--nav-shell);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(18px);
 }
 .mobileLink {
   display: block;
   padding: var(--space-4) 0;
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
-  color: var(--color-text-inverse);
-  border-bottom: 1px solid var(--color-border-inverse);
+  color: var(--nav-ink);
+  border-bottom: 1px solid var(--nav-border);
 }
 .mobileCta {
   display: inline-flex;
   margin-top: var(--space-4);
   padding: 0.85em 1.6em;
-  border-radius: var(--radius-pill);
-  background: var(--color-accent-fill);
-  color: var(--white);
+  border-radius: var(--radius-control);
+  background: var(--color-cta-bg);
+  color: var(--color-cta-fg);
   font-weight: var(--weight-bold);
 }
 
