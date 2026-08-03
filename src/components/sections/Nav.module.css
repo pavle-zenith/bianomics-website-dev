@@ -1,20 +1,41 @@
+/* The bar itself is invisible: the chrome is the two floating shells, so
+   nothing spans the viewport and the canvas behind stays uninterrupted. */
 .header {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: var(--z-nav);
-  /* Transparent over the hero; text is light. */
   color: var(--color-text-inverse);
-  transition:
-    background-color var(--dur-base) var(--ease-standard),
-    box-shadow var(--dur-base) var(--ease-standard),
-    backdrop-filter var(--dur-base) var(--ease-standard);
 }
 
-/* Solid, condensed state once scrolled past the hero top. */
-.scrolled {
-  background: color-mix(in srgb, var(--color-bg-inverse) 88%, transparent);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 var(--color-border-inverse);
+/* --- Tone, driven by whatever canvas sits under the nav line ---
+   The shells read as glass either way; only the tint and ink flip. */
+.onDark {
+  --nav-shell: rgb(255 255 255 / 0.1);
+  --nav-border: rgb(255 255 255 / 0.16);
+  --nav-ink: var(--color-text-inverse);
+  --nav-hover: rgb(255 255 255 / 0.14);
+  color: var(--color-text-inverse);
+}
+.onLight {
+  --nav-shell: rgb(255 255 255 / 0.72);
+  --nav-border: rgb(13 14 17 / 0.1);
+  --nav-ink: var(--color-text);
+  --nav-hover: rgb(13 14 17 / 0.06);
+  color: var(--color-text);
+}
+
+/* The lockup ships white-on-transparent, so it needs inverting on light. */
+.onLight .logoImg {
+  filter: invert(1);
+}
+
+.header,
+.header * {
+  transition:
+    background-color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard),
+    color var(--dur-base) var(--ease-standard),
+    filter var(--dur-base) var(--ease-standard);
 }
 
 .inner {
@@ -22,51 +43,68 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-5);
-  height: 5.5rem;
-  transition: height var(--dur-base) var(--ease-standard);
-}
-.scrolled .inner {
-  height: 4.5rem;
+  /* Floating chrome, so the gap from the top is padding rather than height. */
+  padding-block: var(--space-5);
 }
 
-/* --- Logo --- */
+/* --- Logo ---
+   Carries its own shell so it stays legible once the page scrolls and the
+   mark sits over light sections rather than the dark hero. */
 .logo {
   display: inline-flex;
   align-items: center;
   min-width: 0;
   flex: none;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-control);
+  background: var(--nav-shell);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(14px);
 }
 .logoImg {
-  height: 1.5rem;
+  height: 1.35rem;
   width: auto;
 }
 
-/* --- Centered link cluster --- */
+/* --- Floating group: the links and the CTA share one rounded shell --- */
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.3rem;
+  border-radius: var(--radius-control);
+  background: var(--nav-shell);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(14px);
+}
+
 .desktopNav {
   display: none;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 }
+@media (min-width: 62rem) {
+  .desktopNav {
+    display: block;
+  }
+}
+
 .links {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-1);
 }
+
 .link {
   display: inline-flex;
   align-items: center;
   gap: 0.35em;
+  padding: 0.55rem 0.85rem;
+  border-radius: calc(var(--radius-control) - 0.15rem);
   font-size: var(--text-base);
-  font-weight: var(--weight-regular);
-  color: color-mix(in srgb, var(--color-text-inverse) 92%, transparent);
-  transition: color var(--dur-fast) var(--ease-standard);
+  font-weight: var(--weight-medium);
+  color: var(--nav-ink);
 }
 .link:hover {
-  color: var(--color-text-inverse);
-}
-.caret {
-  opacity: 0.75;
+  background: var(--nav-hover);
 }
 
 /* --- Right actions --- */
@@ -77,26 +115,24 @@
   flex: none;
 }
 
+/* The solid block at the end of the group — the one filled element up here. */
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8em 1.6em;
-  border-radius: var(--radius-pill);
+  padding: 0.7rem 1.25rem;
+  border-radius: calc(var(--radius-control) - 0.15rem);
   font-size: var(--text-base);
   font-weight: var(--weight-bold);
-  color: var(--color-text-inverse);
-  background: rgb(255 255 255 / 0.1);
-  border: 1px solid var(--color-border-inverse);
+  color: var(--color-cta-fg);
+  background: var(--color-cta-bg);
   white-space: nowrap;
   transition:
     background-color var(--dur-fast) var(--ease-standard),
     transform var(--dur-fast) var(--ease-standard);
 }
 .cta:hover {
-  background: var(--color-accent-fill);
-  border-color: var(--color-accent-fill);
-  color: var(--white);
+  background: var(--color-cta-bg-hover);
   transform: translateY(-1px);
 }
 
@@ -107,7 +143,7 @@
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-field);
   color: var(--color-text-inverse);
 }
 .menuBar,

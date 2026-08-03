@@ -17,18 +17,19 @@ export const faqItems: FaqItem[] = [
     // NOTE: final answer pending confirmation from the founder (plan open item #6).
     question: 'What size organizations do you work with?',
     answer:
-      'We work with established organizations and firms that are ready to invest in doing this well. If you are weighing whether you are a fit, the free Snapshot is the simplest way to find out.',
+      "We work with established organizations and firms that are ready to invest in doing this well. If you're weighing whether you're a fit, the Snapshot is the simplest way to find out.",
   },
   {
     id: 'location',
     question: 'Do you only work with organizations in El Paso?',
+    // NOTE: the international claim is pending Bianca's confirmation before publishing.
     answer:
-      'No. We are based in El Paso and work across six states. The Snapshot and much of the work happen remotely, and we travel when the project calls for it.',
+      "No. We're based in El Paso and our work runs across six states and internationally. The Snapshot and much of the work happen remotely, and we travel when the project calls for it.",
   },
   {
     id: 'cost',
     question: 'How much does it cost?',
     answer:
-      'It depends on what you need and how much of the system you bring in. The Snapshot is free and comes with a clear read of where you stand, so you can decide with real information before any numbers are discussed.',
+      'It depends on what you need and how much of the system you bring in. The Snapshot is complimentary and comes with a clear read of where you stand, so you can decide with real information before any numbers come up.',
   },
 ]

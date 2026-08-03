@@ -14,7 +14,9 @@ export function ClosingCta() {
   return (
     <section className="section" aria-labelledby="closing-heading">
       <div className="container">
-        <Reveal className={styles.panel}>
+        {/* section-inverse marks this as a dark canvas so the shared Button's
+            secondary variant flips to light-on-dark inside it. */}
+        <Reveal className={`${styles.panel} section-inverse`}>
           <div className={styles.fill}>
             <Image
               src={ctaBg}
@@ -27,7 +29,7 @@ export function ClosingCta() {
           <div className={styles.scrim} aria-hidden="true" />
 
           <div className={styles.content}>
-            <p className={styles.lockup}>{brand.lockup}</p>
+            <p className={styles.lockup}>{brand.lockupClosing}</p>
 
             <div className={styles.foot}>
               <h2 id="closing-heading" className={styles.heading}>
@@ -40,12 +42,18 @@ export function ClosingCta() {
                   variant="primary"
                   event="cta_primary_click"
                   location="closing"
+                  arrow
                 >
                   Book a Snapshot
                 </Button>
-                <a href={anchors.whatWeDo} className={styles.secondary}>
+                <Button
+                  href={anchors.whatWeDo}
+                  variant="secondary"
+                  event="cta_secondary_click"
+                  location="closing"
+                >
                   See what we do
-                </a>
+                </Button>
               </div>
             </div>
           </div>

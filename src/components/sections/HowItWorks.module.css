@@ -2,156 +2,236 @@
   overflow: hidden;
 }
 
-/* --- Header: title left, description right --- */
+/* --- Header: mono label in the margin, title and copy to the right --- */
 .head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-9);
+}
+@media (min-width: 60rem) {
+  .head {
+    grid-template-columns: 12rem 1fr;
+    gap: var(--space-7);
+    align-items: start;
+  }
+}
+
+.headLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-inverse-muted);
+}
+@media (min-width: 60rem) {
+  .headLabel {
+    padding-top: 0.65rem;
+  }
+}
+
+.headMain {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  margin-bottom: var(--space-8);
+  gap: var(--space-6);
+  min-width: 0;
 }
-@media (min-width: 52rem) {
-  .head {
+
+.heading {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-heading);
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text-inverse);
+  max-width: 20ch;
+}
+
+.headRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+@media (min-width: 60rem) {
+  .headRow {
     flex-direction: row;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-8);
   }
 }
 
-.headLeft {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.heading {
-  font-size: var(--text-3xl);
-  color: var(--color-text-inverse);
-  max-width: 16ch;
-}
-
-.headRight {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  max-width: 34rem;
-}
-@media (min-width: 52rem) {
-  .headRight {
-    text-align: right;
-    align-items: flex-end;
-  }
-}
-
 .headDesc {
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
   color: var(--color-text-inverse-muted);
-  max-width: 40ch;
+  max-width: 38ch;
 }
 
+/* The line that carries the section. Given room to breathe. */
 .framework {
   font-family: var(--font-quote);
   font-style: italic;
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
   color: var(--color-accent-fill);
+  max-width: 24ch;
 }
 
-/* --- Track: the path layered behind the steps --- */
+/* --- Track: rows with the progress rail down the left margin --- */
 .track {
   position: relative;
 }
 
-.pathWrap {
+.rail {
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
   pointer-events: none;
 }
-/* Below 52rem the steps stack in one column, so the winding path would
-   cut through them. Hide it and let the steps carry the section. */
-@media (max-width: 51.999rem) {
-  .pathWrap {
+/* Below 60rem the rows use their full width, so the rail would crowd them. */
+@media (max-width: 59.999rem) {
+  .rail {
     display: none;
   }
 }
 
-.pathSvg {
-  width: 100%;
-  height: 100%;
+.railTrack,
+.railFill {
+  position: absolute;
+  inset: 0;
+  width: 1px;
 }
 
-.pathTrack {
-  stroke: rgb(255 255 255 / 0.14);
-  stroke-width: 1.5;
+.railTrack {
+  background: var(--color-border-inverse);
 }
 
-.pathFill {
-  stroke: var(--color-accent-fill);
-  stroke-width: 1.5;
-  stroke-linecap: round;
+/* Grows from the top as the rows scroll past. */
+.railFill {
+  background: var(--color-accent-fill);
+  transform-origin: top center;
+  will-change: transform;
 }
 
-.pathNode {
-  fill: var(--color-accent-fill);
+/* Nodes ride the rail, centred on it. */
+.railNode {
+  position: absolute;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: -0.25rem;
+  margin-top: -0.25rem;
+  border-radius: 50%;
+  background: var(--color-accent-fill);
 }
 
-/* --- Steps, alternating either side of the path --- */
-.steps {
+/* --- The tracked region: rows left, cursor preview right --- */
+.zone {
   position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
+}
+
+/* --- Steps as hairline rows: counter | title | body --- */
+.steps {
   list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--color-border-inverse);
+}
+@media (min-width: 60rem) {
+  .steps {
+    /* Clear the rail. The rows themselves stay full width so their rules
+       run to the edge of the section. */
+    margin-left: var(--space-7);
+  }
 }
 
 .step {
-  display: flex;
+  border-bottom: 1px solid var(--color-border-inverse);
 }
 
-@media (min-width: 52rem) {
-  .steps {
-    gap: 0;
-  }
-  .step {
-    /* One step per path bend: matches ProcessPath's STEP_H rhythm. */
-    min-height: 16rem;
-    align-items: center;
-    width: 50%;
-  }
-  /* Odd steps sit right of the path, even steps left. */
-  .step:nth-child(odd) {
-    margin-left: auto;
-    padding-left: var(--space-7);
-  }
-  .step:nth-child(even) {
-    padding-right: var(--space-7);
-    text-align: right;
-  }
-  .step:nth-child(even) .stepInner {
-    align-items: flex-end;
-  }
-}
-
+/* Copy at the foot of the left half, image filling the right. */
 .stepInner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  padding-block: var(--space-6);
+}
+@media (min-width: 60rem) {
+  .stepInner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    /* Tall tabs. The copy sits on the baseline; the image fills the height. */
+    min-height: 26rem;
+    padding-block: var(--space-6);
+    align-items: end;
+  }
+}
+
+.stepBody {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-3);
+  align-items: flex-start;
+}
+
+/* --- The step's image, right half --- */
+.stepMedia {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  background: var(--ink-900);
+  min-height: 14rem;
+}
+@media (min-width: 60rem) {
+  .stepMedia {
+    align-self: stretch;
+    min-height: 0;
+  }
+}
+
+/* Oversized inside its frame so the drift never exposes an edge. */
+.stepMediaInner {
+  position: absolute;
+  inset: -14px;
+  will-change: transform;
+}
+
+.stepImg {
+  object-fit: cover;
+  object-position: center;
 }
 
 .stepNum {
-  font-family: var(--font-quote);
-  font-style: italic;
-  font-size: var(--text-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
   color: var(--color-accent-fill);
 }
 
+/* Fills in when the row is under the cursor, as in the reference. */
+.stepDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent-fill);
+  background: transparent;
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+.stepActive .stepDot {
+  background: var(--color-accent-fill);
+}
+
+
+
 .stepTitle {
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
   color: var(--color-text-inverse);
   max-width: 18ch;
 }
@@ -159,5 +239,5 @@
 .stepText {
   line-height: var(--leading-relaxed);
   color: var(--color-text-inverse-muted);
-  max-width: 34ch;
+  max-width: 42ch;
 }

@@ -1,96 +1,99 @@
 .heading {
   font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
   max-width: 20ch;
 }
 
-/* --- Case studies, one per row --- */
+/* --- 2x2 editorial grid. Every card starts on the same line. --- */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-5);
-  margin-top: var(--space-7);
+  gap: var(--space-8);
+  margin-top: var(--space-8);
 }
-
-.card {
-  display: flex;
-}
-
-/* Each card is one image; all copy sits over it. */
-.cardInner {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  background: var(--ink-900);
-  isolation: isolate;
-}
-
-/* Image layer. Separate from the animated wrapper so next/image's `fill`
-   resolves against a stable containing block. */
-.cardFill {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-/* Full-width rows read as a wide band rather than a tall block. */
-@media (min-width: 52rem) {
-  .cardInner {
-    aspect-ratio: 21 / 9;
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-8);
+    row-gap: var(--space-10);
+    align-items: start;
   }
 }
 
-.mediaImage {
+.card {
+  display: block;
+}
+
+/* --- Media. Square and landscape alternate on the diagonal. --- */
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--ink-100);
+  border-radius: var(--radius-card);
+}
+.mediaSquare {
+  aspect-ratio: 1 / 1;
+}
+
+.image {
   object-fit: cover;
   object-position: center;
   transition: transform var(--dur-base) var(--ease-standard);
+  z-index: 0;
 }
-.cardInner:hover .mediaImage {
-  transform: scale(1.03);
+.card:hover .image {
+  transform: scale(1.02);
 }
 
-/* Gradient that carries the copy at the foot of the image. */
+/* Keeps the glass legible whatever the texture underneath does. */
 .scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgb(6 7 9 / 0.88) 0%,
-    rgb(6 7 9 / 0.55) 38%,
-    rgb(6 7 9 / 0.05) 70%
+    rgb(0 0 0 / 0.62) 0%,
+    rgb(0 0 0 / 0.32) 32%,
+    rgb(0 0 0 / 0) 62%
   );
+  pointer-events: none;
 }
 
-/* --- Services: glass chips, top-left --- */
-.servicePills {
+/* --- Services provided, on glass at the foot of the image --- */
+.services {
   position: absolute;
-  top: var(--space-6);
-  left: var(--space-6);
-  right: var(--space-6);
   z-index: 2;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.servicePill {
+
+.service {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.45em 0.9em;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgb(255 255 255 / 0.22);
+  padding: 0.5em 0.85em;
+  border-radius: var(--radius-control);
+  border: 1px solid rgb(255 255 255 / 0.3);
   background: rgb(255 255 255 / 0.14);
-  backdrop-filter: blur(10px);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--white);
   white-space: nowrap;
 }
-.servicePill::before {
+/* The engagement's coded accent, kept to the dot. */
+.service::before {
   content: '';
   width: 0.4rem;
   height: 0.4rem;
@@ -99,30 +102,63 @@
   flex: none;
 }
 
-/* --- Caption: title + intro over the gradient --- */
-.caption {
-  position: absolute;
-  left: var(--space-6);
-  right: var(--space-6);
-  bottom: var(--space-6);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+/* --- Copy --- */
+.category {
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent-text);
 }
 
+/* Card copy runs the full width of its column — no measure cap, so the
+   title and the result line each hold to one or two lines. */
 .title {
-  font-size: var(--text-xl);
-  font-weight: var(--weight-heading);
+  margin-top: var(--space-3);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
-  color: var(--white);
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-text);
+}
+
+/* The one-line read on the engagement, set small and wide. */
+.summary {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
 }
 
 .intro {
-  line-height: var(--leading-snug);
-  color: color-mix(in srgb, var(--white) 82%, transparent);
-  max-width: 46ch;
-  text-wrap: pretty;
+  margin-top: var(--space-4);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding-bottom: 0.3rem;
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+}
+.link:hover {
+  color: var(--color-accent-text);
+  border-color: var(--color-accent-fill);
 }
 
 /* --- Empty state --- */
@@ -130,7 +166,7 @@
   margin-top: var(--space-6);
   padding: var(--space-7);
   border: 1px dashed var(--color-border-strong);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-card);
   background: var(--color-bg-subtle);
 }
 .placeholderText {

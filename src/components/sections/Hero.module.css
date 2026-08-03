@@ -1,3 +1,4 @@
+/* Full-bleed: the texture runs to every edge of the viewport. */
 .hero {
   position: relative;
   min-height: 100svh;
@@ -20,28 +21,30 @@
 .overlay {
   position: absolute;
   inset: 0;
-  /* Darken left for text legibility; let the blue breathe on the right. */
+  /* Darken left for text legibility; let the blue breathe on the right.
+     Held heavier through the middle so the accent headline clears the
+     bright streak the texture runs diagonally behind it. */
   background:
     linear-gradient(
       100deg,
-      rgb(6 7 9 / 0.92) 0%,
+      rgb(6 7 9 / 0.88) 0%,
       rgb(6 7 9 / 0.72) 34%,
-      rgb(6 7 9 / 0.32) 62%,
-      rgb(6 7 9 / 0.28) 100%
+      rgb(6 7 9 / 0.44) 62%,
+      rgb(6 7 9 / 0.3) 100%
     ),
-    linear-gradient(to top, rgb(6 7 9 / 0.55), transparent 40%);
+    linear-gradient(to top, rgb(6 7 9 / 0.6), transparent 42%);
 }
 
-/* --- Layout: content pinned below nav, bottom row at the base --- */
+/* --- Layout: headline at the top, subline and CTA at the base --- */
 .inner {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: var(--space-6);
+  gap: var(--space-7);
   width: 100%;
-  padding-top: clamp(7rem, 5rem + 6vw, 9.5rem);
-  padding-bottom: clamp(1.5rem, 1rem + 3vw, 3rem);
+  padding-top: clamp(6.5rem, 4.5rem + 6vw, 9rem);
+  padding-bottom: clamp(1.75rem, 1.25rem + 2.5vw, 3rem);
 }
 
 .top {
@@ -49,22 +52,30 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-5);
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 .badgeRow {
   margin-bottom: var(--space-1);
 }
 
-/* --- Oversized headline (sized to fit the fold alongside CTAs + row) --- */
+/* --- Display headline ---
+   The page's single largest statement. Weight 400 at up to 112px; the
+   negative tracking is what keeps it chiselled rather than loose. Sized a
+   step below the raw token so it still shares the fold with the CTAs. */
 .anchor {
-  font-size: clamp(2.25rem, 1.1rem + 4.6vw, 5.25rem);
-  font-weight: var(--weight-bold);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  max-width: 20ch;
+  font-size: clamp(2.25rem, 1.15rem + 4.9vw, 5.75rem);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-display);
+  line-height: 0.98;
+  /* Runs the full content column; the container padding is the only inset. */
+  max-width: none;
   overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+/* Each line masks in on its own beat, so the statement assembles. */
+.line {
+  display: block;
+  overflow: hidden;
 }
 /* Second sentence of the Anchor, tinted with the brand accent so it lands
    as its own beat without any dash device. */
@@ -79,36 +90,6 @@
   align-items: center;
   gap: var(--space-5);
   margin-top: var(--space-4);
-}
-
-.primaryCta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: 0.5rem 0.5rem 0.5rem 1.75rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-cta-bg);
-  color: var(--color-cta-fg);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  transition:
-    background-color var(--dur-fast) var(--ease-standard),
-    transform var(--dur-fast) var(--ease-standard);
-}
-.primaryCta:hover {
-  background: var(--color-cta-bg-hover);
-  transform: translateY(-2px);
-}
-.ctaBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  background: var(--color-bg-inverse);
-  color: var(--white);
-  flex: none;
 }
 
 .secondaryCta {
@@ -126,12 +107,19 @@
   border-color: var(--color-text-inverse);
 }
 
-/* --- Bottom row --- */
+/* --- Base: recognition, a rule, then the subline and CTA --- */
+.base {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* --- Bottom row: subline left, CTA right, both on the baseline --- */
 .bottom {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-6);
-  padding-top: var(--space-6);
+  padding-top: var(--space-5);
   border-top: 1px solid var(--color-border-inverse);
 }
 @media (min-width: 52rem) {
@@ -142,67 +130,55 @@
   }
 }
 
-.clarifier {
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  color: color-mix(in srgb, var(--color-text-inverse) 90%, transparent);
-  max-width: 42ch;
+.ctaSlot {
+  display: flex;
+  justify-content: flex-start;
+}
+@media (min-width: 52rem) {
+  .ctaSlot {
+    justify-content: flex-end;
+  }
 }
 
+.clarifier {
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  color: color-mix(in srgb, var(--color-text-inverse) 92%, transparent);
+  max-width: 48ch;
+}
+
+/* Sits above the rule, reading left to right along the base. */
 .trust {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-3);
 }
 @media (min-width: 52rem) {
   .trust {
-    align-items: flex-end;
-    text-align: right;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-6);
   }
 }
 .trustLead {
-  font-size: var(--text-base);
-  color: var(--color-text-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-inverse-muted);
 }
 .marks {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-5);
 }
+/* Recognition marks read as instrument labels, not headings. */
 .mark {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-extrabold);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
   letter-spacing: var(--tracking-wide);
   color: color-mix(in srgb, var(--color-text-inverse) 82%, transparent);
   text-decoration: none;
   cursor: help;
-}
-
-/* --- Scroll cue --- */
-.scrollCue {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-text-inverse-muted);
-  transition: color var(--dur-fast) var(--ease-standard);
-}
-.scrollCue:hover {
-  color: var(--color-text-inverse);
-}
-.scrollArrow {
-  display: inline-flex;
-  animation: bob 1.8s var(--ease-inout) infinite;
-}
-@keyframes bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(3px);
-  }
 }

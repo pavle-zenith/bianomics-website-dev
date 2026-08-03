@@ -1,22 +1,39 @@
+import Image from 'next/image'
 import { comparison, brand } from '@/content/site'
 import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
+import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './WhyDifferent.module.css'
 
 export function WhyDifferent() {
   return (
     <section id="why-different" className="section" aria-labelledby="why-heading">
       <div className="container">
+        {/* Title left, CTA right, both above the comparison. */}
         <Reveal className={styles.head}>
-          <div className={styles.badgeRow}>
-            <AntiAgencyBadge />
+          <div className={styles.headMain}>
+            <div className={styles.badgeRow}>
+              <AntiAgencyBadge label={brand.lockupComparison} />
+            </div>
+            <h2 id="why-heading" className={styles.heading}>
+              One senior team runs the whole picture, and stays as long as you
+              want us in it.
+            </h2>
           </div>
-          <h2 id="why-heading" className={styles.heading}>
-            Most firms do one piece and hand it off. We do the whole picture and
-            stay until it holds.
-          </h2>
+
+          <div className={styles.headCta}>
+            <Button
+              href={anchors.snapshot}
+              variant="primary"
+              event="cta_primary_click"
+              location="why-different"
+              arrow
+            >
+              Book a Snapshot
+            </Button>
+          </div>
         </Reveal>
 
         <Reveal delay={0.1}>
@@ -42,8 +59,10 @@ export function WhyDifferent() {
             {/* Bianomics panel — the elevated, winning side */}
             <div className={`${styles.panel} ${styles.panelUs}`}>
               <p className={styles.panelLabel}>
-                <span className={styles.panelDot} aria-hidden="true" />
-                {brand.name}
+                {/* The wordmark stands in for the name. The asset is
+                    white-on-transparent, so it is inverted for this light
+                    panel, the same way the nav handles its light state. */}
+                <Image src={logo} alt={brand.name} className={styles.panelLogo} />
               </p>
               <ul className={styles.rows}>
                 {comparison.map((row) => (
@@ -59,19 +78,6 @@ export function WhyDifferent() {
                 ))}
               </ul>
             </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.16}>
-          <div className={styles.cta}>
-            <Button
-              href={anchors.snapshot}
-              variant="primary"
-              event="cta_primary_click"
-              location="why-different"
-            >
-              Book a Snapshot
-            </Button>
           </div>
         </Reveal>
       </div>

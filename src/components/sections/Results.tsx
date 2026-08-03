@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import Image, { type StaticImageData } from 'next/image'
-import type { ResultsContent } from '@/content/types'
+import type { CaseStudy, ResultsContent } from '@/content/types'
+import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './Results.module.css'
 
@@ -15,8 +16,10 @@ const textures: Record<string, StaticImageData> = {
 }
 
 /**
- * Results — a 2x2 grid of case studies. Each card is a single image with the
- * services, title, and intro laid over it under a bottom-up gradient.
+ * Results — an editorial 2x2 grid. Every card starts on the same line; the
+ * only variation is the frame, which alternates square and landscape so the
+ * grid reads as a spread rather than four identical tiles. Services ride
+ * inside the image on glass, over a gradient that keeps them legible.
  */
 export function Results({ results }: { results: ResultsContent }) {
   const { caseStudies } = results
@@ -24,7 +27,7 @@ export function Results({ results }: { results: ResultsContent }) {
   return (
     <section id="results" className="section" aria-labelledby="results-heading">
       <div className="container">
-        <Reveal>
+        <Reveal variant="mask">
           <h2 id="results-heading" className={styles.heading}>
             Featured projects
           </h2>
@@ -41,53 +44,69 @@ export function Results({ results }: { results: ResultsContent }) {
             </div>
           </Reveal>
         ) : (
-          <ul className={styles.grid}>
+          <div className={styles.grid}>
             {caseStudies.map((study, i) => (
-              <Reveal
-                as="li"
+              <Card
                 key={study.id}
-                delay={i * 0.06}
-                className={styles.card}
-              >
-                <article
-                  className={styles.cardInner}
-                  style={
-                    {
-                      ['--case-fill' as string]: `var(--lab-${study.color}-fill)`,
-                    } as CSSProperties
-                  }
-                >
-                  <div className={styles.cardFill}>
-                    <Image
-                      src={textures[study.texture] ?? case1}
-                      alt=""
-                      fill
-                      sizes="(min-width: 60rem) 50vw, 100vw"
-                      className={styles.mediaImage}
-                    />
-                  </div>
-                  <div className={styles.scrim} aria-hidden="true" />
-
-                  {/* Services, pinned top-left. */}
-                  <ul className={styles.servicePills} aria-label="Services provided">
-                    {study.services.slice(0, 3).map((s) => (
-                      <li key={s} className={styles.servicePill}>
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Title and intro, at the foot of the image. */}
-                  <div className={styles.caption}>
-                    <h3 className={styles.title}>{study.client}</h3>
-                    <p className={styles.intro}>{study.intro}</p>
-                  </div>
-                </article>
-              </Reveal>
+                study={study}
+                // Square on the diagonal, landscape on the counter-diagonal.
+                square={i % 3 === 0}
+                delay={(i % 2) * 0.06}
+              />
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </section>
+  )
+}
+
+function Card({
+  study,
+  square,
+  delay,
+}: {
+  study: CaseStudy
+  square: boolean
+  delay: number
+}) {
+  return (
+    <Reveal delay={delay} className={styles.card}>
+      <article
+        // The coded accent for this engagement, used on the category and dots.
+        // Cast because CSS custom properties are not in the CSSProperties type.
+        style={{ ['--case-fill' as string]: `var(--lab-${study.color}-fill)` } as CSSProperties}
+      >
+        <div className={`${styles.media} ${square ? styles.mediaSquare : ''}`}>
+          <Image
+            src={textures[study.texture] ?? case1}
+            alt=""
+            fill
+            sizes="(min-width: 60rem) 46vw, 100vw"
+            className={styles.image}
+          />
+          <div className={styles.scrim} aria-hidden="true" />
+
+          {/* Three at most — a fourth crowds the frame and wraps to a second row. */}
+          <ul className={styles.services} aria-label="Services provided">
+            {study.services.slice(0, 3).map((s) => (
+              <li key={s} className={styles.service}>
+                {s}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className={styles.category}>{study.category}</p>
+        <h3 className={styles.title}>{study.title}</h3>
+        <p className={styles.summary}>{study.summary}</p>
+        <p className={styles.intro}>{study.intro}</p>
+
+        <a href={anchors.snapshot} className={styles.link}>
+          View case study
+          <span aria-hidden="true">→</span>
+        </a>
+      </article>
+    </Reveal>
   )
 }

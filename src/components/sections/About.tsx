@@ -1,108 +1,152 @@
 import Image from 'next/image'
 import { about } from '@/content/site'
+import { getResults } from '@/content'
 import { anchors } from '@/lib/routes'
+import type { AboutStat, Testimonial } from '@/content/types'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
-import { AboutCta } from './AboutCta'
-import teamImg from '../../../public/about/team.png'
-import figureImg from '../../../public/about/figure.png'
+import ctaBg from '../../../public/about/team.png'
 import styles from './About.module.css'
 
 /**
- * About Us intro: a small eyebrow, a large right-weighted intro paragraph,
- * then three feature cards (accent CTA card, a stat over team imagery, and a
- * stat over an abstract figure). Assets live in public/about/.
+ * About — the statement, the supporting line, then the evidence row:
+ * a bare testimonial rail on the left and the two headline numbers as cards,
+ * each with its own numeral ghosted in behind and clipped by the card edge.
  */
 export function About() {
+  // Testimonials live in the results content. Empty is the expected state
+  // until approved quotes land, and the rail simply drops out when it is.
+  const [testimonial] = getResults().testimonials
+
   return (
     <section id="about" className={`${styles.about} section`} aria-labelledby="about-heading">
       <div className="container">
-        <Reveal className={styles.intro}>
-          <div className={styles.introRow}>
+        <div className={styles.intro}>
+          <Reveal variant="mask">
             <h2 id="about-heading" className={styles.introText}>
-              {about.intro}
+              {about.introStatement}
             </h2>
-            <div className={styles.introCta}>
+          </Reveal>
+
+          {/* Full-width band: the photograph is carried at low opacity so the
+              copy stays the subject and the type keeps its contrast. */}
+          <Reveal delay={0.12} className={styles.band}>
+            <div className={styles.bandBg} aria-hidden="true">
+              <Image
+                src={ctaBg}
+                alt=""
+                fill
+                sizes="100vw"
+                className={styles.bandImg}
+                placeholder="blur"
+              />
+            </div>
+            <div className={styles.bandScrim} aria-hidden="true" />
+
+            <div className={styles.bandInner}>
+              <div className={styles.introSubText}>
+                <p className={styles.introLabel}>{about.introLabel}</p>
+                <p className={styles.introBody}>{about.introBody}</p>
+                <p className={styles.introClose}>{about.introClose}</p>
+              </div>
+
               <Button
                 href={anchors.snapshot}
                 variant="primary"
                 event="cta_primary_click"
                 location="snapshot"
+                arrow
               >
                 {about.introCta}
               </Button>
             </div>
-          </div>
-        </Reveal>
-
-        <div className={styles.grid}>
-          {/* Card 1 — accent CTA card */}
-          <Reveal className={styles.ctaCard}>
-            <AboutCta />
           </Reveal>
+        </div>
 
-          {/* Card 2 — team imagery with a stat overlay */}
-          <Reveal delay={0.08} className={styles.mediaCard}>
-            {/* The image fills this wrapper, not the Reveal: framer-motion's
-                inline transform would otherwise become the containing block. */}
-            <div className={styles.cardFill}>
-              <Image
-                src={teamImg}
-                alt={about.media.imageAlt}
-                fill
-                sizes="(min-width: 60rem) 33vw, 100vw"
-                className={styles.mediaImage}
-              />
-            </div>
-            <div className={styles.mediaScrim} aria-hidden="true" />
-            <div className={styles.stat}>
-              <p className={styles.statValue}>
-                {about.media.stat}
-                <span className={styles.statSuffix}>{about.media.statSuffix}</span>
-              </p>
-              <p className={styles.statLabel}>{about.media.label}</p>
-            </div>
-          </Reveal>
+        <div className={`${styles.evidence} ${testimonial ? '' : styles.evidenceNoRail}`}>
+          {testimonial ? (
+            <Reveal className={`${styles.card} ${styles.quoteCard}`}>
+              <Quote testimonial={testimonial} />
+            </Reveal>
+          ) : null}
 
-          {/* Card 3 — abstract figure with a stat overlay */}
-          <Reveal delay={0.16} className={styles.figureCard}>
-            <div className={styles.cardFill}>
-              <Image
-                src={figureImg}
-                alt={about.figure.imageAlt}
-                fill
-                sizes="(min-width: 60rem) 33vw, 100vw"
-                className={styles.figureImage}
-              />
-            </div>
-            <div className={styles.figureStat}>
-              <p className={styles.figureValue}>{about.figure.stat}</p>
-              <p className={styles.figureLabel}>{about.figure.label}</p>
-            </div>
-            <a
-              href={anchors.whatWeDo}
-              className={styles.figureArrow}
-              aria-label="See what we do"
+          {about.stats.map((stat, i) => (
+            <Reveal
+              key={stat.value}
+              delay={0.08 + i * 0.08}
+              className={`${styles.card} ${styles.statCard}`}
             >
-              <ArrowRight />
-            </a>
-          </Reveal>
+              <StatCard stat={stat} />
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
   )
 }
 
-function ArrowRight() {
+function StatCard({ stat }: { stat: AboutStat }) {
   return (
-    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
-      <path
-        d="M8 20h24M22 10l10 10-10 10"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <>
+      {/* Decorative: the same numeral, oversized and clipped by the card. */}
+      <span className={styles.ghost} aria-hidden="true">
+        {stat.value}
+      </span>
+
+      <Mark className={styles.markTop} />
+      <Mark className={styles.markBottom} />
+
+      <p className={styles.statValue}>
+        {stat.value}
+        {stat.suffix ? <span className={styles.statSuffix}>{stat.suffix}</span> : null}
+      </p>
+      <p className={styles.statLabel}>{stat.label}</p>
+    </>
+  )
+}
+
+function Quote({ testimonial }: { testimonial: Testimonial }) {
+  return (
+    <figure className={styles.quoteFigure}>
+      <Mark className={styles.markTop} />
+      <Mark className={styles.markBottom} />
+
+      {testimonial.rating ? (
+        <p className={styles.rating}>
+          <span className={styles.stars} aria-hidden="true">
+            ★★★★★
+          </span>
+          <span className={styles.ratingValue}>{testimonial.rating}</span>
+          <span className={styles.ratingOutOf}>/ 5</span>
+        </p>
+      ) : null}
+
+      <blockquote className={styles.quote}>{testimonial.quote}</blockquote>
+
+      <figcaption className={styles.attribution}>
+        <span className={styles.attributionName}>{testimonial.attribution}</span>
+        {testimonial.role || testimonial.org ? (
+          <span className={styles.attributionRole}>
+            {[testimonial.role, testimonial.org].filter(Boolean).join(', ')}
+          </span>
+        ) : null}
+      </figcaption>
+    </figure>
+  )
+}
+
+/** The hairline corner tick from the reference. Decorative only. */
+function Mark({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 10 10"
+      width="10"
+      height="10"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M5 0v10M0 5h10" stroke="currentColor" strokeWidth="1" />
     </svg>
   )
 }

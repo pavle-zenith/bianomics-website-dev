@@ -21,6 +21,8 @@ interface ButtonProps {
   disabled?: boolean
   className?: string
   fullWidth?: boolean
+  /** Renders the accent arrow square beside the button. */
+  arrow?: boolean
 }
 
 /**
@@ -38,15 +40,35 @@ export function Button({
   disabled,
   className,
   fullWidth,
+  arrow,
 }: ButtonProps) {
   const classes = [
     styles.button,
     styles[variant],
+    arrow ? styles.hasArrow : '',
     fullWidth ? styles.fullWidth : '',
     className ?? '',
   ]
     .filter(Boolean)
     .join(' ')
+
+  const content = (
+    <>
+      {arrow ? <span>{children}</span> : children}
+      {arrow ? (
+        <span className={styles.arrow} aria-hidden="true">
+          {/* Two glyphs: the resting one flies out along its own diagonal
+              while its twin flies in from the opposite corner. */}
+          <span className={`${styles.arrowGlyph} ${styles.arrowOut}`}>
+            <ArrowUpRight />
+          </span>
+          <span className={`${styles.arrowGlyph} ${styles.arrowIn}`}>
+            <ArrowUpRight />
+          </span>
+        </span>
+      ) : null}
+    </>
+  )
 
   const handleClick = () => {
     if (event && location) {
@@ -58,14 +80,28 @@ export function Button({
   if (href) {
     return (
       <a href={href} className={classes} onClick={handleClick} aria-disabled={disabled}>
-        {children}
+        {content}
       </a>
     )
   }
 
   return (
     <button type={type} className={classes} onClick={handleClick} disabled={disabled}>
-      {children}
+      {content}
     </button>
+  )
+}
+
+function ArrowUpRight() {
+  return (
+    <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true">
+      <path
+        d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }

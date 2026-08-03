@@ -2,6 +2,7 @@
 
 import { anchors } from '@/lib/routes'
 import { track } from '@/lib/analytics'
+import { Button } from '@/components/ui/Button'
 import styles from './Hero.module.css'
 
 function ArrowUpRight() {
@@ -18,20 +19,10 @@ function ArrowUpRight() {
   )
 }
 
-/** Hero CTAs (client) — anchors that fire PostHog events on click. */
+/** Hero CTAs — the shared Button primitive plus a plain text secondary. */
 export function HeroCtas() {
   return (
     <div className={styles.ctas}>
-      <a
-        href={anchors.snapshot}
-        className={styles.primaryCta}
-        onClick={() => track('cta_primary_click', { location: 'hero' })}
-      >
-        <span>Book a Snapshot</span>
-        <span className={styles.ctaBadge} aria-hidden="true">
-          <ArrowUpRight />
-        </span>
-      </a>
       <a
         href={anchors.whatWeDo}
         className={styles.secondaryCta}
@@ -40,6 +31,15 @@ export function HeroCtas() {
         See what we do
         <ArrowUpRight />
       </a>
+      <Button
+        href={anchors.snapshot}
+        variant="primary"
+        event="cta_primary_click"
+        location="hero"
+        arrow
+      >
+        Book a Snapshot
+      </Button>
     </div>
   )
 }

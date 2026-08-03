@@ -4,24 +4,25 @@
   grid-template-columns: 1fr;
   gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   padding: clamp(1rem, 0.7rem + 1vw, 1.5rem);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-card);
   background: var(--color-bg-inverse);
   color: var(--color-text-inverse);
 }
 @media (min-width: 52rem) {
   .card {
-    grid-template-columns: minmax(13rem, 18rem) 1fr;
+    grid-template-columns: minmax(16rem, 24rem) 1fr;
     align-items: stretch;
   }
 }
 
 /* --- Portrait: a tall rectangle, not a square --- */
 .portrait {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 3 / 4;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-card);
   background: linear-gradient(160deg, var(--ink-700), var(--ink-800));
   overflow: hidden;
 }
@@ -52,12 +53,13 @@
 .bodyFoot {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-6);
 }
 
 .heading {
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
   font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
   color: var(--color-text-inverse);
 }
 
@@ -66,27 +68,48 @@
   font-weight: var(--weight-regular);
   line-height: var(--leading-snug);
   color: var(--color-text-inverse);
-  max-width: 46ch;
+  max-width: 58ch;
   text-wrap: pretty;
 }
 
-/* Longer first-person note under the pull-quote. */
+/* Longer first-person note under the pull-quote. Given a wide measure and
+   real space between paragraphs so it reads as prose, not a wall. */
 .note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
   line-height: var(--leading-relaxed);
   color: var(--color-text-inverse-muted);
-  max-width: 54ch;
+  max-width: 68ch;
   text-wrap: pretty;
 }
 
+/* --- Attribution: a glass chip at the foot of the portrait --- */
 .attribution {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  /* left + right bound the chip; fit-content shrinks it to the name. */
+  width: fit-content;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-control);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(14px);
 }
 .name {
+  font-size: var(--text-sm);
   font-weight: var(--weight-bold);
-  color: var(--color-text-inverse);
+  color: var(--white);
 }
 .role {
-  color: var(--color-text-inverse-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.72);
 }

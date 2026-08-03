@@ -75,8 +75,8 @@
 .formCard {
   padding: var(--space-6);
   background: var(--color-surface);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
 }
 
 @media (min-width: 40rem) {

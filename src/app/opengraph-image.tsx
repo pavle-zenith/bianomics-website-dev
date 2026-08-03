@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { brand } from '@/content/site'
 
-export const alt = `${brand.name} — ${brand.anchor}`
+export const alt = `${brand.name}: ${brand.anchor}`
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -60,7 +60,7 @@ export default function OpengraphImage() {
             color: '#b8bcc4',
           }}
         >
-          <span>THE ANTI-AGENCY</span>
+          <span>{brand.lockupHero}</span>
         </div>
       </div>
     ),

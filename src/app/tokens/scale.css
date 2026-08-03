@@ -8,6 +8,8 @@
   /* --- Font families (attached via next/font on <html>) --- */
   --font-body: var(--font-causten), system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-quote: var(--font-fitzgerald), Georgia, 'Times New Roman', serif;
+  /* Technical voice: counters, margin labels, tags, metadata. Never headlines. */
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* --- Fluid type scale (min .. max across ~360 -> 1440px) --- */
   --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
@@ -26,21 +28,27 @@
   --leading-normal: 1.5;
   --leading-relaxed: 1.65;
 
-  /* --- Letter spacing --- */
-  --tracking-tight: -0.02em;
+  /* --- Letter spacing ---
+     Tracking tightens as type grows. This is what carries the hierarchy now
+     that every heading is a single weight: at 400, large type needs the
+     negative tracking to read as chiselled rather than loose. */
+  --tracking-display: -0.04em; /* 84-112px */
+  --tracking-tight: -0.03em; /* 44-60px  */
+  --tracking-snug: -0.015em; /* 22-30px  */
   --tracking-normal: 0;
   --tracking-wide: 0.04em;
-  --tracking-wider: 0.12em; /* eyebrows / lockups */
+  --tracking-wider: 0.12em; /* mono labels / counters */
 
   /* --- Font weights ---
-     Mapped one notch lighter than their names for a more editorial feel:
-     "bold" renders SemiBold (600), "extrabold" renders Bold (700). Retune
-     the whole site's heaviness here. Causten ships 400/500/600/700/800. */
+     Display and headings run at a SINGLE weight (400). Hierarchy is carved
+     by size and tracking, never by weight — that is the defining rule of
+     this system, and bolding a heading breaks it. The heavier steps remain
+     for small UI: mono labels, buttons, and inline emphasis in body copy. */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-bold: 600;
   --weight-extrabold: 700;
-  --weight-heading: 600;
+  --weight-heading: 400;
 
   /* --- Spacing scale --- */
   --space-1: 0.25rem;
@@ -62,24 +70,28 @@
   --container-narrow: 48rem; /* prose / centered blocks */
   --container-pad: clamp(1.25rem, 0.5rem + 3vw, 3rem);
 
-  /* --- Radii (tight, editorial; large cards sit near-square) --- */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-pill: 999px;
+  /* --- Radii ---
+     Sharp editorial: content surfaces are square, controls are fully round.
+     That contrast is the system's shape language — editorial surfaces stay
+     flat and sharp; anything you can click is a pill. */
+  --radius-card: 0; /* cards, images, panels, media */
+  --radius-control: 0.5rem; /* buttons, nav group, controls — blocky, not pill */
+  --radius-pill: 999px; /* tags and chips only */
+  --radius-sm: 2px; /* focus rings and hairline-scale details only */
+  --radius-field: 0.375rem; /* form inputs */
 
-  /* --- Elevation --- */
-  --shadow-sm: 0 1px 2px rgb(13 14 17 / 0.06), 0 1px 3px rgb(13 14 17 / 0.08);
-  --shadow-md: 0 4px 12px rgb(13 14 17 / 0.08), 0 2px 4px rgb(13 14 17 / 0.06);
-  --shadow-lg: 0 18px 48px rgb(13 14 17 / 0.14);
+  /* --- Elevation ---
+     There is none. Depth comes from canvas contrast and 1px hairlines.
+     Shadow tokens were removed deliberately: do not reintroduce them. */
 
   /* --- Motion --- */
   --dur-fast: 160ms;
   --dur-base: 280ms;
   --dur-reveal: 640ms;
+  --dur-display: 900ms; /* mask reveal on display type */
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1); /* restrained ease-out */
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1); /* long, settled reveals */
 
   /* --- Z-index --- */
   --z-nav: 100;

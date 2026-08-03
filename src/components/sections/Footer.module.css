@@ -1,11 +1,46 @@
 .footer {
   position: relative;
-  background: var(--color-bg-inverse);
+  isolation: isolate;
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
   color: var(--color-text-inverse);
-  padding-block: var(--space-9) var(--space-6);
+  padding-top: var(--space-9);
+  background: var(--ink-950);
 }
 
-/* --- Top: headline left, link columns right --- */
+/* The legal line and wordmark hold the base; the gap absorbs the extra
+   height so the top block stays put rather than drifting to the middle. */
+.footer > .legal {
+  margin-top: auto;
+}
+
+/* --- Texture + scrim --- */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.bgImage {
+  object-fit: cover;
+  object-position: center;
+}
+/* Carries the type over the brightest part of the texture. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      100deg,
+      rgb(6 7 9 / 0.9) 0%,
+      rgb(6 7 9 / 0.7) 38%,
+      rgb(6 7 9 / 0.45) 100%
+    ),
+    linear-gradient(to bottom, rgb(6 7 9 / 0.55), rgb(6 7 9 / 0.2) 40%);
+}
+
+/* --- Top: statement left, columns right --- */
 .inner {
   display: grid;
   grid-template-columns: 1fr;
@@ -14,7 +49,7 @@
 @media (min-width: 60rem) {
   .inner {
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-7);
+    gap: var(--space-9);
   }
 }
 
@@ -25,95 +60,102 @@
   gap: var(--space-6);
 }
 
-/* Two-tone headline: muted lead-in, bright payoff. */
 .headline {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   font-weight: var(--weight-heading);
-  line-height: var(--leading-tight);
+  line-height: 1.1;
   letter-spacing: var(--tracking-tight);
-  max-width: 16ch;
+  color: var(--white);
+  max-width: 18ch;
   text-wrap: balance;
 }
 
-.headlineLead {
-  color: var(--color-text-inverse-muted);
-}
-
-.headlineRest {
-  color: var(--color-text-inverse);
-}
-
-.cta {
-  flex: none;
-}
-
-/* --- Link columns: 2x2 on desktop --- */
+/* --- Link columns --- */
 .cols {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-7) var(--space-5);
+  gap: var(--space-6);
+}
+@media (min-width: 48rem) {
+  .cols {
+    grid-template-columns: 1fr 1fr auto;
+    gap: var(--space-7);
+  }
 }
 
+/* Each column opens with a hairline, as in the reference. */
 .col {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
+  gap: var(--space-4);
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--color-border-inverse);
 }
 
 .colHead {
-  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
   color: var(--color-text-inverse-muted);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
 }
 
-/* Social sits on one line, comma-separated, as in the reference. */
-.inlineList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35em;
-}
-.inlineList li:not(:last-child)::after {
-  content: ',';
-  color: var(--color-text-inverse);
-}
-
-.link,
-.navLink {
-  font-weight: var(--weight-bold);
+.link {
+  font-size: var(--text-base);
   color: var(--color-text-inverse);
   transition: color var(--dur-fast) var(--ease-standard);
 }
-.link:hover,
-.navLink:hover {
+.link:hover {
   color: var(--color-accent-fill);
 }
 
-/* Company / Utility lists are set larger, per the reference. */
-.navLink {
-  font-size: var(--text-lg);
+/* Back to top, pinned to the end of the column row. */
+.toTop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--color-border-inverse);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-inverse);
+  align-self: flex-start;
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+}
+.toTop:hover {
+  background: rgb(255 255 255 / 0.08);
+  border-color: var(--color-text-inverse);
 }
 
-/* --- Legal line above the wordmark --- */
+/* --- Legal line, above the wordmark --- */
 .legal {
-  margin-top: var(--space-8);
-  font-size: var(--text-sm);
+  margin-top: var(--space-9);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   color: var(--color-text-inverse-muted);
 }
 
-/* --- Oversized wordmark, fitted to the content column ---
-   The SVG spans the container's inner width, so the mark's left and right
-   edges line up with the headline and link columns above it. */
+/* --- Oversized wordmark across the foot ---
+   Bounded by the container, so its left and right edges line up with the
+   statement and the link columns above it rather than the viewport. */
 .wordmarkWrap {
-  margin-top: var(--space-6);
+  margin-top: var(--space-4);
+  /* Crop the lockup's own baseline padding so it sits on the page edge. */
+  margin-bottom: -1.5%;
 }
 
-/* The lockup spans the full content width; height follows its 5.75:1 ratio. */
 .wordmark {
   display: block;
   width: 100%;

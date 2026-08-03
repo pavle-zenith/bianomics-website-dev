@@ -3,9 +3,9 @@ import { Reveal } from '@/components/ui/Reveal'
 import styles from './Founder.module.css'
 
 /**
- * Founder card: portrait on the left, a word from the founder on the right,
- * on a single dark panel. The portrait is a labeled placeholder until the
- * real photograph lands (plan open item #4).
+ * Founder card: portrait on the left with the attribution on glass at its
+ * foot, a word from the founder on the right. The portrait is a labeled
+ * placeholder until the real photograph lands (plan open item #4).
  */
 export function Founder() {
   return (
@@ -13,14 +13,16 @@ export function Founder() {
       <div className="container">
         <Reveal className={styles.card}>
           {/* Portrait slot — swap for <Image> when the photo lands. */}
-          <div
-            className={styles.portrait}
-            role="img"
-            aria-label={`${founder.name}, ${founder.role}`}
-          >
+          <div className={styles.portrait}>
             <span className={styles.portraitInitials} aria-hidden="true">
               BC
             </span>
+
+            {/* Attribution rides inside the frame, on glass. */}
+            <div className={styles.attribution}>
+              <p className={styles.name}>{founder.name}</p>
+              <p className={styles.role}>{founder.role}</p>
+            </div>
           </div>
 
           <div className={styles.body}>
@@ -28,17 +30,16 @@ export function Founder() {
               A word from our founder
             </h2>
 
-            {/* Quote and attribution sit at the foot of the panel. */}
+            {/* Quote and note sit at the foot of the panel. */}
             <div className={styles.bodyFoot}>
               <blockquote className={styles.quote}>
                 &ldquo;{founder.promise}&rdquo;
               </blockquote>
 
-              {founder.note ? <p className={styles.note}>{founder.note}</p> : null}
-
-              <div className={styles.attribution}>
-                <p className={styles.name}>{founder.name}</p>
-                <p className={styles.role}>{founder.role}</p>
+              <div className={styles.note}>
+                {founder.note.map((paragraph) => (
+                  <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+                ))}
               </div>
             </div>
           </div>

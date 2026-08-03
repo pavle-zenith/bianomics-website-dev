@@ -40,6 +40,18 @@ export interface Testimonial {
   attribution: string
   role?: string
   org?: string
+  /** Star rating as authored, e.g. "5.0". Omit to hide the stars entirely. */
+  rating?: string
+}
+
+/** A single headline number in the About band. */
+export interface AboutStat {
+  /** The number itself, e.g. "6" or "4 + 1". */
+  value: string
+  /** Unit set small beside the value, e.g. " states". */
+  suffix?: string
+  /** What it measures. */
+  label: string
 }
 
 export interface CaseStudyMetric {
@@ -53,8 +65,12 @@ export interface CaseStudy {
   id: string
   /** Client name (tab label and left-panel wordmark). */
   client: string
+  /** Engagement type, set small above the title. */
+  category: string
   /** Headline for the case study (bottom-left of the left panel). */
   title: string
+  /** One-line summary, set in small caps between the title and the intro. */
+  summary: string
   /** Short intro under the title. */
   intro: string
   /** Background texture image key, resolved to public/results/<texture>.png. */
@@ -79,8 +95,6 @@ export interface NavLink {
   href: string
   /** Hidden in Phase 1; authored now for the Phase-2 route map. */
   phase2Only?: boolean
-  /** Shows a dropdown caret (visual only in Phase 1). */
-  hasDropdown?: boolean
 }
 
 export interface FitSituation {

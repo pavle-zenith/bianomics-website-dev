@@ -10,14 +10,15 @@ import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Nav.module.css'
 
 /**
- * Transparent nav layered over the hero: logo left, centered link cluster
- * (with dropdown carets), a pill CTA on the right. Turns solid + condenses
- * once the user scrolls past the hero. Logo mark is a placeholder star
- * until the official logo files land (plan open item #3).
+ * Floating nav over the page: the logo sits in its own shell on the left, the
+ * links and CTA share one shell on the right. Both shells invert with the
+ * canvas beneath them — light-on-dark over dark sections, dark-on-light over
+ * white ones — so the chrome stays legible the whole way down.
  */
 export function Nav({ links }: { links: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [onDark, setOnDark] = useState(true)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -26,51 +27,73 @@ export function Nav({ links }: { links: NavLink[] }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Watch a 1px band at the nav's own line: whichever region crosses it
+  // decides the tone. Cheaper and steadier than reading pixels on scroll.
+  useEffect(() => {
+    const regions = document.querySelectorAll<HTMLElement>('[data-nav-tone="dark"]')
+    if (!regions.length) return
+
+    let observer: IntersectionObserver | null = null
+    const dark = new Set<Element>()
+
+    const build = () => {
+      observer?.disconnect()
+      const line = 56 // roughly the vertical centre of the floating shells
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) dark.add(e.target)
+            else dark.delete(e.target)
+          }
+          setOnDark(dark.size > 0)
+        },
+        { rootMargin: `-${line}px 0px -${window.innerHeight - line - 1}px 0px` },
+      )
+      regions.forEach((r) => observer!.observe(r))
+    }
+
+    build()
+    window.addEventListener('resize', build)
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('resize', build)
+    }
+  }, [])
+
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+    <header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${
+        onDark ? styles.onDark : styles.onLight
+      }`}
+    >
       <div className={`${styles.inner} container`}>
         <a href={anchors.hero} className={styles.logo} aria-label={`${brand.name} home`}>
           <Image src={logo} alt="" priority className={styles.logoImg} />
         </a>
 
-        <nav className={styles.desktopNav} aria-label="Primary">
-          <ul className={styles.links}>
+        <div className={styles.actions}>
+          {/* Links and the CTA sit inside one floating shell. */}
+          <div className={styles.group}>
+            <nav className={styles.desktopNav} aria-label="Primary">
+              <ul className={styles.links}>
             {links.map((link) => (
               <li key={link.href}>
                 <a href={link.href} className={styles.link}>
                   {link.label}
-                  {link.hasDropdown ? (
-                    <svg
-                      className={styles.caret}
-                      viewBox="0 0 12 12"
-                      width="11"
-                      height="11"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M2.5 4.5 6 8l3.5-3.5"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  ) : null}
                 </a>
               </li>
             ))}
-          </ul>
-        </nav>
+              </ul>
+            </nav>
 
-        <div className={styles.actions}>
-          <a
-            href={anchors.snapshot}
-            className={styles.cta}
-            onClick={() => track('cta_primary_click', { location: 'nav' })}
-          >
-            Contact Us
-          </a>
+            <a
+              href={anchors.snapshot}
+              className={styles.cta}
+              onClick={() => track('cta_primary_click', { location: 'nav' })}
+            >
+              Contact Us
+            </a>
+          </div>
           <button
             className={styles.menuToggle}
             aria-expanded={menuOpen}

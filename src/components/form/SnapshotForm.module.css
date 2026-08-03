@@ -22,7 +22,7 @@
   color: var(--color-error);
   background: var(--color-error-bg);
   padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-field);
 }
 
 .confirmation {
@@ -33,7 +33,7 @@
   padding: var(--space-7) var(--space-6);
   background: var(--green-50);
   border: 1.5px solid var(--green-300);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-card);
 }
 
 .confirmation:focus {

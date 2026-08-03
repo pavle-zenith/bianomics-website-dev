@@ -27,7 +27,8 @@
    gap twice the intended size. Halve the shared boundary so the rhythm reads
    as one break. Sections that change canvas (.section-tinted/.section-inverse)
    are excluded — there the full padding gives the color band room to breathe. */
-.section + .section:not(.section-tinted):not(.section-inverse) {
+.section:not(.section-tinted):not(.section-inverse)
+  + .section:not(.section-tinted):not(.section-inverse) {
   padding-top: calc(var(--section-y) / 2);
 }
 .section:not(.section-tinted):not(.section-inverse):has(
@@ -55,13 +56,61 @@
   gap: var(--space-5);
 }
 
-/* Eyebrow / section label */
-.eyebrow {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
+/* ============================================================
+   TYPE ROLES — the hierarchy. Every heading is weight 400; the
+   tier is set by size, and tracking tightens as size grows.
+   Never add weight to differentiate a heading.
+   ============================================================ */
+
+/* Tier 1 — the page's single largest statement (Hero only). */
+.display {
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-heading);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+/* Tier 2 — major section openers (What We Do, How It Works, Results, Closing). */
+.title-lg {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-heading);
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+/* Tier 3 — standard section openers. */
+.title {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  line-height: 1.06;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+/* Technical label / margin annotation. The mono voice — counters, section
+   markers, tags, metadata. Sits in its own column, never stacked on a title. */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--color-text-subtle);
+}
+.section-inverse .label,
+.label-inverse {
+  color: var(--color-text-inverse-muted);
+}
+
+/* Hairline rule. The only divider in the system: 1px, horizontal, solid. */
+.rule {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+.section-inverse .rule {
+  border-color: var(--color-border-inverse);
 }
 
 /* Screen-reader-only content */
@@ -86,7 +135,7 @@
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg-inverse);
   color: var(--color-text-inverse);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-field);
   transition: top var(--dur-fast) var(--ease-standard);
 }
 .skip-link:focus {

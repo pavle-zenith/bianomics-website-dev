@@ -4,7 +4,7 @@
   justify-content: center;
   gap: var(--space-2);
   padding: 0.85em 1.5em;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-control);
   font-weight: var(--weight-bold);
   font-size: var(--text-base);
   line-height: 1;
@@ -33,6 +33,60 @@
 
 .fullWidth {
   width: 100%;
+}
+
+/* --- Arrow variant: the badge sits inset inside the button --- */
+.hasArrow {
+  gap: var(--space-4);
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+}
+
+.arrow {
+  position: relative;
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: calc(var(--radius-control) - 0.125rem);
+  background: var(--color-bg-inverse);
+  color: var(--white);
+  flex: none;
+  /* Clips the glyphs at the badge edge so they read as flying in and out. */
+  overflow: hidden;
+}
+
+.arrowGlyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Slower than a normal hover tick so the flyby actually reads as travel;
+     the editorial ease would land it at 90% before the eye caught it. */
+  transition: transform var(--dur-reveal) var(--ease-standard);
+}
+/* The twin waits off the bottom-left corner. */
+.arrowIn {
+  transform: translate(-130%, 130%);
+}
+.button:hover .arrowOut,
+.button:focus-visible .arrowOut {
+  transform: translate(130%, -130%);
+}
+.button:hover .arrowIn,
+.button:focus-visible .arrowIn {
+  transform: translate(0, 0);
+}
+/* Without motion the swap is pointless, so only one glyph is ever shown. */
+@media (prefers-reduced-motion: reduce) {
+  .arrowIn {
+    display: none;
+  }
+}
+/* On the outline variant the badge would vanish, so it inherits the border. */
+.secondary .arrow {
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
 }
 
 /* Primary — solid CTA */

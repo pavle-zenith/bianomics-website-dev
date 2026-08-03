@@ -3,45 +3,70 @@ import type { NavLink } from '@/content/types'
 import { brand, contact } from '@/content/site'
 import { anchors } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
+import bg from '../../../public/hero/hero-bg.png'
 import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Footer.module.css'
 
 /**
- * Footer: a two-tone headline and CTA on the left, link columns on the
- * right, and the wordmark oversized across the bottom edge.
+ * Footer: a full-bleed texture carrying the closing statement and CTA on the
+ * left, the link columns on the right, and the wordmark oversized across the
+ * bottom edge. The texture is the hero's, so the page ends where it opened.
  */
 export function Footer({ links }: { links: NavLink[] }) {
   const year = 2026
 
   return (
-    <footer className={styles.footer} aria-labelledby="footer-heading">
+    <footer
+      className={styles.footer}
+      aria-labelledby="footer-heading"
+      data-nav-tone="dark"
+    >
       <h2 id="footer-heading" className="visually-hidden">
         Footer
       </h2>
 
+      {/* Texture + scrim, behind everything. */}
+      <div className={styles.bg} aria-hidden="true">
+        <Image src={bg} alt="" fill sizes="100vw" className={styles.bgImage} />
+        <div className={styles.scrim} />
+      </div>
+
       <div className={`${styles.inner} container`}>
-        {/* Left: headline + CTA */}
+        {/* Left: statement + CTA pair */}
         <div className={styles.lead}>
           <p className={styles.headline}>
-            <span className={styles.headlineLead}>{contact.invitationLead}</span>{' '}
-            <span className={styles.headlineRest}>{contact.invitationRest}</span>
+            {contact.invitationLead} {contact.invitationRest}
           </p>
 
           <Button
             href={anchors.snapshot}
+            variant="primary"
             event="cta_secondary_click"
             location="footer"
-            className={styles.cta}
+            arrow
           >
             Book a Snapshot
           </Button>
         </div>
 
-        {/* Right: link columns, two per row */}
+        {/* Right: link columns, each opened by a hairline */}
         <div className={styles.cols}>
+          <nav className={styles.col} aria-label="Footer">
+            <p className={styles.colHead}>Navigate</p>
+            <ul className={styles.list}>
+              {links.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} className={styles.link}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           <div className={styles.col}>
             <p className={styles.colHead}>Connect</p>
-            <ul className={styles.inlineList}>
+            <ul className={styles.list}>
               <li>
                 <a
                   href={contact.linkedinUrl}
@@ -62,58 +87,22 @@ export function Footer({ links }: { links: NavLink[] }) {
                   YouTube
                 </a>
               </li>
-            </ul>
-          </div>
-
-          <div className={styles.col}>
-            <p className={styles.colHead}>Reach us</p>
-            <ul className={styles.list}>
               <li>
                 <a href={contact.emailHref} className={styles.link}>
-                  {contact.email}
+                  Email
                 </a>
               </li>
               <li>
                 <a href={contact.phoneHref} className={styles.link}>
-                  {contact.phone}
+                  Call
                 </a>
               </li>
             </ul>
           </div>
 
-          <nav className={styles.col} aria-label="Footer">
-            <p className={styles.colHead}>Company</p>
-            <ul className={styles.list}>
-              {links.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className={styles.navLink}>
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className={styles.col}>
-            <p className={styles.colHead}>Utility</p>
-            <ul className={styles.list}>
-              <li>
-                <a href="/privacy" className={styles.navLink}>
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="/terms" className={styles.navLink}>
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href={contact.academyUrl} className={styles.navLink} rel="noopener noreferrer" target="_blank">
-                  Workforce Academy
-                </a>
-              </li>
-            </ul>
-          </div>
+          <a href={anchors.hero} className={styles.toTop} aria-label="Back to top">
+            <Arrow up />
+          </a>
         </div>
       </div>
 
@@ -121,8 +110,8 @@ export function Footer({ links }: { links: NavLink[] }) {
         &copy; {year} {brand.name}. All rights reserved.
       </p>
 
-      {/* The brand lockup, set full-width across the foot of the page. The
-          asset is white-on-transparent, so it sits directly on the canvas. */}
+      {/* The brand lockup, spanning the foot of the page. The asset is
+          white-on-transparent, so it sits directly on the texture. */}
       <div className={`${styles.wordmarkWrap} container`}>
         <Image
           src={logo}
@@ -133,5 +122,19 @@ export function Footer({ links }: { links: NavLink[] }) {
         />
       </div>
     </footer>
+  )
+}
+
+function Arrow({ up = false }: { up?: boolean }) {
+  return (
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true">
+      <path
+        d={up ? 'M8 13V3M3.5 7.5 8 3l4.5 4.5' : 'M3 8h10M8.5 3.5 13 8l-4.5 4.5'}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }

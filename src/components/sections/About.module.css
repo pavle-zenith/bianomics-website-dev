@@ -3,252 +3,274 @@
   color: var(--color-text);
 }
 
-/* --- Intro: eyebrow, then a left title with a CTA on the right --- */
+/* --- Intro band: statement full width, supporting line beneath --- */
 .intro {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  margin-bottom: var(--space-7);
-  text-align: left;
+  gap: var(--space-7);
+  margin-bottom: var(--space-8);
 }
 
-.introRow {
+/* Weight 400; tracking does the work the weight used to. Held between the
+   2xl and 3xl steps: full width at 4xl this runs to a wall of type. */
+.introText {
+  font-size: clamp(1.5rem, 1.05rem + 2.1vw, 2.875rem);
+  font-weight: var(--weight-heading);
+  line-height: 1.24;
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-text);
+  text-align: left;
+  text-wrap: pretty;
+}
+
+/* --- The CTA band: one full-width rectangle carrying the photograph --- */
+.band {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--ink-900);
+  isolation: isolate;
+}
+
+.bandBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.bandImg {
+  object-fit: cover;
+  object-position: center 35%;
+}
+/* Carries the photograph well back so the copy reads as the subject. */
+.bandScrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    rgb(6 7 9 / 0.92) 0%,
+    rgb(6 7 9 / 0.86) 45%,
+    rgb(6 7 9 / 0.68) 100%
+  );
+}
+
+/* Taller than the copy needs, so the photograph has room to read and the
+   content settles at the foot of the frame. */
+.bandInner {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-5);
+  justify-content: flex-end;
+  gap: var(--space-6);
+  min-height: 22rem;
+  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
 }
-@media (min-width: 52rem) {
-  .introRow {
+@media (min-width: 60rem) {
+  .bandInner {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-8);
+    min-height: 30rem;
   }
 }
 
-.introCta {
-  flex: none;
-}
-@media (min-width: 52rem) {
-  .introCta {
-    padding-bottom: 0.35rem;
-  }
+.introSubText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-base);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: var(--tracking-wide);
-  color: var(--color-accent-text);
-}
-.eyebrowDot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-accent-fill);
+.introLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent-fill);
 }
 
-.introText {
-  font-size: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
+.introBody {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse-muted);
+  max-width: 52ch;
+}
+
+/* The closing line carries more weight than the paragraph above it. */
+.introClose {
+  font-size: var(--text-lg);
   font-weight: var(--weight-bold);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-  text-wrap: balance;
-  max-width: 34ch;
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-inverse);
+  max-width: 52ch;
 }
 
-/* --- Three-card grid --- */
-.grid {
+/* --- Evidence row: the testimonial card, then the two stat cards --- */
+.evidence {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+/* Stacked, the quote reads as a footnote to the numbers, so it follows them.
+   It only leads once there is a column beside them to lead from. */
+.quoteCard {
+  order: 1;
 }
 @media (min-width: 48rem) {
-  .grid {
+  .evidence {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* Accent card spans both columns on the tablet 2-col layout. */
-  .ctaCard {
+  .quoteCard {
     grid-column: 1 / -1;
   }
 }
 @media (min-width: 60rem) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
+  .evidence {
+    grid-template-columns: 0.85fr 1fr 1fr;
+    gap: var(--space-6);
   }
-  .ctaCard {
+  .quoteCard {
     grid-column: auto;
+    order: 0;
+  }
+  .evidenceNoRail {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Uniform card height / shape. `height: 100%` (not just min-height) so the
-   fill images resolve against the full card box and stretch edge to edge. */
-.ctaCard,
-.mediaCard,
-.figureCard {
+/* One shell for all three cards, so the row reads as a set. */
+.card {
   position: relative;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  height: 100%;
-  min-height: 26rem;
-}
-@media (min-width: 60rem) {
-  .ctaCard,
-  .mediaCard,
-  .figureCard {
-    min-height: 32rem;
-  }
-}
-
-/* Fill layer for card images. Sits behind the overlay content and gives
-   next/image's `fill` a reliable containing block of its own. */
-.cardFill {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-
-/* --- Card 1: accent CTA --- */
-.ctaCard {
-  background: var(--color-accent-fill);
-  color: var(--ink-950);
-}
-.ctaInner {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* The ghost numeral bleeds past the top and right edges; this clips it. */
+  overflow: hidden;
+  min-height: 20rem;
   padding: var(--space-6);
-  gap: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-subtle);
 }
-@media (min-width: 40rem) {
-  .ctaInner {
-    padding: var(--space-7);
+@media (min-width: 60rem) {
+  .card {
+    min-height: 24rem;
   }
 }
-.ctaTitle {
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-tight);
-  max-width: 18ch;
+
+/* --- The testimonial: rating at the head, attribution at the foot --- */
+.quoteFigure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  height: 100%;
 }
-.ctaBigArrow {
-  display: inline-flex;
-  color: color-mix(in srgb, var(--ink-950) 55%, transparent);
-  margin-bottom: auto;
-}
-.ctaPill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  align-self: flex-start;
-  padding: 0.75rem 0.75rem 0.75rem 1.5rem;
-  border-radius: var(--radius-pill);
-  background: var(--ink-950);
-  color: var(--white);
-  font-weight: var(--weight-bold);
-  transition: transform var(--dur-fast) var(--ease-standard);
-}
-.ctaPill:hover {
-  transform: translateY(-2px);
-}
-.ctaPillBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background: var(--color-accent-fill);
-  color: var(--ink-950);
+.quoteCard .attribution {
+  margin-top: auto;
+  padding-top: var(--space-5);
 }
 
-/* --- Card 2: media + stat --- */
-.mediaCard {
-  background: var(--ink-800);
+.rating {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
 }
-.mediaImage {
-  object-fit: cover;
-  object-position: center;
+.stars {
+  color: var(--color-accent-fill);
+  letter-spacing: 0.1em;
 }
-.mediaScrim {
+.ratingValue {
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+.ratingOutOf {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+}
+
+.quote {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.attributionName {
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+.attributionRole {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+/* The same numeral, oversized and faded, running off the top of the card.
+   Decorative texture rather than a step in the type hierarchy, which is why
+   it carries a bespoke size instead of a scale token. */
+.ghost {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to top, rgb(6 7 9 / 0.78), rgb(6 7 9 / 0.05) 55%);
-}
-.stat {
-  position: absolute;
-  left: var(--space-6);
-  right: var(--space-6);
-  bottom: var(--space-6);
-  z-index: 2;
-  color: var(--white);
-}
-.statValue {
-  font-size: clamp(2.5rem, 1.8rem + 2.6vw, 3.75rem);
-  font-weight: var(--weight-extrabold);
+  top: -0.34em;
+  left: var(--space-5);
+  z-index: 0;
+  font-size: clamp(7rem, 4rem + 12vw, 13rem);
+  font-weight: var(--weight-heading);
   line-height: 1;
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--ink-200);
+  opacity: 0.7;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Hairline corner ticks, from the reference. */
+.markTop,
+.markBottom {
+  position: absolute;
+  z-index: 2;
+  color: var(--color-border-strong);
+}
+.markTop {
+  top: var(--space-4);
+  left: var(--space-4);
+}
+.markBottom {
+  right: var(--space-4);
+  bottom: var(--space-4);
+}
+
+.statValue {
+  position: relative;
+  z-index: 1;
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-heading);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
 }
 .statSuffix {
-  font-size: 0.5em;
+  font-size: 0.32em;
   font-weight: var(--weight-bold);
-  margin-left: 0.15em;
-}
-.statLabel {
-  margin-top: var(--space-2);
-  font-size: var(--text-base);
-  color: color-mix(in srgb, var(--white) 88%, transparent);
-  max-width: 24ch;
+  letter-spacing: var(--tracking-normal);
+  margin-left: 0.2em;
 }
 
-/* --- Card 3: figure + stat + arrow (white text over the dark family texture) --- */
-.figureCard {
-  background: var(--color-bg-inverse);
-}
-.figureImage {
-  object-fit: cover;
-  object-position: center;
-}
-.figureStat {
-  position: absolute;
-  left: var(--space-6);
-  top: var(--space-6);
-  right: var(--space-6);
-  z-index: 2;
-  color: var(--white);
-}
-.figureValue {
-  font-size: clamp(2.5rem, 1.8rem + 2.6vw, 3.75rem);
-  font-weight: var(--weight-extrabold);
-  line-height: 1;
-  letter-spacing: var(--tracking-tight);
-}
-.figureLabel {
-  margin-top: var(--space-2);
+/* Pushed to the foot so both cards' labels share a baseline. */
+.statLabel {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: var(--space-6);
   font-size: var(--text-base);
-  font-weight: var(--weight-bold);
-  color: color-mix(in srgb, var(--white) 82%, transparent);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
   max-width: 22ch;
-}
-.figureArrow {
-  position: absolute;
-  right: var(--space-6);
-  bottom: var(--space-6);
-  z-index: 2;
-  color: color-mix(in srgb, var(--white) 70%, transparent);
-  transition:
-    color var(--dur-fast) var(--ease-standard),
-    transform var(--dur-fast) var(--ease-standard);
-}
-.figureArrow:hover {
-  color: var(--white);
-  transform: translateX(4px);
 }

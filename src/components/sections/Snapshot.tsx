@@ -15,7 +15,7 @@ export function Snapshot() {
           {/* Left: the offer explainer. */}
           <Reveal className={styles.explainer}>
             <h2 id="snapshot-heading" className={styles.heading}>
-              A free, senior read of where you stand
+              {snapshot.heading}
             </h2>
             <p className={styles.intro}>{snapshot.intro}</p>
 

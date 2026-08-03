@@ -1,14 +1,41 @@
+/* Title on the left, CTA parked on its right, both above the comparison. */
 .head {
-  max-width: 40rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 52rem) {
+  .head {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-7);
+    /* The button sits on the last line of the title. */
+    align-items: end;
+  }
+}
+
+.headMain {
+  min-width: 0;
 }
 
 .badgeRow {
   margin-bottom: var(--space-4);
 }
 
+/* Section titles all sit on the same tier; only the two majors step up. */
 .heading {
-  font-size: var(--text-2xl);
-  max-width: 26ch;
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.headCta {
+  display: flex;
+}
+@media (min-width: 52rem) {
+  .headCta {
+    justify-content: flex-end;
+    padding-bottom: 0.35rem;
+  }
 }
 
 /* --- Two-panel comparison --- */
@@ -31,7 +58,7 @@
   flex-direction: column;
   gap: var(--space-5);
   padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-card);
 }
 
 /* Typical agency — muted, recedes */
@@ -46,7 +73,6 @@
   background: var(--color-surface);
   color: var(--color-text);
   border: 2px solid var(--color-accent-fill);
-  box-shadow: var(--shadow-md);
 }
 @media (min-width: 52rem) {
   .panelUs {
@@ -70,11 +96,12 @@
 .panelUs .panelLabel {
   color: var(--color-text);
 }
-.panelDot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-accent-fill);
+
+/* Matched to the cap height of "A TYPICAL AGENCY" opposite it. */
+.panelLogo {
+  height: 1.15rem;
+  width: auto;
+  filter: invert(1);
 }
 
 .rows {
@@ -127,8 +154,4 @@
 }
 .panelTypical .rowText {
   color: var(--color-text-muted);
-}
-
-.cta {
-  margin-top: var(--space-7);
 }

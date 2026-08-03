@@ -15,7 +15,9 @@ export const results: ResultsContent = {
     {
       id: 'case-1',
       client: 'Borderplex Alliance',
+      category: 'Brand & Launch',
       title: 'A regional brand that finally matched the ambition',
+      summary: 'Rebuilt the story, then filled the room.',
       intro:
         'We rebuilt the story and the identity, then carried it through a launch event that filled the room.',
       texture: 'case-1',
@@ -29,7 +31,9 @@ export const results: ResultsContent = {
     {
       id: 'case-2',
       client: 'Sun City Summit',
+      category: 'Event & Press',
       title: 'A flagship conference people still talk about',
+      summary: 'Two days, one connected push.',
       intro:
         'From concept to production, we ran the event and the press moment as one connected push.',
       texture: 'case-2',
@@ -43,7 +47,9 @@ export const results: ResultsContent = {
     {
       id: 'case-3',
       client: 'Rio Grande Works',
+      category: 'Operations',
       title: 'Operations that let a stretched team breathe',
+      summary: 'Systems that outlast the engagement.',
       intro:
         'We put the systems in place, trained the people, and stayed until the work ran on its own.',
       texture: 'case-3',
@@ -57,7 +63,9 @@ export const results: ResultsContent = {
     {
       id: 'case-4',
       client: 'Paso del Norte Institute',
+      category: 'Team Development',
       title: 'A team that could finally tell its own story',
+      summary: 'The message holds without us.',
       intro:
         'We built the internal playbook and trained the people who use it, so the message holds when we are not in the room.',
       texture: 'case-1',
@@ -69,5 +77,22 @@ export const results: ResultsContent = {
       services: ['Team training', 'Messaging', 'Internal comms', 'Workshops'],
     },
   ],
-  testimonials: [],
+  /**
+   * PLACEHOLDER. The quote, the attribution, and the rating are all invented
+   * and must not ship. A fabricated rating is a claim about the business, so
+   * this needs sign-off alongside the client permissions in the copy doc
+   * before launch. The About band reads testimonials[0]; empty the array and
+   * it stops rendering the rail on its own.
+   */
+  testimonials: [
+    {
+      id: 'testimonial-1',
+      quote:
+        'They found the thing we had been doing well by accident and turned it into something we could repeat.',
+      attribution: 'Marisa Delgado',
+      role: 'Executive Director',
+      org: 'Borderplex Alliance',
+      rating: '5.0',
+    },
+  ],
 }

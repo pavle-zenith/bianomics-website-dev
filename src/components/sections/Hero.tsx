@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { brand, recognitionMarks } from '@/content/site'
-import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
 import { HeroCtas } from './HeroCtas'
@@ -15,7 +14,12 @@ import styles from './Hero.module.css'
  */
 export function Hero() {
   return (
-    <section id="hero" className={styles.hero} aria-labelledby="hero-heading">
+    <section
+      id="hero"
+      className={styles.hero}
+      aria-labelledby="hero-heading"
+      data-nav-tone="dark"
+    >
       <div className={styles.bg} aria-hidden="true">
         <Image
           src={heroBg}
@@ -33,29 +37,33 @@ export function Hero() {
         <div className={styles.top}>
           <Reveal>
             <div className={styles.badgeRow}>
-              <AntiAgencyBadge tone="inverse" />
+              <AntiAgencyBadge label={brand.lockupHero} tone="inverse" />
             </div>
           </Reveal>
 
-          <Reveal delay={0.08}>
-            {/* The single H1 on the page: the Brand Anchor (verbatim). */}
-            <h1 id="hero-heading" className={styles.anchor}>
-              The world doesn&rsquo;t see what you&rsquo;re capable of.{' '}
-              <span className={styles.line2}>Yet. We change that.</span>
-            </h1>
-          </Reveal>
+          {/* The single H1 on the page: the Brand Anchor (verbatim).
+              Each line masks in on its own beat so the statement assembles. */}
+          <h1 id="hero-heading" className={styles.anchor}>
+            <Reveal as="span" variant="mask" delay={0.08} className={styles.line}>
+              You built something real.
+            </Reveal>
+            <Reveal
+              as="span"
+              variant="mask"
+              delay={0.2}
+              className={`${styles.line} ${styles.line2}`}
+            >
+              We make the world feel it, fund it, and remember it.
+            </Reveal>
+          </h1>
 
-          <Reveal delay={0.16}>
-            <HeroCtas />
-          </Reveal>
         </div>
 
-        <Reveal delay={0.24} className={styles.bottom}>
-          <p className={styles.clarifier}>{brand.clarifier}</p>
-
-          <div className={styles.trust}>
+        {/* The base: recognition, then a rule, then the subline and the CTA. */}
+        <div className={styles.base}>
+          <Reveal delay={0.3} className={styles.trust}>
             <p className={styles.trustLead}>
-              Trusted work, recognized across the field.
+              Trusted work, recognized across the world.
             </p>
             <ul className={styles.marks}>
               {recognitionMarks.map((mark) => (
@@ -66,23 +74,15 @@ export function Hero() {
                 </li>
               ))}
             </ul>
-          </div>
-        </Reveal>
+          </Reveal>
 
-        <a href={anchors.whoWeWorkWith} className={styles.scrollCue}>
-          <span className={styles.scrollArrow} aria-hidden="true">
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
-              <path
-                d="M8 2v12M3.5 9.5 8 14l4.5-4.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-          Scroll down
-        </a>
+          <Reveal delay={0.24} className={styles.bottom}>
+            <p className={styles.clarifier}>{brand.clarifier}</p>
+            <div className={styles.ctaSlot}>
+              <HeroCtas />
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   )

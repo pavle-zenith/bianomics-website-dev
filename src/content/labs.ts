@@ -9,10 +9,12 @@ import type { Lab } from './types'
 export const labs: Lab[] = [
   {
     id: 'vision',
-    name: 'Vision Lab',
+    // NOTE: ™ is applied to all four practices for now. Bianca is confirming
+    // which of them should actually carry it (Section 3 of the copy doc).
+    name: 'Vision Lab™',
     mode: 'Express',
     description:
-      'Brand, marketing, and PR. Story, campaigns, press, and creative that show people what you are.',
+      "The story underneath, brought to the surface and aimed at the people who need to hear it. Brand, campaigns, press, and creative built on what's true about you, then sharpened until it performs.",
     color: 'vision',
     subservices: [
       'Brand strategy',
@@ -26,10 +28,10 @@ export const labs: Lab[] = [
   },
   {
     id: 'stage',
-    name: 'Stage',
+    name: 'Stage™',
     mode: 'Resonate',
     description:
-      'Events and activations. Conferences, launches, press moments, and community that people remember.',
+      'The room where it lands. Conferences, launches, press moments, and community events people are still talking about on Monday.',
     color: 'stage',
     subservices: [
       'Conferences',
@@ -46,7 +48,7 @@ export const labs: Lab[] = [
     name: 'Blueprint™',
     mode: 'Structure',
     description:
-      'Operations and project management. The systems that make the work run on time.',
+      'The systems underneath the work. Project management, workflow, and operations built so everything runs on time without you holding it up.',
     color: 'blueprint',
     subservices: [
       'Project management',
@@ -62,14 +64,15 @@ export const labs: Lab[] = [
     name: 'Groundwork™',
     mode: 'Regulate',
     description:
-      'Team development. Training, communication, and wellbeing so your people can do their best work.',
+      'Workforce development built for how people actually change. Every participant completes nervous system regulation work before anything else, because that is the step every other program skips and the reason the rest of the training sticks. Our proprietary PowerPrint assessment maps strengths, stress patterns, and values to real roles in real industries.',
     color: 'groundwork',
     subservices: [
-      'Team training',
-      'Communication',
-      'Leadership development',
-      'Wellbeing',
-      'Workforce curriculum',
+      'Beyond Duty, veteran workforce readiness',
+      'Bridge, emotional intelligence and regulation',
+      'Agent Z, AI operator training',
+      'Builders, hands-on trades apprenticeship',
+      'Money with Purpose, bilingual financial literacy',
+      'PowerPrint, proprietary Career DNA assessment',
     ],
     href: '#what-we-do',
   },
