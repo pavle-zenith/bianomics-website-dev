@@ -16,16 +16,8 @@ import styles from './Nav.module.css'
  * white ones — so the chrome stays legible the whole way down.
  */
 export function Nav({ links }: { links: NavLink[] }) {
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [onDark, setOnDark] = useState(true)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   // Watch a 1px band at the nav's own line: whichever region crosses it
   // decides the tone. Cheaper and steadier than reading pixels on scroll.
@@ -62,9 +54,7 @@ export function Nav({ links }: { links: NavLink[] }) {
 
   return (
     <header
-      className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${
-        onDark ? styles.onDark : styles.onLight
-      }`}
+      className={`${styles.header} ${onDark ? styles.onDark : styles.onLight}`}
     >
       <div className={`${styles.inner} container`}>
         {/* Below the desktop breakpoint this is the single glass shell that

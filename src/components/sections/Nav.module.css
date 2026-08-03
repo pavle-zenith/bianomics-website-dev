@@ -69,17 +69,6 @@
   }
 }
 
-/* Inside the shell the children must not carry glass of their own. */
-@media (max-width: 61.999rem) {
-  .logo,
-  .group {
-    padding: 0;
-    background: transparent;
-    border-color: transparent;
-    backdrop-filter: none;
-  }
-}
-
 /* --- Logo ---
    Carries its own shell so it stays legible once the page scrolls and the
    mark sits over light sections rather than the dark hero. */
@@ -109,6 +98,18 @@
   background: var(--nav-shell);
   border: 1px solid var(--nav-border);
   backdrop-filter: blur(14px);
+}
+
+/* Inside the mobile shell the children must not carry glass of their own.
+   This has to follow both definitions above to win on source order. */
+@media (max-width: 61.999rem) {
+  .logo,
+  .group {
+    padding: 0;
+    background: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+  }
 }
 
 .desktopNav {
