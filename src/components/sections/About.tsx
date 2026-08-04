@@ -31,6 +31,8 @@ export function About() {
           {/* Full-width band: the photograph is carried at low opacity so the
               copy stays the subject and the type keeps its contrast. */}
           <Reveal delay={0.12} className={styles.band}>
+            {/* Dark enough to drive the nav's tone while it is under the line. */}
+            <span data-nav-tone="dark" className={styles.bandTone} aria-hidden="true" />
             <div className={styles.bandBg} aria-hidden="true">
               <Image
                 src={ctaBg}

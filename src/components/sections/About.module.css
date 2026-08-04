@@ -32,6 +32,14 @@
   isolation: isolate;
 }
 
+/* Invisible; exists only as a region for the nav's tone observer. */
+.bandTone {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .bandBg {
   position: absolute;
   inset: 0;
