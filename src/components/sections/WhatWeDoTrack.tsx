@@ -6,11 +6,11 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 import Image, { type StaticImageData } from 'next/image'
-import { useReducedMotion } from 'framer-motion'
 import type { Lab, LabId } from '@/content/types'
 import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
@@ -18,6 +18,13 @@ import styles from './WhatWeDo.module.css'
 
 /** How far a drag has to travel before it counts as a page, in px. */
 const DRAG_THRESHOLD = 70
+
+/**
+ * Below this the carousel un-pages and the four practices stack. A card that
+ * runs the full width of a phone leaves no room for the neighbours to peek in,
+ * so there is nothing on screen to say the set continues sideways.
+ */
+const CAROUSEL_MIN_WIDTH = '(min-width: 60rem)'
 
 /**
  * The practices as a looping carousel: one card centred in the viewport, its
@@ -42,37 +49,59 @@ export function WhatWeDoTrack({
   accent: string
 }) {
   const viewportRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLOListElement>(null)
   const slideRefs = useRef<(HTMLLIElement | null)[]>([])
-  const reduce = useReducedMotion()
 
   const [index, setIndex] = useState(0)
-  const [offset, setOffset] = useState(0)
 
-  // Live drag distance. Held in state so the track follows the pointer, and
-  // mirrored in a ref so the pointerup handler reads the final value without
-  // depending on a re-render having landed first. `dragging` is state rather
-  // than the ref's flag because render reads it to suspend the easing, and a
-  // ref read during render is not a dependable value.
-  const [drag, setDrag] = useState(0)
-  const [dragging, setDragging] = useState(false)
+  // The media query as an external store rather than state synced in an
+  // effect: React reads it during render, so there is no pass where the
+  // component has mounted but still believes it is the other layout. The
+  // server snapshot is `true`, so the markup ships as a carousel and only
+  // narrow clients correct on hydration.
+  const carousel = useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(CAROUSEL_MIN_WIDTH)
+      query.addEventListener('change', onChange)
+      return () => query.removeEventListener('change', onChange)
+    },
+    () => window.matchMedia(CAROUSEL_MIN_WIDTH).matches,
+    () => true,
+  )
+
   const dragState = useRef({ active: false, startX: 0, distance: 0 })
 
-  // Centre the active card: shift the track by the distance between the
-  // viewport's midline and the card's own. Measured rather than computed from
-  // a slide width, so the gap and the fluid card width need no bookkeeping.
-  const centre = useCallback(() => {
+  /**
+   * Centre the active card: shift the track by the distance between the
+   * viewport's midline and the card's own, plus however far a drag in
+   * progress has travelled. Measured rather than computed from a slide width,
+   * so the gap and the fluid card width need no bookkeeping.
+   *
+   * Written straight to the node rather than held in state. The offset is
+   * purely visual and is derived from a measurement, so routing it through a
+   * render would mean a measure-then-set-state round trip on every pointer
+   * move for a value React never needs to know.
+   */
+  const applyOffset = useCallback(() => {
+    const track = trackRef.current
     const viewport = viewportRef.current
     const slide = slideRefs.current[index]
-    if (!viewport || !slide) return
-    setOffset(viewport.clientWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2))
-  }, [index])
+    if (!track || !viewport || !slide) return
+    // Stacked, the track is a plain column and must not be shifted.
+    const base = carousel
+      ? viewport.clientWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2)
+      : 0
+    track.style.transform = `translate3d(${base + dragState.current.distance}px, 0, 0)`
+  }, [index, carousel])
 
-  useLayoutEffect(centre, [centre])
+  // No dependency array: the offset depends on the rendered layout, so it is
+  // re-applied after every commit.
+  useLayoutEffect(applyOffset)
 
   useEffect(() => {
-    window.addEventListener('resize', centre)
-    return () => window.removeEventListener('resize', centre)
-  }, [centre])
+    window.addEventListener('resize', applyOffset)
+    return () => window.removeEventListener('resize', applyOffset)
+  }, [applyOffset])
 
   // Wrapping in both directions, so the set has no first or last.
   const step = useCallback(
@@ -82,26 +111,28 @@ export function WhatWeDoTrack({
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     // Let the browser keep secondary buttons and pen erasers to itself.
-    if (e.button !== 0) return
+    if (e.button !== 0 || !carousel) return
     dragState.current = { active: true, startX: e.clientX, distance: 0 }
-    setDragging(true)
+    // The track has to follow the finger exactly; easing reads as lag.
+    if (trackRef.current) trackRef.current.style.transition = 'none'
     e.currentTarget.setPointerCapture(e.pointerId)
   }
 
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragState.current.active) return
     dragState.current.distance = e.clientX - dragState.current.startX
-    setDrag(dragState.current.distance)
+    applyOffset()
   }
 
   const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragState.current.active) return
     const { distance } = dragState.current
-    dragState.current.active = false
+    dragState.current = { active: false, startX: 0, distance: 0 }
     e.currentTarget.releasePointerCapture(e.pointerId)
-    setDragging(false)
-    setDrag(0)
+    // Hand the easing back to the stylesheet before the track settles.
+    if (trackRef.current) trackRef.current.style.transition = ''
     if (Math.abs(distance) > DRAG_THRESHOLD) step(distance < 0 ? 1 : -1)
+    else applyOffset()
   }
 
   return (
@@ -119,8 +150,9 @@ export function WhatWeDoTrack({
         </div>
 
         {/* On the heading's line, where the reader is already looking when the
-            set opens, rather than at the foot after four cards of scrolling. */}
-        <div className={styles.arrows}>
+            set opens, rather than at the foot after four cards of scrolling.
+            Stacked, there is nothing to page. */}
+        <div className={styles.arrows} hidden={!carousel}>
           <button type="button" className={styles.arrow} onClick={() => step(-1)}>
             <span className="visually-hidden">Previous practice</span>
             <Chevron direction="left" />
@@ -134,7 +166,7 @@ export function WhatWeDoTrack({
 
       <div className={styles.carousel}>
         <div
-          className={styles.viewport}
+          className={`${styles.viewport} ${carousel ? '' : styles.viewportStacked}`}
           ref={viewportRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -142,16 +174,8 @@ export function WhatWeDoTrack({
           onPointerCancel={onPointerUp}
         >
           <ol
-            className={styles.track}
-            style={{
-              transform: `translate3d(${offset + drag}px, 0, 0)`,
-              // No easing while the pointer is down: the track has to track
-              // the finger exactly, or the drag feels like it is lagging.
-              transition:
-                reduce || dragging
-                  ? 'none'
-                  : `transform var(--dur-reveal) var(--ease-editorial)`,
-            }}
+            ref={trackRef}
+            className={`${styles.track} ${carousel ? '' : styles.trackStacked}`}
           >
             {labs.map((lab, i) => (
               <li
@@ -159,10 +183,11 @@ export function WhatWeDoTrack({
                 ref={(el) => {
                   slideRefs.current[i] = el
                 }}
-                className={`${styles.slide} ${i === index ? styles.slideActive : ''}`}
+                className={`${styles.slide} ${!carousel || i === index ? styles.slideActive : ''}`}
                 // Only the centred card is in the reading order; the ones
-                // peeking in at the edges are decoration until they are paged to.
-                aria-hidden={i === index ? undefined : true}
+                // peeking in at the edges are decoration until they are paged
+                // to. Stacked, every card is real content.
+                aria-hidden={!carousel || i === index ? undefined : true}
               >
                 {/* The card IS the practice's colour. `tone-oncolor` resolves
                     the copy to ink, which all four fills clear at AA. */}
@@ -216,9 +241,10 @@ export function WhatWeDoTrack({
           </ol>
         </div>
 
-        {/* Foot: progress, counter, and the way on. */}
+        {/* Foot: progress, counter, and the way on. Stacked, the reader has
+            already passed all four, so only the way on is left. */}
         <div className={`${styles.foot} container`}>
-          <div className={styles.progress} aria-hidden="true">
+          <div className={styles.progress} aria-hidden="true" hidden={!carousel}>
             <span
               className={styles.progressFill}
               style={{ transform: `scaleX(${(index + 1) / labs.length})` }}
@@ -226,7 +252,7 @@ export function WhatWeDoTrack({
           </div>
 
           <div className={styles.footRow}>
-            <p className={styles.count}>
+            <p className={styles.count} hidden={!carousel}>
               [ {String(index + 1).padStart(2, '0')} /{' '}
               {String(labs.length).padStart(2, '0')} ]
             </p>

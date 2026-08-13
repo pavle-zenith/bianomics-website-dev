@@ -16,11 +16,18 @@
   max-width: 20ch;
 }
 
+/* Below the breakpoint the track is a grid with everyone already on it, so
+   there is nothing left to page through. */
 .controls {
-  display: flex;
+  display: none;
   gap: var(--space-3);
   flex: none;
   padding-bottom: 0.35rem;
+}
+@media (min-width: 52rem) {
+  .controls {
+    display: flex;
+  }
 }
 
 .arrow {
@@ -49,40 +56,53 @@
 }
 
 /* --- Track: runs off the right edge of the viewport --- */
+/* On a phone the track showed about one and a half of eight people, with no
+   edge visible to say the rest were there, so below the breakpoint it becomes
+   a two-up grid and everyone is on the page. The horizontal track only earns
+   its place once several cards fit at once. */
 .track {
-  display: flex;
-  gap: var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5) var(--space-4);
   margin-top: var(--space-7);
   list-style: none;
-  overflow-x: auto;
-  /* Proximity, not mandatory: under mandatory snapping the nearest snap point
-     to the true scroll end sits before it, so the last card could never come
-     off the right edge and stayed half cut. */
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  /* Start at the container's left edge, but let cards bleed off the right.
-     scroll-padding keeps snapped cards aligned to that same edge. */
-  padding-inline-start: max(
-    var(--container-pad),
-    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-  );
-  /* Room past the last card so it can travel clear of the right edge rather
-     than stopping against it. */
-  padding-inline-end: max(var(--container-pad), 24vw);
-  scroll-padding-inline-start: max(
-    var(--container-pad),
-    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-  );
-  padding-bottom: var(--space-2);
-}
-.track::-webkit-scrollbar {
-  display: none;
+  padding-inline: var(--container-pad);
 }
 
-.card {
-  flex: none;
-  width: clamp(13rem, 10rem + 12vw, 19rem);
-  scroll-snap-align: start;
+@media (min-width: 52rem) {
+  .track {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    /* Proximity, not mandatory: under mandatory snapping the nearest snap
+       point to the true scroll end sits before it, so the last card could
+       never come off the right edge and stayed half cut. */
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    /* Start at the container's left edge, but let cards bleed off the right.
+       scroll-padding keeps snapped cards aligned to that same edge. */
+    padding-inline-start: max(
+      var(--container-pad),
+      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+    );
+    /* Room past the last card so it can travel clear of the right edge rather
+       than stopping against it. */
+    padding-inline-end: max(var(--container-pad), 24vw);
+    scroll-padding-inline-start: max(
+      var(--container-pad),
+      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+    );
+    padding-bottom: var(--space-2);
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    flex: none;
+    width: clamp(13rem, 10rem + 12vw, 19rem);
+    scroll-snap-align: start;
+  }
 }
 
 /* The whole card is the control that opens the bio. */

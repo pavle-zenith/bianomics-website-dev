@@ -100,6 +100,13 @@ ol {
   padding: 0;
 }
 
+/* The UA stylesheet gives [hidden] display:none, but any author `display`
+   rule outranks it, so an element with its own layout stays on screen while
+   claiming to be hidden. Restoring it makes the attribute dependable. */
+[hidden] {
+  display: none !important;
+}
+
 /* Visible, consistent focus for keyboard users */
 :focus-visible {
   outline: 3px solid var(--color-focus-ring);

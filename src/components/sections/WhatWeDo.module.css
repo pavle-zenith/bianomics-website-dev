@@ -81,6 +81,19 @@
   cursor: grabbing;
 }
 
+/* Stacked: no paging, so no grab affordance and no clipping. */
+.viewportStacked {
+  overflow: visible;
+  touch-action: auto;
+  cursor: auto;
+  user-select: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* The transform itself is written to the node by the component; the easing
+   lives here so the reduced-motion reset in base.css governs it, and so a
+   drag can suspend it by setting `transition: none` inline and hand it back
+   by clearing that. */
 .track {
   display: flex;
   align-items: stretch;
@@ -88,6 +101,7 @@
   list-style: none;
   padding: 0;
   will-change: transform;
+  transition: transform var(--dur-reveal) var(--ease-editorial);
 }
 
 .slide {
@@ -102,6 +116,21 @@
 }
 .slideActive {
   opacity: 1;
+}
+
+/* Stacked: a plain column, every card at its own height. `align-items` is
+   what matters here — stretched, the shortest practice would inherit
+   Groundwork's height and close on a long run of empty colour. */
+.trackStacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-5);
+}
+.trackStacked .slide {
+  width: 100%;
+}
+.trackStacked .slideInner {
+  height: auto;
 }
 
 /* The card IS the practice's colour: the fill arrives as --slide-fill from
@@ -147,12 +176,25 @@
   mix-blend-mode: soft-light;
 }
 
+/* Single column, the copy leads and the picture closes the card. The DOM
+   order is the desktop one, where the title has to sit next to the frame it
+   straddles, so the reordering is done here. */
 .counter {
+  order: 0;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--tone-text-muted);
+}
+.slideInner > .title {
+  order: 1;
+}
+.slideInner > .meta {
+  order: 2;
+}
+.slideInner > .media {
+  order: 3;
 }
 @media (min-width: 60rem) {
   .counter {
