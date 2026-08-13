@@ -40,14 +40,19 @@
   --tracking-wider: 0.12em; /* mono labels / counters */
 
   /* --- Font weights ---
-     Display and headings run at a SINGLE weight (400). Hierarchy is carved
-     by size and tracking, never by weight — that is the defining rule of
-     this system, and bolding a heading breaks it. The heavier steps remain
-     for small UI: mono labels, buttons, and inline emphasis in body copy. */
+     TWO weights ship: 400 for everything that is read, 600 for small UI that
+     has to be picked out (labels, buttons, inline emphasis). Display and
+     headings run at 400 and carve their hierarchy with size and tracking,
+     never weight — bolding a heading breaks the system.
+
+     500 and 700 were in use and have been retired: four weights across three
+     families read as noise rather than hierarchy, which is exactly what the
+     client caught. They stay defined so the tokens resolve, but nothing
+     should reach for them; add a size or tighten tracking instead. */
   --weight-regular: 400;
-  --weight-medium: 500;
+  --weight-medium: 500; /* retired */
   --weight-bold: 600;
-  --weight-extrabold: 700;
+  --weight-extrabold: 700; /* retired */
   --weight-heading: 400;
 
   /* --- Spacing scale --- */

@@ -140,10 +140,8 @@
 /* --- Legal line, above the wordmark --- */
 .legal {
   margin-top: var(--space-9);
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  letter-spacing: var(--tracking-normal);
   color: var(--tone-text-muted);
 }
 

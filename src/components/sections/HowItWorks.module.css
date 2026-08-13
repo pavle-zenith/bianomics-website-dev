@@ -69,8 +69,6 @@
 
 /* The line that carries the section. Given room to breathe. */
 .framework {
-  font-family: var(--font-quote);
-  font-style: italic;
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
   /* The AA-safe step: at 22px this is normal-size text on white, so the raw

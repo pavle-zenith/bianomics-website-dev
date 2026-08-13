@@ -162,7 +162,7 @@ export const steps: Step[] = [
   },
   {
     n: 4,
-    title: 'Senior people build it with you',
+    title: 'One team, all the way through',
     description:
       'The people who scoped the work are the people who do it. We build it to run without you needing us. Most partners keep us anyway.',
     color: 'groundwork',
@@ -418,7 +418,7 @@ export const faqIntro = {
 /** Snapshot section copy (locked). */
 export const snapshot = {
   /** Block headline above the form. */
-  heading: 'A senior read of where you stand.',
+  heading: 'Where you stand, no spin.',
   intro:
     'A complimentary read of your communications or brand position, done by our senior team. We take a limited number each month, because every one is reviewed personally and every submission comes to Bianca directly.',
   submitLabel: 'Apply for a Snapshot →',

@@ -42,9 +42,9 @@
     linear-gradient(
       100deg,
       rgb(255 255 255 / 0.94) 0%,
-      rgb(255 255 255 / 0.82) 38%,
-      rgb(255 255 255 / 0.3) 68%,
-      rgb(255 255 255 / 0.05) 100%
+      rgb(255 255 255 / 0.88) 45%,
+      rgb(255 255 255 / 0.66) 72%,
+      rgb(255 255 255 / 0.34) 100%
     ),
     linear-gradient(to top, var(--color-bg) 2%, transparent 26%);
 }
@@ -105,10 +105,14 @@
   display: block;
   overflow: hidden;
 }
-/* Second sentence of the Anchor, tinted with the brand accent so it lands
-   as its own beat without any dash device. */
+/* Second sentence of the Anchor, tinted with the brand accent so it lands as
+   its own beat without any dash device.
+
+   The darker step, not the raw fill. This line runs past the scrim's reach and
+   over the rock face, where Bondi at 3.4:1 on white drops further still; the
+   closing words were disappearing into the photograph. */
 .line2 {
-  color: var(--color-accent-fill);
+  color: var(--color-accent-text);
 }
 
 /* --- CTAs --- */
@@ -169,7 +173,7 @@
 
 .clarifier {
   font-size: var(--text-lg);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   color: color-mix(in srgb, var(--tone-text) 92%, transparent);
   max-width: 48ch;
@@ -203,9 +207,8 @@
 }
 /* Recognition marks read as instrument labels, not headings. */
 .mark {
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-normal);
   color: color-mix(in srgb, var(--tone-text) 82%, transparent);
   text-decoration: none;
   cursor: help;

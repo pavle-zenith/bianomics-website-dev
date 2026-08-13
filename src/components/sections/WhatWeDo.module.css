@@ -4,7 +4,7 @@
   position: relative;
 }
 
-/* --- Section head: title left, carousel arrows parked on its last line --- */
+/* --- Section head: title left, the track's arrows on its last line --- */
 .head {
   display: flex;
   flex-direction: column;
@@ -50,50 +50,53 @@
 /* The one quiet philosophy line. */
 .accent {
   margin-top: var(--space-5);
-  font-family: var(--font-quote);
-  font-style: italic;
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
   color: var(--tone-text-muted);
   max-width: 46ch;
 }
 
-/* --- Carousel ---
-   One card centred, its neighbours peeking in at both edges. The viewport is
-   full-bleed so the peek reaches the screen edge; the foot returns to the
-   container so the controls line up with the section head above them. */
-.carousel {
+/* --- Pinned scroll region ---
+   The wrapper is tall; the inner sticks to the viewport while the page scrolls
+   through it, and that vertical progress is what moves the track sideways.
+   One viewport of scroll per practice, plus a half to settle on the last.
+
+   No overflow clipping on the section itself: a non-visible overflow on an
+   ancestor breaks position: sticky, so the clipping is done on .sticky and
+   .viewport, both of which sit at or inside the sticky element. */
+.pin {
+  position: relative;
+}
+.pinActive {
+  height: calc((var(--slides) + 0.5) * 100vh);
+}
+
+.sticky {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--space-7);
+}
+.pinActive > .sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .viewport {
   overflow: hidden;
   width: 100%;
-  /* The pointer handlers own the horizontal axis; the browser keeps the
-     vertical one, so a drag never traps the page scroll. */
-  touch-action: pan-y;
-  cursor: grab;
-  user-select: none;
-}
-.viewport:active {
-  cursor: grabbing;
 }
 
-/* Stacked: no paging, so no grab affordance and no clipping. */
+/* Un-pinned: nothing travels sideways, so nothing is clipped. */
 .viewportStacked {
   overflow: visible;
-  touch-action: auto;
-  cursor: auto;
-  user-select: auto;
   padding-inline: var(--container-pad);
 }
 
-/* The transform itself is written to the node by the component; the easing
-   lives here so the reduced-motion reset in base.css governs it, and so a
-   drag can suspend it by setting `transition: none` inline and hand it back
-   by clearing that. */
+/* The transform is driven by scroll progress, so it carries no transition of
+   its own: the spring in the component does the smoothing. */
 .track {
   display: flex;
   align-items: stretch;
@@ -101,7 +104,6 @@
   list-style: none;
   padding: 0;
   will-change: transform;
-  transition: transform var(--dur-reveal) var(--ease-editorial);
 }
 
 .slide {
@@ -109,16 +111,9 @@
   /* The full content width, so the card has the room the section head has.
      The peek at the edges comes from the viewport being full-bleed. */
   width: min(calc(100vw - 2 * var(--container-pad)), var(--container-max));
-  /* The cards to either side stay legible as objects but hand the eye back to
-     the centred one. */
-  opacity: 0.34;
-  transition: opacity var(--dur-reveal) var(--ease-editorial);
-}
-.slideActive {
-  opacity: 1;
 }
 
-/* Stacked: a plain column, every card at its own height. `align-items` is
+/* Un-pinned: a plain column, every card at its own height. `align-items` is
    what matters here — stretched, the shortest practice would inherit
    Groundwork's height and close on a long run of empty colour. */
 .trackStacked {
@@ -148,7 +143,7 @@
   border-radius: var(--radius-card);
   background: var(--slide-fill);
   overflow: hidden;
-  /* Contains the title's difference blend to this card. */
+  /* Contains the haze's soft-light blend to this card. */
   isolation: isolate;
 }
 @media (min-width: 60rem) {
@@ -161,19 +156,19 @@
 /* Between the fill and the content: the card isolates, so z-index -1 lands
    above its own background and below everything in it.
 
-   soft-light rather than a straight tint: the haze's bright field lifts the
-   fill and its darker corner sinks it, so what lands is the texture's form in
-   the practice's colour at full saturation. A luminosity blend would have
-   taken the card to a pale wash instead, because the haze is a light image. */
-.slideHaze {
+   overlay, not a plain alpha: the grain tile averages mid-grey, and overlay
+   leaves mid-grey untouched while its lighter and darker specks push the fill
+   either side. The colour underneath comes through at full strength and only
+   the surface changes, which a straight opacity would not do — that just
+   lifts everything toward grey. */
+.slideGrain {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: var(--texture-haze);
-  background-size: cover;
-  background-position: center right;
-  mix-blend-mode: soft-light;
+  background-image: var(--texture-grain);
+  mix-blend-mode: overlay;
+  opacity: 0.45;
 }
 
 /* The copy leads and the picture follows, at every width: stacked on a phone
@@ -278,10 +273,12 @@
 
 /* Underlined, as in the reference: these read as the practice's index. */
 .service {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  /* 20px on desktop, down to 16px on a phone. Bespoke rather than a scale
+     step because the scale has no 20: `base` tops out at 18 and `lg` at 22,
+     and this list is the card's index, so the size was called exactly. */
+  font-size: clamp(1rem, 0.86rem + 0.6vw, 1.25rem);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
   color: var(--tone-text);
   text-decoration: underline;
   text-underline-offset: 0.35em;
@@ -364,10 +361,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
+  letter-spacing: var(--tracking-normal);
   color: var(--tone-text);
   transition: color var(--dur-fast) var(--ease-standard);
 }

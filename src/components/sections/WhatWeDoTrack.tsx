@@ -4,38 +4,47 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
   type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
 } from 'react'
 import Image, { type StaticImageData } from 'next/image'
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
 import type { Lab, LabId } from '@/content/types'
 import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './WhatWeDo.module.css'
 
-/** How far a drag has to travel before it counts as a page, in px. */
-const DRAG_THRESHOLD = 70
-
 /**
- * Below this the carousel un-pages and the four practices stack. A card that
+ * Below this the section un-pins and the four practices stack. A card that
  * runs the full width of a phone leaves no room for the neighbours to peek in,
- * so there is nothing on screen to say the set continues sideways.
+ * and hijacking scroll on a touch device is hostile rather than helpful.
  */
-const CAROUSEL_MIN_WIDTH = '(min-width: 60rem)'
+const PIN_MIN_WIDTH = '(min-width: 60rem)'
 
 /**
- * The practices as a looping carousel: one card centred in the viewport, its
- * neighbours peeking in at both edges, paged by dragging or by the arrows on
- * the heading's line.
+ * Where the travel finishes and the hold begins, as a share of the pin. The
+ * track sweeps continuously from the first practice to the last across
+ * everything before this, then the last one sits centred for the remainder.
+ */
+const HOLD_FROM = 0.78
+
+/**
+ * The practices as a scroll-pinned horizontal track: while the section is on
+ * screen the page's vertical scroll drives the cards sideways, so all four are
+ * seen before the page moves on.
  *
- * This replaced a scroll-pinned horizontal track. Pinning spent the reader's
- * scroll unevenly — the last practice arrived as the section was already
- * releasing, so Groundwork was on screen for a fraction of the time Vision
- * got. Paging gives all four the same turn, and the loop means neither end of
- * the set is a dead stop.
+ * The travel is continuous: the track sweeps from the first practice to the
+ * last as the reader scrolls, passing each one through the centre on the way.
+ * The one departure from a straight mapping is at the end, where the last
+ * practice is held centred for the closing stretch of the pin. Without that
+ * hold it finishes arriving exactly as the section releases, which is how
+ * Groundwork ended up with a fraction of the screen time Vision got.
+ *
+ * Falls back to a plain vertical stack on narrow viewports and under
+ * prefers-reduced-motion.
  */
 export function WhatWeDoTrack({
   labs,
@@ -48,91 +57,116 @@ export function WhatWeDoTrack({
   heading: string
   accent: string
 }) {
+  const pinRef = useRef<HTMLDivElement>(null)
   const viewportRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLOListElement>(null)
   const slideRefs = useRef<(HTMLLIElement | null)[]>([])
-
-  const [index, setIndex] = useState(0)
+  const reduce = useReducedMotion()
 
   // The media query as an external store rather than state synced in an
   // effect: React reads it during render, so there is no pass where the
   // component has mounted but still believes it is the other layout. The
-  // server snapshot is `true`, so the markup ships as a carousel and only
-  // narrow clients correct on hydration.
-  const carousel = useSyncExternalStore(
+  // server snapshot is `true`, so the markup ships pinned and only narrow
+  // clients correct on hydration.
+  const wide = useSyncExternalStore(
     (onChange) => {
-      const query = window.matchMedia(CAROUSEL_MIN_WIDTH)
+      const query = window.matchMedia(PIN_MIN_WIDTH)
       query.addEventListener('change', onChange)
       return () => query.removeEventListener('change', onChange)
     },
-    () => window.matchMedia(CAROUSEL_MIN_WIDTH).matches,
+    () => window.matchMedia(PIN_MIN_WIDTH).matches,
     () => true,
   )
 
-  const dragState = useRef({ active: false, startX: 0, distance: 0 })
+  const pinned = wide && !reduce
 
-  /**
-   * Centre the active card: shift the track by the distance between the
-   * viewport's midline and the card's own, plus however far a drag in
-   * progress has travelled. Measured rather than computed from a slide width,
-   * so the gap and the fluid card width need no bookkeeping.
-   *
-   * Written straight to the node rather than held in state. The offset is
-   * purely visual and is derived from a measurement, so routing it through a
-   * render would mean a measure-then-set-state round trip on every pointer
-   * move for a value React never needs to know.
-   */
-  const applyOffset = useCallback(() => {
-    const track = trackRef.current
+  // One x-offset per practice, each centring that card in the viewport.
+  // Measured rather than computed from a slide width, so the gap and the
+  // fluid card width need no bookkeeping.
+  const [offsets, setOffsets] = useState<number[]>([])
+
+  const measure = useCallback(() => {
     const viewport = viewportRef.current
-    const slide = slideRefs.current[index]
-    if (!track || !viewport || !slide) return
-    // Stacked, the track is a plain column and must not be shifted.
-    const base = carousel
-      ? viewport.clientWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2)
-      : 0
-    track.style.transform = `translate3d(${base + dragState.current.distance}px, 0, 0)`
-  }, [index, carousel])
+    if (!viewport) return
+    const next = slideRefs.current.map((slide) =>
+      slide ? viewport.clientWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2) : 0,
+    )
+    setOffsets((prev) =>
+      prev.length === next.length && prev.every((v, i) => v === next[i]) ? prev : next,
+    )
+  }, [])
 
-  // No dependency array: the offset depends on the rendered layout, so it is
-  // re-applied after every commit.
-  useLayoutEffect(applyOffset)
+  useLayoutEffect(() => {
+    // Measured after paint rather than during the effect body, so the read
+    // happens once the stacked/pinned layout it depends on has been applied.
+    const frame = requestAnimationFrame(measure)
+    return () => cancelAnimationFrame(frame)
+  }, [measure, pinned])
 
   useEffect(() => {
-    window.addEventListener('resize', applyOffset)
-    return () => window.removeEventListener('resize', applyOffset)
-  }, [applyOffset])
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [measure])
 
-  // Wrapping in both directions, so the set has no first or last.
-  const step = useCallback(
-    (delta: number) => setIndex((i) => (i + delta + labs.length) % labs.length),
-    [labs.length],
-  )
+  const { scrollYProgress } = useScroll({
+    target: pinRef,
+    // Starts once the section is pinned, ends as it releases.
+    offset: ['start start', 'end end'],
+  })
 
-  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    // Let the browser keep secondary buttons and pen erasers to itself.
-    if (e.button !== 0 || !carousel) return
-    dragState.current = { active: true, startX: e.clientX, distance: 0 }
-    // The track has to follow the finger exactly; easing reads as lag.
-    if (trackRef.current) trackRef.current.style.transition = 'none'
-    e.currentTarget.setPointerCapture(e.pointerId)
-  }
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  })
 
-  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!dragState.current.active) return
-    dragState.current.distance = e.clientX - dragState.current.startX
-    applyOffset()
-  }
+  // One keyframe per practice, spread evenly across the travel, plus a final
+  // one repeating the last offset so the end of the pin holds it centred.
+  // Keyed off the measured offsets rather than a single start-to-end span, so
+  // each card passes through the centre even if the widths ever differ.
+  const [stops, values] = useMemo(() => {
+    const n = offsets.length
+    if (n < 2) return [[0, 1], [offsets[0] ?? 0, offsets[0] ?? 0]]
+    const inputs = offsets.map((_, i) => (i / (n - 1)) * HOLD_FROM)
+    const outputs = [...offsets]
+    inputs.push(1)
+    outputs.push(offsets[n - 1]!)
+    return [inputs, outputs]
+  }, [offsets])
 
-  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!dragState.current.active) return
-    const { distance } = dragState.current
-    dragState.current = { active: false, startX: 0, distance: 0 }
-    e.currentTarget.releasePointerCapture(e.pointerId)
-    // Hand the easing back to the stylesheet before the track settles.
-    if (trackRef.current) trackRef.current.style.transition = ''
-    if (Math.abs(distance) > DRAG_THRESHOLD) step(distance < 0 ? 1 : -1)
-    else applyOffset()
+  const x = useTransform(progress, stops, values, { clamp: true })
+
+  // The counter reads from the same mapping the track does, so it can never
+  // disagree with what is centred: which practice is nearest the middle is
+  // the travel's own progress rounded, and anything past the hold is the last.
+  const [active, setActive] = useState(1)
+  useEffect(() => {
+    return progress.on('change', (v) => {
+      const n = labs.length
+      const along = Math.min(1, v / HOLD_FROM)
+      setActive(Math.min(n, Math.max(1, Math.round(along * (n - 1)) + 1)))
+    })
+  }, [progress, labs.length])
+
+  const fill = useTransform(progress, [0, 1], [1 / labs.length, 1], { clamp: true })
+
+  /** Scroll the window to a practice's dwell, so the arrows drive the pin. */
+  const goTo = (i: number) => {
+    const pin = pinRef.current
+    if (!pin) return
+    const clamped = Math.min(labs.length - 1, Math.max(0, i))
+    if (!pinned) {
+      slideRefs.current[clamped]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    const travel = pin.offsetHeight - window.innerHeight
+    const top = window.scrollY + pin.getBoundingClientRect().top
+    // The last practice targets the middle of its hold; the rest target the
+    // point on the sweep where they pass through the centre.
+    const at =
+      clamped === labs.length - 1
+        ? (HOLD_FROM + 1) / 2
+        : (clamped / (labs.length - 1)) * HOLD_FROM
+    window.scrollTo({ top: top + travel * at, behavior: 'smooth' })
   }
 
   return (
@@ -149,117 +183,128 @@ export function WhatWeDoTrack({
           </Reveal>
         </div>
 
-        {/* On the heading's line, where the reader is already looking when the
-            set opens, rather than at the foot after four cards of scrolling.
-            Stacked, there is nothing to page. */}
-        <div className={styles.arrows} hidden={!carousel}>
-          <button type="button" className={styles.arrow} onClick={() => step(-1)}>
+        {/* Kept alongside the scroll: the pin is the primary way through, but
+            the arrows give the same journey to anyone who would rather click,
+            and they drive the pin rather than fighting it. */}
+        <div className={styles.arrows} hidden={!pinned}>
+          <button
+            type="button"
+            className={styles.arrow}
+            onClick={() => goTo(active - 2)}
+            disabled={active <= 1}
+          >
             <span className="visually-hidden">Previous practice</span>
             <Chevron direction="left" />
           </button>
-          <button type="button" className={styles.arrow} onClick={() => step(1)}>
+          <button
+            type="button"
+            className={styles.arrow}
+            onClick={() => goTo(active)}
+            disabled={active >= labs.length}
+          >
             <span className="visually-hidden">Next practice</span>
             <Chevron direction="right" />
           </button>
         </div>
       </div>
 
-      <div className={styles.carousel}>
-        <div
-          className={`${styles.viewport} ${carousel ? '' : styles.viewportStacked}`}
-          ref={viewportRef}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={onPointerUp}
-        >
-          <ol
-            ref={trackRef}
-            className={`${styles.track} ${carousel ? '' : styles.trackStacked}`}
+      {/* The wrapper is tall; the inner sticks to the viewport while the page
+          scrolls through it, and that vertical progress is what moves the
+          track sideways. */}
+      <div
+        ref={pinRef}
+        className={`${styles.pin} ${pinned ? styles.pinActive : ''}`}
+        style={{ ['--slides' as string]: String(labs.length) }}
+      >
+        <div className={styles.sticky}>
+          <div
+            className={`${styles.viewport} ${pinned ? '' : styles.viewportStacked}`}
+            ref={viewportRef}
           >
-            {labs.map((lab, i) => (
-              <li
-                key={lab.id}
-                ref={(el) => {
-                  slideRefs.current[i] = el
-                }}
-                className={`${styles.slide} ${!carousel || i === index ? styles.slideActive : ''}`}
-                // Only the centred card is in the reading order; the ones
-                // peeking in at the edges are decoration until they are paged
-                // to. Stacked, every card is real content.
-                aria-hidden={!carousel || i === index ? undefined : true}
-              >
-                {/* The card IS the practice's colour. `tone-oncolor` resolves
-                    the copy to ink, which all four fills clear at AA. */}
-                <article
-                  className={`${styles.slideInner} tone-oncolor`}
-                  style={
-                    {
-                      '--slide-fill': `var(--lab-${lab.color}-fill)`,
-                    } as CSSProperties
-                  }
+            <motion.ol
+              className={`${styles.track} ${pinned ? '' : styles.trackStacked}`}
+              style={pinned ? { x } : undefined}
+            >
+              {labs.map((lab, i) => (
+                <li
+                  key={lab.id}
+                  ref={(el) => {
+                    slideRefs.current[i] = el
+                  }}
+                  className={styles.slide}
                 >
-                  {/* The haze, soft-lit into the fill the way the hero does
-                      it, so the card carries the texture's form in its own
-                      colour rather than the texture's cyan. */}
-                  <div className={styles.slideHaze} aria-hidden="true" />
+                  {/* The card IS the practice's colour. `tone-oncolor` resolves
+                      the copy to ink, which all four fills clear at AA. */}
+                  <article
+                    className={`${styles.slideInner} tone-oncolor`}
+                    style={
+                      {
+                        '--slide-fill': `var(--lab-${lab.color}-fill)`,
+                      } as CSSProperties
+                    }
+                  >
+                    {/* Fine grit rather than the haze: the haze is a large
+                        soft image, and at any strength that read it also
+                        washed the fill out. Grain adds tooth without touching
+                        the colour. */}
+                    <div className={styles.slideGrain} aria-hidden="true" />
 
-                  <p className={styles.counter}>
-                    Practice {String(i + 1).padStart(2, '0')}
-                  </p>
+                    <p className={styles.counter}>
+                      Practice {String(i + 1).padStart(2, '0')}
+                    </p>
 
-                  <div className={styles.media}>
-                    <Image
-                      src={textures[lab.id]}
-                      alt=""
-                      fill
-                      draggable={false}
-                      sizes="(min-width: 60rem) 40vw, 85vw"
-                      className={styles.mediaImage}
-                    />
-                  </div>
+                    <div className={styles.media}>
+                      <Image
+                        src={textures[lab.id]}
+                        alt=""
+                        fill
+                        draggable={false}
+                        sizes="(min-width: 60rem) 40vw, 85vw"
+                        className={styles.mediaImage}
+                      />
+                    </div>
 
-                  <div className={styles.meta}>
-                    {/* Leads the copy column, directly above its mode. */}
-                    <h3 className={styles.title}>
-                      <LabName name={lab.name} />
-                    </h3>
-                    <p className={styles.mode}>{lab.mode}</p>
-                    <ul className={styles.services}>
-                      {lab.subservices.map((s) => (
-                        <li key={s} className={styles.service}>
-                          {s}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className={styles.desc}>{lab.description}</p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        {/* Foot: progress, counter, and the way on. Stacked, the reader has
-            already passed all four, so only the way on is left. */}
-        <div className={`${styles.foot} container`}>
-          <div className={styles.progress} aria-hidden="true" hidden={!carousel}>
-            <span
-              className={styles.progressFill}
-              style={{ transform: `scaleX(${(index + 1) / labs.length})` }}
-            />
+                    <div className={styles.meta}>
+                      {/* Leads the copy column, directly above its mode. */}
+                      <h3 className={styles.title}>
+                        <LabName name={lab.name} />
+                      </h3>
+                      <p className={styles.mode}>{lab.mode}</p>
+                      <ul className={styles.services}>
+                        {lab.subservices.map((s) => (
+                          <li key={s} className={styles.service}>
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className={styles.desc}>{lab.description}</p>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </motion.ol>
           </div>
 
-          <div className={styles.footRow}>
-            <p className={styles.count} hidden={!carousel}>
-              [ {String(index + 1).padStart(2, '0')} /{' '}
-              {String(labs.length).padStart(2, '0')} ]
-            </p>
+          {/* Foot: progress, counter, and the way on. */}
+          <div className={`${styles.foot} container`}>
+            <div className={styles.progress} aria-hidden="true" hidden={!pinned}>
+              <motion.span
+                className={styles.progressFill}
+                style={pinned ? { scaleX: fill } : { scaleX: 1 }}
+              />
+            </div>
 
-            <a href={anchors.snapshot} className={styles.footLink}>
-              Book a Snapshot
-              <ArrowUpRight />
-            </a>
+            <div className={styles.footRow}>
+              <p className={styles.count} hidden={!pinned}>
+                [ {String(active).padStart(2, '0')} /{' '}
+                {String(labs.length).padStart(2, '0')} ]
+              </p>
+
+              <a href={anchors.snapshot} className={styles.footLink}>
+                Book a Snapshot
+                <ArrowUpRight />
+              </a>
+            </div>
           </div>
         </div>
       </div>

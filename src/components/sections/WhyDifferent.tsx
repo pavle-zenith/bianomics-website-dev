@@ -18,8 +18,7 @@ export function WhyDifferent() {
               <AntiAgencyBadge label={brand.lockupComparison} />
             </div>
             <h2 id="why-heading" className={styles.heading}>
-              One senior team runs the whole picture, and stays as long as you
-              want us in it.
+              The same team runs it all, and stays as long as you need us.
             </h2>
           </div>
 

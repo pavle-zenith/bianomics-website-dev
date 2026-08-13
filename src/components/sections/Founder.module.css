@@ -107,9 +107,7 @@
   color: var(--white);
 }
 .role {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-normal);
   color: rgb(255 255 255 / 0.72);
 }

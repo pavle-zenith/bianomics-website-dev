@@ -3,7 +3,6 @@
 }
 
 .quote {
-  font-family: var(--font-quote);
   font-weight: var(--weight-regular);
   font-size: var(--text-2xl);
   line-height: var(--leading-snug);
