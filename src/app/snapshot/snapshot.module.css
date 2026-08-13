@@ -1,0 +1,383 @@
+/* ============================================================
+   /snapshot — the standalone application page.
+   Centred throughout: the form is the only thing being asked
+   for, so nothing competes with it for the left margin the way
+   the landing page's sections do.
+   ============================================================ */
+
+.hero {
+  position: relative;
+  background-color: var(--color-bg);
+  overflow: clip;
+  padding-top: clamp(7.5rem, 5rem + 8vw, 11rem);
+  padding-bottom: var(--section-y);
+}
+
+/* Lifts the middle back toward white so the headline and the form both clear
+   whatever the haze is doing behind them. Centred rather than raked off to one
+   side, because the content is centred here. */
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 30%,
+      rgb(255 255 255 / 0.92) 0%,
+      rgb(255 255 255 / 0.6) 55%,
+      rgb(255 255 255 / 0.1) 100%
+    ),
+    linear-gradient(to bottom, transparent 60%, var(--color-bg) 98%);
+}
+
+.heroDots {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40%;
+  z-index: 0;
+  pointer-events: none;
+  color: var(--color-accent-fill);
+  --halftone-opacity: 0.2;
+  --halftone-mask: linear-gradient(to top, transparent 6%, #000 48%, transparent 100%);
+}
+
+.heroInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.heroCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.eyebrow {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 0.6);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Tier 1. Held a step under the landing hero: this page opens on a task, not
+   on the brand statement. */
+.heading {
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+  font-weight: var(--weight-heading);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text);
+  max-width: 18ch;
+  text-wrap: balance;
+}
+.headingRest {
+  color: var(--color-accent-fill);
+}
+
+.intro {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+.assurances {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-2);
+}
+@media (min-width: 52rem) {
+  .assurances {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+}
+
+.assurance {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+.assurance svg {
+  color: var(--color-accent-fill);
+  flex: none;
+}
+
+/* --- The form, centred and on white so it lifts off the haze --- */
+.formCard {
+  width: 100%;
+  max-width: 46rem;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+/* --- What the read covers --- */
+.coverHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.coverHeading {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  max-width: 20ch;
+}
+
+.coverIntro {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 54ch;
+  text-wrap: pretty;
+}
+
+/* Hairline cells rather than floating cards: the rules do the separating,
+   which is the same call the landing page's FAQ makes. */
+.coverGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 48rem) {
+  .coverGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 72rem) {
+  .coverGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.coverItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5) var(--space-7);
+  border-bottom: 1px solid var(--color-border);
+}
+@media (min-width: 48rem) {
+  /* The inner rules; the outer edges stay open so the grid reads as part of
+     the page rather than as a boxed table. */
+  .coverItem:not(:nth-child(2n)) {
+    border-right: 1px solid var(--color-border);
+  }
+}
+@media (min-width: 72rem) {
+  .coverItem:not(:nth-child(2n)) {
+    border-right: none;
+  }
+  .coverItem:not(:nth-child(3n)) {
+    border-right: 1px solid var(--color-border);
+  }
+}
+
+/* Icon left, counter right, centred on each other so the cell opens on one
+   line rather than two stacked marks. */
+.coverTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* The one filled shape in the cell, so the grid has an entry point before the
+   type. Square-ish rather than a pill: this is a mark, not a control. */
+.coverIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-control);
+  background: var(--color-bg-inverse);
+  color: var(--color-bg);
+}
+
+.coverIndex {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-accent-text);
+}
+
+.coverTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+  max-width: 22ch;
+}
+
+.coverBody {
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+/* --- FAQ --- */
+.faqGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+@media (min-width: 60rem) {
+  .faqGrid {
+    grid-template-columns: 0.8fr 1fr;
+    gap: var(--space-9);
+    align-items: start;
+  }
+}
+
+.faqIntro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.faqHeading {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  max-width: 14ch;
+}
+
+.faqText {
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 34ch;
+}
+
+.faqActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.faqList {
+  border-top: 1px solid var(--color-border);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faqQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-block: var(--space-5);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  cursor: pointer;
+  list-style: none;
+}
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+/* A plus that becomes a minus, drawn from two rules so it needs no glyph. */
+.faqIcon {
+  position: relative;
+  width: 0.85rem;
+  height: 0.85rem;
+  flex: none;
+}
+.faqIcon::before,
+.faqIcon::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1px;
+  background: var(--color-text);
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+.faqIcon::after {
+  transform: rotate(90deg);
+}
+.faqItem[open] .faqIcon::after {
+  transform: rotate(0deg);
+}
+
+.faqAnswer {
+  padding-bottom: var(--space-5);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+/* --- Closing band --- */
+.closing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
+  border-radius: var(--radius-card);
+  background: var(--ink-950);
+  /* The projects section's grain, at its strength. */
+  --bed-dark-src: var(--texture-dark-02);
+  --bed-opacity: 0.55;
+}
+@media (min-width: 52rem) {
+  .closing {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+}
+
+.closingCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.closingHeading {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  color: var(--tone-text);
+  max-width: 16ch;
+}
+
+.closingBody {
+  line-height: var(--leading-relaxed);
+  color: var(--tone-text-muted);
+  max-width: 52ch;
+  text-wrap: pretty;
+}

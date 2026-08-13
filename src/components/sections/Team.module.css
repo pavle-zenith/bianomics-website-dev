@@ -55,7 +55,10 @@
   margin-top: var(--space-7);
   list-style: none;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  /* Proximity, not mandatory: under mandatory snapping the nearest snap point
+     to the true scroll end sits before it, so the last card could never come
+     off the right edge and stayed half cut. */
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   /* Start at the container's left edge, but let cards bleed off the right.
      scroll-padding keeps snapped cards aligned to that same edge. */
@@ -63,7 +66,9 @@
     var(--container-pad),
     calc((100vw - var(--container-max)) / 2 + var(--container-pad))
   );
-  padding-inline-end: var(--container-pad);
+  /* Room past the last card so it can travel clear of the right edge rather
+     than stopping against it. */
+  padding-inline-end: max(var(--container-pad), 24vw);
   scroll-padding-inline-start: max(
     var(--container-pad),
     calc((100vw - var(--container-max)) / 2 + var(--container-pad))
@@ -78,31 +83,42 @@
   flex: none;
   width: clamp(13rem, 10rem + 12vw, 19rem);
   scroll-snap-align: start;
+}
+
+/* The whole card is the control that opens the bio. */
+.cardButton {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
 }
 
 /* Label above the photo, aligned to the card's left edge. */
 .label {
-  text-align: left;
+  display: block;
   min-width: 0;
   overflow: hidden;
 }
 .name {
+  display: block;
   font-size: var(--text-base);
   font-weight: var(--weight-bold);
   color: var(--color-text);
   white-space: nowrap;
 }
 .role {
+  display: block;
   font-size: var(--text-sm);
   color: var(--color-text-muted);
-  white-space: nowrap;
+  /* Some titles are long, so they wrap rather than run off the card. */
+  line-height: var(--leading-snug);
 }
 
 .photoWrap {
   position: relative;
+  display: block;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--ink-100);
@@ -117,13 +133,143 @@
     filter var(--dur-base) var(--ease-standard),
     transform var(--dur-base) var(--ease-standard);
 }
-.card:hover .photo {
+.cardButton:hover .photo,
+.cardButton:focus-visible .photo {
   filter: grayscale(0);
   transform: scale(1.03);
+}
+
+/* Rides in at the foot of the photo to say the card is openable. */
+.readBio {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 1;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-control);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  background: rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(0.4rem);
+  transition:
+    opacity var(--dur-base) var(--ease-standard),
+    transform var(--dur-base) var(--ease-standard);
+}
+.cardButton:hover .readBio,
+.cardButton:focus-visible .readBio {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (min-width: 48rem) {
   .photoWrap {
     aspect-ratio: 3 / 4;
   }
+}
+
+/* --- Bio panel, in from the right --- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(6 7 9 / 0.55);
+  cursor: pointer;
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(34rem, 100%);
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-left: 1px solid var(--color-border);
+  will-change: transform;
+}
+
+.close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-control);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  background: rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(12px);
+  color: var(--white);
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+.close:hover {
+  background: rgb(255 255 255 / 0.26);
+}
+
+.panelScroll {
+  overflow-y: auto;
+  height: 100%;
+  overscroll-behavior: contain;
+}
+
+/* Portrait rather than landscape, but not the full 4/5: at that height the
+   longer bios ran off the foot of the panel. This crops from the bottom of
+   the frame, which is chest and shoulders on every one of these headshots,
+   and keeps the face intact. */
+.panelPhoto {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--ink-100);
+}
+.panelImg {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.panelBody {
+  padding: var(--space-6) clamp(1.5rem, 1rem + 2vw, 2.5rem) var(--space-8);
+}
+
+.panelRole {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+}
+
+.panelName {
+  margin-top: var(--space-2);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+.panelBio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  text-wrap: pretty;
 }

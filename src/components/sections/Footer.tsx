@@ -3,21 +3,21 @@ import type { NavLink } from '@/content/types'
 import { brand, contact } from '@/content/site'
 import { anchors } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
-import bg from '../../../public/hero/hero-bg.png'
 import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Footer.module.css'
 
 /**
  * Footer: a full-bleed texture carrying the closing statement and CTA on the
  * left, the link columns on the right, and the wordmark oversized across the
- * bottom edge. The texture is the hero's, so the page ends where it opened.
+ * bottom edge. It takes the same dark grain as the projects section, so the
+ * two dark bands read as one material.
  */
 export function Footer({ links }: { links: NavLink[] }) {
   const year = 2026
 
   return (
     <footer
-      className={styles.footer}
+      className={`${styles.footer} tone-dark bed bed-dark`}
       aria-labelledby="footer-heading"
       data-nav-tone="dark"
     >
@@ -25,9 +25,8 @@ export function Footer({ links }: { links: NavLink[] }) {
         Footer
       </h2>
 
-      {/* Texture + scrim, behind everything. */}
+      {/* Scrim over the grain bed, behind everything. */}
       <div className={styles.bg} aria-hidden="true">
-        <Image src={bg} alt="" fill sizes="100vw" className={styles.bgImage} />
         <div className={styles.scrim} />
       </div>
 

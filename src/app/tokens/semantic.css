@@ -29,6 +29,19 @@
   --color-border-strong: var(--ink-300);
   --color-border-inverse: rgb(255 255 255 / 0.14);
 
+  /* --- Tone (contextual) ---
+     The roles above are absolute: -inverse always means light-on-dark.
+     These are relative: they resolve to whichever pair suits the canvas
+     the element is sitting on, and .section-inverse / .tone-dark flip them
+     (see utilities.css). Components reference these, so re-tinting a
+     section from light to dark is a one-line class change instead of an
+     edit to every colour declaration in its module. */
+  --tone-text: var(--color-text);
+  --tone-text-muted: var(--color-text-muted);
+  --tone-text-subtle: var(--color-text-subtle);
+  --tone-border: var(--color-border);
+  --tone-border-strong: var(--color-border-strong);
+
   /* --- Brand accents ---
      *-fill  = decorative fills / large shapes (raw brand OK)
      *-text  = text / small UI on white (AA-safe darker step) */
@@ -67,7 +80,7 @@
   --lab-vision-text: var(--red-700);
   --lab-stage-fill: var(--gooseberry); /* Stage: Gooseberry green */
   --lab-stage-text: var(--green-800);
-  --lab-blueprint-fill: var(--blue-800); /* Blueprint: darker Bondi (#00738B) */
+  --lab-blueprint-fill: var(--bondi-blue); /* Blueprint: Bondi (#0094B3) */
   --lab-blueprint-text: var(--blue-900);
   --lab-groundwork-fill: var(--trendy-orange); /* Groundwork: Trendy Orange */
   --lab-groundwork-text: var(--orange-700);

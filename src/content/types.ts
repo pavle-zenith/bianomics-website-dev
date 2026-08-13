@@ -44,6 +44,17 @@ export interface Testimonial {
   rating?: string
 }
 
+/**
+ * One capability pill in the About section. Which capabilities get surfaced
+ * here is an editorial call rather than something derivable from `labs`, so
+ * they are authored, but each carries the practice it belongs to and takes
+ * that practice's colour.
+ */
+export interface AboutCapability {
+  label: string
+  color: LabColorKey
+}
+
 /** A single headline number in the About band. */
 export interface AboutStat {
   /** The number itself, e.g. "6" or "4 + 1". */
@@ -137,5 +148,7 @@ export interface TeamMember {
   role: string
   /** Image key resolved to a portrait in public/team/. */
   photo: string
+  /** Full bio, one string per paragraph. Shown in the detail panel. */
+  bio: readonly string[]
   linkedinUrl?: string
 }

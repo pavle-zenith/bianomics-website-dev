@@ -25,7 +25,12 @@ export function Results({ results }: { results: ResultsContent }) {
   const { caseStudies } = results
 
   return (
-    <section id="results" className="section" aria-labelledby="results-heading">
+    <section
+      id="results"
+      className={`${styles.results} section section-inverse bed bed-dark`}
+      aria-labelledby="results-heading"
+      data-nav-tone="dark"
+    >
       <div className="container">
         <Reveal variant="mask">
           <h2 id="results-heading" className={styles.heading}>

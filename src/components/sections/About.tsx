@@ -1,86 +1,78 @@
-import Image from 'next/image'
+import type { CSSProperties } from 'react'
 import { about } from '@/content/site'
-import { getResults } from '@/content'
-import { anchors } from '@/lib/routes'
-import type { AboutStat, Testimonial } from '@/content/types'
+import { routes } from '@/lib/routes'
+import type { AboutStat } from '@/content/types'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
-import ctaBg from '../../../public/about/team.png'
 import styles from './About.module.css'
 
 /**
- * About — the statement, the supporting line, then the evidence row:
- * a bare testimonial rail on the left and the two headline numbers as cards,
- * each with its own numeral ghosted in behind and clipped by the card edge.
+ * About — the statement runs the width with the Snapshot CTA parked on its
+ * last line, then the range of the work as capability pills on the left and a
+ * single headline number on the right.
+ *
+ * Each pill carries the practice it belongs to and takes that practice's
+ * colour on hover, so the section previews the coding that the practices
+ * block further down uses at full strength.
  */
 export function About() {
-  // Testimonials live in the results content. Empty is the expected state
-  // until approved quotes land, and the rail simply drops out when it is.
-  const [testimonial] = getResults().testimonials
+  // Only the first number is shown here now; the row reads as one supporting
+  // figure beside the pills rather than a wall of cards.
+  const [stat] = about.stats
 
   return (
     <section id="about" className={`${styles.about} section`} aria-labelledby="about-heading">
       <div className="container">
-        <div className={styles.intro}>
-          <Reveal variant="mask">
-            <h2 id="about-heading" className={styles.introText}>
-              {about.introStatement}
+        <div className={styles.head}>
+          <Reveal className={styles.headMain} variant="mask">
+            <p className={styles.eyebrow}>{about.introLabel}</p>
+            <h2 id="about-heading" className={styles.heading}>
+              {about.introBody}
             </h2>
           </Reveal>
 
-          {/* Full-width band: the photograph is carried at low opacity so the
-              copy stays the subject and the type keeps its contrast. */}
-          <Reveal delay={0.12} className={styles.band}>
-            {/* Dark enough to drive the nav's tone while it is under the line. */}
-            <span data-nav-tone="dark" className={styles.bandTone} aria-hidden="true" />
-            <div className={styles.bandBg} aria-hidden="true">
-              <Image
-                src={ctaBg}
-                alt=""
-                fill
-                sizes="100vw"
-                className={styles.bandImg}
-                placeholder="blur"
-              />
-            </div>
-            <div className={styles.bandScrim} aria-hidden="true" />
-
-            <div className={styles.bandInner}>
-              <div className={styles.introSubText}>
-                <p className={styles.introLabel}>{about.introLabel}</p>
-                <p className={styles.introBody}>{about.introBody}</p>
-                <p className={styles.introClose}>{about.introClose}</p>
-              </div>
-
-              <Button
-                href={anchors.snapshot}
-                variant="primary"
-                event="cta_primary_click"
-                location="snapshot"
-                arrow
-              >
-                {about.introCta}
-              </Button>
-            </div>
+          <Reveal delay={0.12} className={styles.headCta}>
+            <Button
+              href={routes.snapshot}
+              variant="primary"
+              event="cta_primary_click"
+              location="snapshot"
+              arrow
+            >
+              {about.introCta}
+            </Button>
           </Reveal>
         </div>
 
-        <div className={`${styles.evidence} ${testimonial ? '' : styles.evidenceNoRail}`}>
-          {testimonial ? (
-            <Reveal className={`${styles.card} ${styles.quoteCard}`}>
-              <Quote testimonial={testimonial} />
-            </Reveal>
-          ) : null}
+        <Reveal delay={0.08}>
+          <p className={styles.close}>{about.introClose}</p>
+        </Reveal>
 
-          {about.stats.map((stat, i) => (
-            <Reveal
-              key={stat.value}
-              delay={0.08 + i * 0.08}
-              className={`${styles.card} ${styles.statCard}`}
-            >
+        <div className={styles.body}>
+          <ul className={styles.pills}>
+            {about.capabilities.map((capability, i) => (
+              <Reveal
+                as="li"
+                key={capability.label}
+                delay={(i % 2) * 0.06}
+                className={styles.pill}
+                style={
+                  {
+                    '--pill-fill': `var(--lab-${capability.color}-fill)`,
+                  } as CSSProperties
+                }
+              >
+                <span className={styles.pillMark} aria-hidden="true" />
+                <span className={styles.pillLabel}>{capability.label}</span>
+              </Reveal>
+            ))}
+          </ul>
+
+          {stat ? (
+            <Reveal delay={0.12} className={styles.statCard}>
               <StatCard stat={stat} />
             </Reveal>
-          ))}
+          ) : null}
         </div>
       </div>
     </section>
@@ -104,36 +96,6 @@ function StatCard({ stat }: { stat: AboutStat }) {
       </p>
       <p className={styles.statLabel}>{stat.label}</p>
     </>
-  )
-}
-
-function Quote({ testimonial }: { testimonial: Testimonial }) {
-  return (
-    <figure className={styles.quoteFigure}>
-      <Mark className={styles.markTop} />
-      <Mark className={styles.markBottom} />
-
-      {testimonial.rating ? (
-        <p className={styles.rating}>
-          <span className={styles.stars} aria-hidden="true">
-            ★★★★★
-          </span>
-          <span className={styles.ratingValue}>{testimonial.rating}</span>
-          <span className={styles.ratingOutOf}>/ 5</span>
-        </p>
-      ) : null}
-
-      <blockquote className={styles.quote}>{testimonial.quote}</blockquote>
-
-      <figcaption className={styles.attribution}>
-        <span className={styles.attributionName}>{testimonial.attribution}</span>
-        {testimonial.role || testimonial.org ? (
-          <span className={styles.attributionRole}>
-            {[testimonial.role, testimonial.org].filter(Boolean).join(', ')}
-          </span>
-        ) : null}
-      </figcaption>
-    </figure>
   )
 }
 

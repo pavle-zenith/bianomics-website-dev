@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import type { NavLink } from '@/content/types'
 import { brand } from '@/content/site'
-import { anchors } from '@/lib/routes'
+import { anchors, routes } from '@/lib/routes'
 import { track } from '@/lib/analytics'
-import logo from '../../../public/Horizontal_Monochrome_White.png'
+import logoLight from '../../../public/Horizontal_Original_Blue.png'
+import logoDark from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Nav.module.css'
 
 /**
@@ -61,8 +62,28 @@ export function Nav({ links }: { links: NavLink[] }) {
             holds everything; above it, `display: contents` dissolves it and
             the logo and actions float as their own shells again. */}
         <div className={styles.shell}>
-          <a href={anchors.hero} className={styles.logo} aria-label={`${brand.name} home`}>
-            <Image src={logo} alt="" priority className={styles.logoImg} />
+          {/* Two marks rather than one inverted: the full-colour lockup keeps
+              its blue dot, which a filter would push to orange. Each is hidden
+              from the accessibility tree with the tone that is not showing. */}
+          {/* Absolute, not the bare anchor: the nav is on /snapshot too, where
+              a lone hash would look for a #hero that is not on the page. */}
+          <a
+            href={`${routes.home}${anchors.hero}`}
+            className={styles.logo}
+            aria-label={`${brand.name} home`}
+          >
+            <Image
+              src={logoLight}
+              alt=""
+              priority
+              className={`${styles.logoImg} ${styles.logoOnLight}`}
+            />
+            <Image
+              src={logoDark}
+              alt=""
+              priority
+              className={`${styles.logoImg} ${styles.logoOnDark}`}
+            />
           </a>
 
           <div className={styles.actions}>
@@ -80,12 +101,14 @@ export function Nav({ links }: { links: NavLink[] }) {
                 </ul>
               </nav>
 
+              {/* The Snapshot is the only ask in the chrome: a general
+                  "Contact" competed with it and won nothing. */}
               <a
-                href={anchors.snapshot}
+                href={routes.snapshot}
                 className={styles.cta}
                 onClick={() => track('cta_primary_click', { location: 'nav' })}
               >
-                Contact Us
+                Book a Snapshot
               </a>
             </div>
             <button
@@ -122,14 +145,14 @@ export function Nav({ links }: { links: NavLink[] }) {
               ))}
               <li>
                 <a
-                  href={anchors.snapshot}
+                  href={routes.snapshot}
                   className={styles.mobileCta}
                   onClick={() => {
                     track('cta_primary_click', { location: 'nav' })
                     setMenuOpen(false)
                   }}
                 >
-                  Contact Us
+                  Book a Snapshot
                 </a>
               </li>
             </ul>

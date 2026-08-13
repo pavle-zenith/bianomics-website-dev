@@ -26,10 +26,14 @@
   color: var(--color-text);
 }
 
+/* An explicit request for the dark treatment, so it carries its own tone
+   context rather than depending on an ancestor to supply one. */
 .inverse {
-  border-color: var(--color-border-inverse);
+  --tone-text: var(--color-text-inverse);
+  --tone-border: var(--color-border-inverse);
+  border-color: var(--tone-border);
   background: transparent;
 }
 .inverse .text {
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
 }

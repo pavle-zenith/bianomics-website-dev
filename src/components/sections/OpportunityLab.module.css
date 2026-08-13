@@ -30,8 +30,11 @@
   justify-content: space-between;
   gap: var(--space-8);
   padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
-  background: var(--color-bg-inverse);
-  color: var(--color-text-inverse);
+  /* Washed with the nonprofit arm's Gooseberry rather than filled with it:
+     this sits flush beside a photograph, and at full strength the two halves
+     fight each other. */
+  background: color-mix(in srgb, var(--opportunity-fill) 24%, var(--color-bg));
+  color: var(--tone-text);
 }
 
 .contentTop,
@@ -48,7 +51,7 @@
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 
 /* The panel's anchor: the ethos statement. Set a step below the section
@@ -57,14 +60,14 @@
   font-size: var(--text-xl);
   font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   max-width: 26ch;
   text-wrap: balance;
 }
 
 .footText {
   line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
   max-width: 44ch;
 }
 

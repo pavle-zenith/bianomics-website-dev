@@ -1,18 +1,19 @@
 'use client'
 
-import { useRef, type ReactNode } from 'react'
+import { useRef, type CSSProperties, type ReactNode } from 'react'
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
 import type { Step } from '@/content/types'
 import styles from './HowItWorks.module.css'
 
 /**
  * The progress rail beside the steps. A 1px vertical line is drawn twice: a
- * dim track and a brand-colored copy whose stroke fills in as the section
- * scrolls, with a node lighting at each step just before the fill arrives.
+ * dim track and a coloured copy whose stroke fills in as the section scrolls,
+ * with a node lighting at each step just before the fill arrives.
  *
- * The viewBox is 2 units wide and 100 tall, stretched to the rail's box, so
- * the geometry is resolution-independent and the stroke stays 1px via
- * vector-effect regardless of the non-uniform scale.
+ * The fill runs through the four practice colours in whatever order the steps
+ * take them, so the rail reads as the descent through the practices rather
+ * than as a generic progress bar. Built from the steps themselves, so it can
+ * never drift out of step with the content.
  */
 export function ProcessPath({
   steps,
@@ -47,7 +48,12 @@ export function ProcessPath({
         <span className={styles.railTrack} />
         <motion.span
           className={styles.railFill}
-          style={{ scaleY: reduce ? 1 : progress }}
+          style={
+            {
+              scaleY: reduce ? 1 : progress,
+              '--rail-gradient': railGradient(steps),
+            } as CSSProperties
+          }
         />
 
         {/* A node per step, sitting at that row's share of the rail. */}
@@ -58,6 +64,7 @@ export function ProcessPath({
             total={steps.length}
             progress={progress}
             reduce={!!reduce}
+            color={step.color}
           />
         ))}
       </div>
@@ -67,16 +74,31 @@ export function ProcessPath({
   )
 }
 
+/**
+ * A stop per step, each centred in its row's band of the rail, so the colour
+ * changes where the reader crosses into the next step rather than at an
+ * arbitrary fraction of the line.
+ */
+function railGradient(steps: readonly Step[]) {
+  const stops = steps.map((step, i) => {
+    const at = ((i + 0.5) / steps.length) * 100
+    return `var(--lab-${step.color}-fill) ${at.toFixed(1)}%`
+  })
+  return `linear-gradient(to bottom, ${stops.join(', ')})`
+}
+
 function Node({
   index,
   total,
   progress,
   reduce,
+  color,
 }: {
   index: number
   total: number
   progress: ReturnType<typeof useSpring>
   reduce: boolean
+  color: Step['color']
 }) {
   // Centre each node in its row's band of the rail.
   const at = (index + 0.5) / total
@@ -85,13 +107,18 @@ function Node({
   const opacity = useTransform(progress, [at - 0.14, at - 0.02], [0.2, 1])
   const scale = useTransform(progress, [at - 0.14, at - 0.02], [0.6, 1])
 
+  const position = {
+    top: `${at * 100}%`,
+    '--node-fill': `var(--lab-${color}-fill)`,
+  } as CSSProperties
+
   return (
     <motion.span
       className={styles.railNode}
       style={
         reduce
-          ? { top: `${at * 100}%`, opacity: 1 }
-          : { top: `${at * 100}%`, opacity, scale }
+          ? { ...position, opacity: 1 }
+          : { ...position, opacity, scale }
       }
     />
   )

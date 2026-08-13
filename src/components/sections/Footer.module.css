@@ -5,9 +5,13 @@
   display: flex;
   flex-direction: column;
   min-height: 70vh;
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   padding-top: var(--space-9);
   background: var(--ink-950);
+  /* The same grain the projects section takes, at the same strength, so the
+     two dark bands read as one material rather than two treatments. */
+  --bed-dark-src: var(--texture-dark-02);
+  --bed-opacity: 0.55;
 }
 
 /* The legal line and wordmark hold the base; the gap absorbs the extra
@@ -21,10 +25,6 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-}
-.bgImage {
-  object-fit: cover;
-  object-position: center;
 }
 /* Carries the type over the brightest part of the texture. */
 .scrim {
@@ -89,7 +89,7 @@
   flex-direction: column;
   gap: var(--space-4);
   padding-left: var(--space-5);
-  border-left: 1px solid var(--color-border-inverse);
+  border-left: 1px solid var(--tone-border);
 }
 
 .colHead {
@@ -97,7 +97,7 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 
 .list {
@@ -110,7 +110,7 @@
 
 .link {
   font-size: var(--text-base);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   transition: color var(--dur-fast) var(--ease-standard);
 }
 .link:hover {
@@ -124,9 +124,9 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  border: 1px solid var(--color-border-inverse);
+  border: 1px solid var(--tone-border);
   border-radius: var(--radius-pill);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   align-self: flex-start;
   transition:
     background-color var(--dur-fast) var(--ease-standard),
@@ -134,7 +134,7 @@
 }
 .toTop:hover {
   background: rgb(255 255 255 / 0.08);
-  border-color: var(--color-text-inverse);
+  border-color: var(--tone-text);
 }
 
 /* --- Legal line, above the wordmark --- */
@@ -144,7 +144,7 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 
 /* --- Oversized wordmark across the foot ---

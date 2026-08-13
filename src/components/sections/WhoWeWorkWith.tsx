@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import Image, { type StaticImageData } from 'next/image'
 import { fitSituations } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
@@ -39,7 +40,13 @@ export function WhoWeWorkWith() {
               delay={i * 0.08}
               className={styles.card}
             >
-              <div className={styles.cardInner}>
+              <div
+                className={styles.cardInner}
+                // Each role already carries one of the four practice colours.
+                style={
+                  { '--fit-fill': `var(--lab-${fit.color}-fill)` } as CSSProperties
+                }
+              >
                 <div className={styles.cardFill}>
                   <Image
                     src={photos[fit.photo] ?? founders}
@@ -50,6 +57,12 @@ export function WhoWeWorkWith() {
                   />
                 </div>
                 <div className={styles.scrim} aria-hidden="true" />
+                {/* Dot screen in the role's coded colour, rising off the foot
+                    of the frame where the caption sits. */}
+                <div
+                  className={`${styles.dots} bed bed-halftone`}
+                  aria-hidden="true"
+                />
 
                 <div className={styles.caption}>
                   <p className={styles.lead}>{fit.lead}</p>

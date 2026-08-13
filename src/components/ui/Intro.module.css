@@ -1,0 +1,122 @@
+/* ============================================================
+   First-visit intro. Pure CSS so it starts on the first paint
+   rather than after hydration; Intro.tsx only removes it after.
+   Timeline, in ms from paint:
+      0    panel visible, haze settling
+     80    lockup lifts and fades in
+    340    tagline masks up from its own baseline
+   1150    panel dissolves out under a blur while the page
+          underneath pulls into focus (see .page-shell in
+          tokens/utilities.css, which runs on the same beat)
+   1950    last keyframe ends; the component unmounts at 2000
+   ============================================================ */
+
+/* The haze is painted here rather than through the shared .bed utility. This
+   panel has to cover the whole viewport or it fails loudly, and a global
+   utility class that also sets `position` is one import-order change away from
+   winning the cascade against this rule. Nothing about this element depends on
+   another stylesheet. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-bg);
+  overflow: hidden;
+  /* Decorative and aria-hidden: it should never take a click, including in
+     the frames where it is nearly transparent. */
+  pointer-events: none;
+  will-change: opacity, filter, transform;
+  animation: dissolve 800ms var(--ease-editorial) 1150ms forwards;
+}
+
+.haze {
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture-haze);
+  background-size: cover;
+  background-position: center right;
+}
+
+/* Softens the haze toward white through the middle so the lockup sits on a
+   clean field, the way the hero's scrim does. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 50%,
+    rgb(255 255 255 / 0.9) 0%,
+    rgb(255 255 255 / 0.55) 55%,
+    rgb(255 255 255 / 0.05) 100%
+  );
+}
+
+.lockup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  padding-inline: var(--container-pad);
+  animation: rise 620ms var(--ease-editorial) 80ms both;
+}
+
+.logo {
+  height: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  width: auto;
+}
+
+/* The mask sits on the wrapper and the inner span does the travelling, so the
+   line rises out of its own baseline instead of sliding in from nowhere. */
+.tagline {
+  overflow: hidden;
+}
+.taglineInner {
+  display: block;
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: clamp(1.125rem, 0.95rem + 0.9vw, 1.625rem);
+  line-height: 1.3;
+  color: var(--color-accent-text);
+  text-align: center;
+  animation: maskUp 700ms var(--ease-editorial) 340ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes maskUp {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Blurs as it goes rather than just fading: the panel and the page cross
+   through the same defocus, so it reads as one image resolving instead of two
+   layers swapping. */
+@keyframes dissolve {
+  to {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(1.04);
+  }
+}
+
+/* Nothing would remove the panel without scripts, so it never shows. */
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}

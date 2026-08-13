@@ -62,6 +62,19 @@
   );
 }
 
+/* Sits above the scrim and below the caption. Its own bed is z-index -1 inside
+   this element's stacking context, so it stays inside these bounds. */
+.dots {
+  position: absolute;
+  inset: 40% 0 0 0;
+  z-index: 1;
+  pointer-events: none;
+  color: var(--fit-fill);
+  --halftone-opacity: 0.22;
+  --halftone-size: 8px;
+  --halftone-mask: linear-gradient(to top, #000 8%, transparent 82%);
+}
+
 .caption {
   position: absolute;
   left: var(--space-6);
@@ -70,7 +83,18 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-1);
+}
+
+/* The role's coded accent, as a short rule over the caption. The colour was
+   authored on every situation and had no expression on the card until now. */
+.caption::before {
+  content: '';
+  width: 2.5rem;
+  height: 3px;
+  margin-bottom: var(--space-3);
+  background: var(--fit-fill);
 }
 
 .lead {

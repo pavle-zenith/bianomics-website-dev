@@ -74,7 +74,7 @@
      Sharp editorial: content surfaces are square, controls are fully round.
      That contrast is the system's shape language — editorial surfaces stay
      flat and sharp; anything you can click is a pill. */
-  --radius-card: 0; /* cards, images, panels, media */
+  --radius-card: 4px; /* cards, images, panels, media */
   --radius-control: 0.5rem; /* buttons, nav group, controls — blocky, not pill */
   --radius-pill: 999px; /* tags and chips only */
   --radius-sm: 2px; /* focus rings and hairline-scale details only */

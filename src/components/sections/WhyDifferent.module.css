@@ -97,11 +97,12 @@
   color: var(--color-text);
 }
 
-/* Matched to the cap height of "A TYPICAL AGENCY" opposite it. */
+/* Matched to the cap height of "A TYPICAL AGENCY" opposite it. The full-colour
+   lockup goes in as-authored now, so the inversion that used to fake a dark
+   mark out of the white one is gone. */
 .panelLogo {
   height: 1.15rem;
   width: auto;
-  filter: invert(1);
 }
 
 .rows {

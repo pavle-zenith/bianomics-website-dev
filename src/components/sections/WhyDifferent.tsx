@@ -4,7 +4,7 @@ import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
-import logo from '../../../public/Horizontal_Monochrome_White.png'
+import logo from '../../../public/Horizontal_Original_Blue.png'
 import styles from './WhyDifferent.module.css'
 
 export function WhyDifferent() {

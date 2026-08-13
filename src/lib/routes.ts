@@ -19,8 +19,9 @@ export const anchors = {
   faq: '#faq',
 } as const
 
-/** Phase-2 routes (not yet built). */
+/** Real routes. Everything below `snapshot` is Phase-2 and not yet built. */
 export const routes = {
+  snapshot: '/snapshot',
   home: '/',
   firm: '/firm',
   work: '/work',

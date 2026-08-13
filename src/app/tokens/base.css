@@ -34,6 +34,24 @@ body {
   overflow-x: clip;
 }
 
+/* Grain over the whole page, fixed to the viewport so it reads as a property
+   of the surface rather than something that scrolls with the content. One
+   rule instead of a bed per section, and it costs nothing: the tile is
+   generated (see tokens/texture.css). No blend mode — a fixed full-viewport
+   blended layer would force the whole page to composite, and the pinned
+   sections cannot afford that. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  /* Over the content, under the nav: the floating chrome and the mobile menu
+     stay crisp while everything they sit on top of takes the grain. */
+  z-index: calc(var(--z-nav) - 1);
+  background-image: var(--texture-grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
 h1,
 h2,
 h3,

@@ -4,9 +4,24 @@
   position: relative;
 }
 
-/* --- Section head --- */
+/* --- Section head: title left, carousel arrows parked on its last line --- */
 .head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
   margin-bottom: var(--space-8);
+}
+@media (min-width: 52rem) {
+  .head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+}
+
+.headMain {
+  min-width: 0;
 }
 
 .heading {
@@ -14,8 +29,22 @@
   font-weight: var(--weight-heading);
   line-height: 1.02;
   letter-spacing: var(--tracking-display);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   max-width: 16ch;
+}
+
+/* Halftone rising behind the section head, tinted with the brand blue. Keeps
+   the tinted canvas from reading as flat grey now that the colour has moved
+   into the cards. */
+.headDots {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 22rem;
+  z-index: 0;
+  pointer-events: none;
+  color: var(--color-accent-fill);
+  --halftone-opacity: 0.14;
+  --halftone-mask: linear-gradient(to bottom, #000, transparent);
 }
 
 /* The one quiet philosophy line. */
@@ -25,69 +54,73 @@
   font-style: italic;
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
   max-width: 46ch;
 }
 
-/* --- Pinned scroll region ---
-   The wrapper is tall; the inner sticks to the viewport while the page
-   scrolls through it, and that vertical progress is what moves the track
-   sideways. Only above PIN_MIN_WIDTH, and never under reduced motion. */
-.pin {
-  position: relative;
-}
-.pinActive {
-  /* One viewport of scroll per slide, plus a little to settle on the last. */
-  height: calc((var(--slides) + 0.5) * 100vh);
-}
-
-.sticky {
+/* --- Carousel ---
+   One card centred, its neighbours peeking in at both edges. The viewport is
+   full-bleed so the peek reaches the screen edge; the foot returns to the
+   container so the controls line up with the section head above them. */
+.carousel {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: var(--space-7);
 }
-.pinActive > .sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+
+.viewport {
   overflow: hidden;
+  width: 100%;
+  /* The pointer handlers own the horizontal axis; the browser keeps the
+     vertical one, so a drag never traps the page scroll. */
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+.viewport:active {
+  cursor: grabbing;
 }
 
-/* --- Track --- */
 .track {
   display: flex;
-  gap: var(--space-8);
+  align-items: stretch;
+  gap: var(--space-6);
   list-style: none;
   padding: 0;
-  /* Slides open at the container's left edge. */
-  padding-inline-start: max(
-    var(--container-pad),
-    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-  );
   will-change: transform;
-}
-/* Un-pinned: stack the practices vertically instead. */
-.pin:not(.pinActive) .track {
-  flex-direction: column;
-  gap: var(--space-9);
-  padding-inline: var(--container-pad);
 }
 
 .slide {
   flex: none;
-  width: min(88vw, 62rem);
+  /* The full content width, so the card has the room the section head has.
+     The peek at the edges comes from the viewport being full-bleed. */
+  width: min(calc(100vw - 2 * var(--container-pad)), var(--container-max));
+  /* The cards to either side stay legible as objects but hand the eye back to
+     the centred one. */
+  opacity: 0.34;
+  transition: opacity var(--dur-reveal) var(--ease-editorial);
 }
-.pin:not(.pinActive) .slide {
-  width: 100%;
+.slideActive {
+  opacity: 1;
 }
 
-/* Media left, meta right, both ending on the same baseline. */
+/* The card IS the practice's colour: the fill arrives as --slide-fill from
+   the track, and `tone-oncolor` resolves the copy to ink against it. The
+   lockup leads on the left, the index and the read sit at the foot on the
+   right, so every slide lands on the same two baselines. */
 .slideInner {
   position: relative;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-5);
+  align-content: start;
+  gap: var(--space-6);
+  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
+  border-radius: var(--radius-card);
+  background: var(--slide-fill);
+  overflow: hidden;
+  /* Contains the title's difference blend to this card. */
+  isolation: isolate;
 }
 @media (min-width: 60rem) {
   .slideInner {
@@ -96,12 +129,30 @@
   }
 }
 
+/* Between the fill and the content: the card isolates, so z-index -1 lands
+   above its own background and below everything in it.
+
+   soft-light rather than a straight tint: the haze's bright field lifts the
+   fill and its darker corner sinks it, so what lands is the texture's form in
+   the practice's colour at full saturation. A luminosity blend would have
+   taken the card to a pale wash instead, because the haze is a light image. */
+.slideHaze {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--texture-haze);
+  background-size: cover;
+  background-position: center right;
+  mix-blend-mode: soft-light;
+}
+
 .counter {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 @media (min-width: 60rem) {
   .counter {
@@ -109,27 +160,30 @@
   }
 }
 
-/* --- The oversized title --- */
+/* --- The oversized title ---
+   Straddles the frame's right edge, difference-blended in the practice's own
+   colour rather than in white. That choice is what makes both halves work:
+   over the fill, the colour differenced against itself resolves to black;
+   over the dark texture it resolves back to the colour at full strength. One
+   declaration, ink on the card and brand colour on the picture, and it
+   re-solves itself for whichever colour the slide carries. */
 .title {
   font-size: var(--text-4xl);
   font-weight: var(--weight-heading);
   line-height: 0.98;
   letter-spacing: var(--tracking-display);
-  color: var(--white);
+  color: var(--slide-fill);
+  mix-blend-mode: difference;
   max-width: 12ch;
 }
 @media (min-width: 60rem) {
   .title {
-    /* Straddles the image's right edge, blending where it crosses it.
-       Difference keeps the type legible over any part of the texture,
-       unlike a plain opacity blend. */
     position: absolute;
     top: 6rem;
     left: 30%;
     z-index: 2;
     width: 70%;
     max-width: none;
-    mix-blend-mode: difference;
     pointer-events: none;
   }
 }
@@ -140,13 +194,24 @@
   opacity: 0.85;
 }
 
-/* --- Media --- */
+/* --- Media ---
+   The texture sits in front of the fill at full strength; the colour reads in
+   the margin the card leaves around it. The files are now named for the
+   practice whose hue they actually carry, so `textures[lab.id]` lines up. */
 .media {
   position: relative;
-  aspect-ratio: 4 / 5;
+  /* Fills its column. The width has to be stated: with only a max-height and
+     a portrait ratio, the cap became the definite dimension and the ratio
+     derived a width off it, so the frame sat narrow in a wide column. */
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* Safety on short viewports, where a square off a full-width column would
+     otherwise run past the fold on its own. */
+  max-height: 62vh;
   overflow: hidden;
-  background: var(--ink-900);
   border-radius: var(--radius-card);
+  background: var(--ink-900);
+  isolation: isolate;
 }
 .mediaImage {
   object-fit: cover;
@@ -161,11 +226,9 @@
 }
 @media (min-width: 60rem) {
   .meta {
-    /* Ends on the image's baseline. Because the media has a fixed aspect
-       ratio, aligning to the end makes every slide's copy sit on the same
-       line regardless of how many services it lists. */
+    /* Ends on the frame's baseline, so the copy sits on the same line from
+       slide to slide regardless of how many services each lists. */
     align-self: end;
-    padding-bottom: 0;
   }
 }
 
@@ -174,7 +237,7 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 
 .services {
@@ -191,17 +254,17 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   text-decoration: underline;
   text-underline-offset: 0.35em;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--color-border-inverse);
+  text-decoration-color: var(--tone-border);
 }
 
 .desc {
   margin-top: var(--space-3);
   line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
   max-width: 36ch;
 }
 
@@ -213,7 +276,7 @@
 .progress {
   position: relative;
   height: 1px;
-  background: var(--color-border-inverse);
+  background: var(--tone-border);
   overflow: hidden;
 }
 .progressFill {
@@ -236,18 +299,13 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wide);
-  color: var(--color-text-inverse);
-}
-
-.footRight {
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
+  color: var(--tone-text);
 }
 
 .arrows {
   display: flex;
   gap: var(--space-3);
+  flex: none;
 }
 
 .arrow {
@@ -256,17 +314,18 @@
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid var(--color-border-inverse);
+  border: 1px solid var(--tone-border-strong);
   border-radius: var(--radius-pill);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   transition:
     background-color var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard),
-    opacity var(--dur-fast) var(--ease-standard);
+    color var(--dur-fast) var(--ease-standard);
 }
-.arrow:hover:not(:disabled) {
+.arrow:hover {
   background: var(--color-cta-bg);
   border-color: var(--color-cta-bg);
+  color: var(--color-cta-fg);
 }
 .arrow:disabled {
   opacity: 0.3;
@@ -281,9 +340,9 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   transition: color var(--dur-fast) var(--ease-standard);
 }
 .footLink:hover {
-  color: var(--color-accent-fill);
+  color: var(--color-accent-text);
 }

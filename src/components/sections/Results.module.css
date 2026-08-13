@@ -1,3 +1,10 @@
+/* The mid-page dark anchor. The grain bed is held well back — it is there to
+   keep the black from reading as flat, not to be seen. */
+.results {
+  --bed-dark-src: var(--texture-dark-02);
+  --bed-opacity: 0.55;
+}
+
 .heading {
   font-size: var(--text-3xl);
   font-weight: var(--weight-heading);
@@ -30,8 +37,20 @@
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--ink-100);
+  background: var(--ink-800);
   border-radius: var(--radius-card);
+}
+
+/* The engagement's coded accent as a rule across the head of the frame. The
+   dot on the service pills was the only place the four colours reached; this
+   is what makes the coding legible from across the grid. */
+.media::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  height: 3px;
+  background: var(--case-fill);
 }
 .mediaSquare {
   aspect-ratio: 1 / 1;
@@ -103,13 +122,16 @@
 }
 
 /* --- Copy --- */
+/* On the dark canvas the raw brand fills all clear AA, so the category takes
+   the engagement's colour outright rather than the darkened text step (which
+   is tuned for white and would go muddy here). */
 .category {
   margin-top: var(--space-5);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-accent-text);
+  color: var(--case-fill);
 }
 
 /* Card copy runs the full width of its column — no measure cap, so the
@@ -120,7 +142,7 @@
   font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
-  color: var(--color-text);
+  color: var(--tone-text);
 }
 
 /* The one-line read on the engagement, set small and wide. */
@@ -131,13 +153,13 @@
   line-height: var(--leading-normal);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--color-text-subtle);
+  color: var(--tone-text-subtle);
 }
 
 .intro {
   margin-top: var(--space-4);
   line-height: var(--leading-relaxed);
-  color: var(--color-text-muted);
+  color: var(--tone-text-muted);
 }
 
 .link {
@@ -149,15 +171,16 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text);
-  border-bottom: 1px solid var(--color-border-strong);
+  color: var(--tone-text);
+  border-bottom: 1px solid var(--tone-border-strong);
   padding-bottom: 0.3rem;
   transition:
     color var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard);
 }
 .link:hover {
-  color: var(--color-accent-text);
+  /* The raw fill, not the darkened text step: this is on black now. */
+  color: var(--color-accent-fill);
   border-color: var(--color-accent-fill);
 }
 
@@ -165,14 +188,14 @@
 .placeholder {
   margin-top: var(--space-6);
   padding: var(--space-7);
-  border: 1px dashed var(--color-border-strong);
+  border: 1px dashed var(--tone-border-strong);
   border-radius: var(--radius-card);
-  background: var(--color-bg-subtle);
+  background: transparent;
 }
 .placeholderText {
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
-  color: var(--color-text-muted);
+  color: var(--tone-text-muted);
   max-width: 52ch;
   text-wrap: pretty;
 }

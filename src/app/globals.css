@@ -9,5 +9,6 @@
 @import './tokens/palette.css';
 @import './tokens/semantic.css';
 @import './tokens/scale.css';
+@import './tokens/texture.css';
 @import './tokens/base.css';
 @import './tokens/utilities.css';

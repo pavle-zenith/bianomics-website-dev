@@ -109,12 +109,15 @@
   border-color: var(--color-border-strong);
 }
 
-/* On dark (inverse) sections, the secondary needs light-on-dark treatment */
-.section-inverse .secondary,
-:global(.section-inverse) .secondary {
-  color: var(--color-text-inverse);
-  border-color: var(--color-border-inverse);
+/* On dark canvases the secondary needs light-on-dark treatment. Both hooks
+   are listed: .section-inverse paints a dark canvas, .tone-dark marks a panel
+   that supplies its own dark background (photograph, colour fill, texture). */
+:global(.section-inverse) .secondary,
+:global(.tone-dark) .secondary {
+  color: var(--tone-text);
+  border-color: var(--tone-border);
 }
-:global(.section-inverse) .secondary:hover {
+:global(.section-inverse) .secondary:hover,
+:global(.tone-dark) .secondary:hover {
   background-color: rgb(255 255 255 / 0.08);
 }

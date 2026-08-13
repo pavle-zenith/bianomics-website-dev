@@ -1,9 +1,11 @@
 import type {
+  AboutCapability,
   AboutStat,
   ComparisonRow,
   FitSituation,
   RecognitionMark,
   Step,
+  TeamMember,
 } from './types'
 
 /** Locked brand language — used verbatim, never paraphrased. */
@@ -68,6 +70,19 @@ export const about = {
   introCta: 'Book a Snapshot',
   /** Closing line of the supporting copy, set as its own paragraph. */
   introClose: 'The people who scope the work are the people who build it.',
+  /**
+   * The capability pills. Six drawn from across the four practices, each
+   * coded to the practice it belongs to, so the section reads as the range of
+   * the work without repeating the practices block further down.
+   */
+  capabilities: [
+    { label: 'Brand strategy', color: 'vision' },
+    { label: 'Public relations', color: 'vision' },
+    { label: 'Conferences and launches', color: 'stage' },
+    { label: 'Project management', color: 'blueprint' },
+    { label: 'Operations systems', color: 'blueprint' },
+    { label: 'Workforce development', color: 'groundwork' },
+  ] satisfies AboutCapability[],
   /** The two headline numbers, shown as cards with a ghosted numeral behind. */
   stats: [
     {
@@ -198,72 +213,172 @@ export const founder = {
 } as const
 
 /**
- * Team — senior people below the founder. NOTE: names, roles, and portraits
- * are placeholders (generated headshots) pending real team content. Replace
- * with actual team members and photos before launch.
+ * Team. Bios and headshots are the real thing, taken verbatim from
+ * "Bianomics Website Team Bios-.docx". Only the paragraph breaks are ours.
+ *
+ * `members` carries the seven people whose headshots have landed. The rest of
+ * the roster is authored below in `teamPending` and is not rendered; move an
+ * entry up once its photo is in public/team/.
  */
 export const team = {
   eyebrow: 'Team',
-  heading: 'Senior people, start to finish',
+  heading: 'Leadership, start to finish',
   members: [
     {
-      id: 'member-1',
-      name: 'Marisol Reyes',
-      role: 'Creative Director',
-      photo: 'member-1',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'bianca',
+      name: 'Bianca Cervantes',
+      role: 'CEO',
+      photo: 'bianca',
+      bio: [
+        'Bianca did not want to build another agency. She wanted to build the thing that fixes what agencies get wrong. Bianomics is that answer. An embedded team that stays until you no longer need us.',
+        'She thinks in nervous systems, paying attention to what is actually driving behavior, not just what is on the surface. She never sits still on an idea either. The moment one lands, she is already three ideas past it, looking for the version that is bigger and better.',
+        'Off the clock, she is always moving. Golf, gym, yoga, running. She will stop for live music, blues to house to EDM, and she will always stop for a dog.',
+        'Her favorite title is not CEO. It is Mom, to her daughter Ava. That one runs the show.',
+      ],
     },
     {
-      id: 'member-2',
-      name: 'Daniel Cruz',
-      role: 'Head of Events',
-      photo: 'member-2',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'hamna',
+      name: 'Hamna Arif',
+      role: 'Chief of Staff',
+      photo: 'hamna',
+      bio: [
+        'Hamna is the reason nothing falls through the cracks. Timelines, deliverables, a dozen moving pieces, she keeps it all on track and keeps the team one step ahead of the deadline.',
+        'She does not just manage the chaos, she quietly fixes what causes it. She spots the clunky process before anyone else does and smooths it out so the rest of the team can move faster.',
+        'Off the clock, she is chasing sunsets, good food, and good tea. Music is always on. Cats over most humans, no argument there.',
+      ],
     },
     {
-      id: 'member-3',
-      name: 'Alicia Monroe',
-      role: 'People & Development Lead',
-      photo: 'member-3',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'desiree',
+      name: 'Desiree Delgado',
+      role: 'Chief Growth Officer',
+      photo: 'desiree',
+      bio: [
+        'Dez does not wait for growth to happen. She goes out and builds it, one real connection at a time.',
+        "Years in hospitality taught her how to read a room fast and turn a first conversation into a relationship worth keeping. Now she runs that same instinct at scale, across an entire region's pipeline.",
+        'Across the Southwest region, she is the outreach, the pipeline, the relationships that turn into retainers.',
+        'Her fuel source is simple. 5am circuit workouts and an Alani in hand to start the day, a country karaoke session she never turns down, and a new food spot always worth trying. Koko, her 20 pound Frenchie, runs the household like she pays the rent. Order everywhere, even off the clock.',
+      ],
     },
     {
-      id: 'member-4',
-      name: 'Robert Vance',
-      role: 'Operations Director',
-      photo: 'member-4',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'milan',
+      name: 'Milan',
+      role: 'Chief Operating Officer',
+      photo: 'milan',
+      bio: [
+        "Milan catches Bianca's ideas at a hundred miles an hour and turns them into a system that makes Bianomics flow. Nobody else in the building can do that quite like him.",
+        'He is built for chaos. Genuinely loves untangling it, which is exactly how he ended up the systems guy. Night owl. Obsessive researcher. Real estate nerd. Lifelong dog person. Ask him one innocent question and he will vanish for three hours and reappear with a full analysis and a spreadsheet nobody asked for. That is just how his brain runs.',
+        'He works best quietly, in the background, solving problems before anyone even knows they exist. Usually with his dog, Lea, right by his side.',
+      ],
     },
     {
-      id: 'member-5',
-      name: 'Elena Marquez',
-      role: 'Brand Strategist',
-      photo: 'member-1',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'kandolite',
+      name: 'Kandolite Carson',
+      role: 'Strategic Communications',
+      photo: 'kandolite',
+      bio: [
+        'By day she is the Queen of the In-Between. By every other hour she is an ultimate boy mom. For 18 plus years, she has built brands, told stories, and turned bold ideas into real ones across journalism, PR, media, marketing, nonprofit leadership, and creative strategy.',
+        'She is professionally curious in the best way, the kind who asks one question and somehow connects five dots nobody saw coming. A crazy idea walks in, proof it should have happened sooner walks out.',
+        'Off the clock, she is training for her first triathlon, chasing two boys and a firefighter husband, and will still defend the 90s as the greatest decade pop culture ever had. Burned CDs from Limewire, included and unashamed.',
+      ],
     },
     {
-      id: 'member-6',
-      name: 'Andre Salas',
-      role: 'Production Lead',
-      photo: 'member-2',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'vanessa',
+      name: 'Vanessa Tena',
+      role: 'Public Affairs & Crisis Strategist',
+      photo: 'vanessa',
+      bio: [
+        "Nobody warns you about Vanessa. She shows up looking like a pageant queen and leaves the room wondering how she just ran policy, built a tech solution, and had everyone laughing, all before lunch. Bianomics' actual secret weapon.",
+        'Marketing, advertising, public affairs, government leadership, tech, she has worn every one of those hats and made each look like it was made for her, Telly Award and Mrs. Texas Earth crown included.',
+        'She is also a passionate advocate for kids born with hearing loss, using her own journey to help the next generation own their story and lead with confidence.',
+        'Off the clock, she is mom first, karaoke queen second, poodle mom always, Doritos never far away. Give her five minutes and she will leave you laughing and a little obsessed.',
+      ],
     },
     {
-      id: 'member-7',
-      name: 'Nadia Brooks',
-      role: 'Communications Director',
-      photo: 'member-3',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'chris',
+      name: 'Chris Lechuga',
+      role: 'Public Relations & Communications Lead',
+      photo: 'chris',
+      bio: [
+        'Chris has spent 15 years helping schools, nonprofits, and coalitions tell the truth about their work in ways people actually listen to. El Paso native, national public affairs consultant, and a rockstar with PR who has the receipts, stories in The New York Times, CNBC, and CBS News, leaders coached through congressional testimony.',
+        'He has stood at the podium as a school district PIO on the worst day of the school year, and he has never lost the instinct that came from it. A good pitch works like a good riff, hook first, no filler. He chases impact, not headlines, not column inches.',
+        'He brings a rock and roll mindset to a suit-and-tie industry, and it shows. Clarity over noise, every single time.',
+      ],
     },
     {
-      id: 'member-8',
-      name: 'Thomas Ellery',
-      role: 'Project Manager',
-      photo: 'member-4',
-      linkedinUrl: 'https://www.linkedin.com/company/bianomics',
+      id: 'pavle',
+      name: 'Pavle Maodus',
+      role: 'Web Development & Automations',
+      photo: 'pavle',
+      bio: [
+        "Pavle's first computer session was at age 3, back in 2007. Nearly two decades later, he is a master of web design, moving fast across sites, automations, and SEO through his own studio, fast enough that clients keep forgetting he is only 22.",
+        "Four languages, three modes: zen, focus, deal-closer, whichever the moment calls for. He also helps run his family's alcohol distilling business on the side, because clearly one job was never going to be enough for him.",
+        'House music never turns off, and neither does his love for cinematography, history, and proper European pub culture with friends once the weekend hits. Work hard, play hard is not a slogan for him, it is the whole operating system.',
+      ],
     },
   ],
 } as const
+
+/**
+ * Authored and waiting on headshots. Drop an entry into `team.members` and add
+ * its photo to public/team/ (plus the import map in Team.tsx) to publish it.
+ */
+export const teamPending = [
+  {
+    id: 'leila',
+    name: 'Leila Azzam',
+    role: 'Video Editor & AI Specialist',
+    photo: 'leila',
+    bio: [
+      "Leila's origin story starts in electrical engineering. Somewhere along the way, creativity won the fight, and she never looked back.",
+      'Now she moves between video editing, 3D in Blender, and building AI automations like it is all one language. Learn how it works, master it fast, repeat. That instinct even took her across the MENA region training teams at Aramco and ADNOC on how to actually use AI, not just talk about it at a conference.',
+      'Off the clock, she is chasing 10k steps, a good book, or 18 holes. Coffee is non negotiable. She treats life like one long experiment and documents the whole thing, one photo at a time.',
+    ],
+  },
+  {
+    id: 'greg',
+    name: 'Greg Kruger',
+    role: 'Instructor, Forgotten Truth Coaching',
+    photo: 'greg',
+    bio: [
+      'Greg spent years untangling the patterns he inherited before he ever taught anyone else how to do it.',
+      'He is a U.S.M.C. veteran, a licensed NLP practitioner, and a certified breathwork facilitator. Inside Beyond Duty, he teaches breathwork as a tool, not a trend. As he puts it, this is not motivation that fades by Monday morning. It is a physiological shift your audience feels in the room.',
+      'He does not sell willpower. He teaches practical, repeatable change, the kind that actually holds.',
+    ],
+  },
+  {
+    id: 'nova',
+    name: 'Nova Rizki Ananda',
+    role: 'Creative Design Lead',
+    photo: 'nova',
+    bio: [
+      "Nova is Bianomics' secret weapon. Give her a rough idea and she will hand you back a brand system that actually holds together, branding, decks, print, digital, all of it clean, all of it hers.",
+      'She has an eye that catches the one detail everyone else missed, and she never turns it off. Every deck, every layout, every brand asset gets that same level of attention.',
+      'Off the clock, she is at the piano, in a book, or chasing down a new café. Same eye for detail, just pointed at the rest of life.',
+    ],
+  },
+  {
+    id: 'minerva',
+    name: 'Minerva',
+    role: 'Recovery & Self-Care Instructor',
+    photo: 'minerva',
+    bio: [
+      'Minerva flips the script on healing. Self-care is not the reward at the end of it. It is where it starts. She learned that the hard way, sitting with families through the toughest parts of substance abuse, and now she teaches it for a living.',
+      'Licensed cosmetologist by trade, recovery coach at heart, she treats those two worlds like they were never separate to begin with. Small, repeatable acts of care beat willpower every time.',
+      'Off the clock, she is laughing too hard to finish her own stories, hunting down the next great food spot, and yes, she really does own an exact replica of the Grail Diary from Indiana Jones.',
+    ],
+  },
+  {
+    id: 'talha',
+    name: 'Talha',
+    role: 'Lead Graphic Designer',
+    photo: 'talha',
+    bio: [
+      'Talha turns a rough idea or a wall of text into something people actually stop and look at. Deck, brand asset, print piece, doesn\'t matter, he finds the version that holds attention every time.',
+      "One rule runs everything he makes. Clarity over decoration. If it doesn't support the message, it doesn't make the cut.",
+      "He is always one tool ahead of everyone else, chasing the next thing before it's cool, powered by a coffee habit that could sponsor its own brand.",
+    ],
+  },
+] satisfies TeamMember[]
 
 /** Opportunity Lab — the nonprofit funding arm. */
 export const opportunityLab = {

@@ -22,7 +22,7 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 @media (min-width: 60rem) {
   .headLabel {
@@ -42,7 +42,7 @@
   font-weight: var(--weight-heading);
   line-height: 1.02;
   letter-spacing: var(--tracking-display);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   max-width: 20ch;
 }
 
@@ -63,7 +63,7 @@
 .headDesc {
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
   max-width: 38ch;
 }
 
@@ -73,7 +73,9 @@
   font-style: italic;
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
-  color: var(--color-accent-fill);
+  /* The AA-safe step: at 22px this is normal-size text on white, so the raw
+     Bondi fill (3.4:1) would not clear the 4.5:1 contract. */
+  color: var(--color-accent-text);
   max-width: 24ch;
 }
 
@@ -105,17 +107,18 @@
 }
 
 .railTrack {
-  background: var(--color-border-inverse);
+  background: var(--tone-border);
 }
 
-/* Grows from the top as the rows scroll past. */
+/* Grows from the top as the rows scroll past, running through the four
+   practice colours in the order the steps take them. */
 .railFill {
-  background: var(--color-accent-fill);
+  background: var(--rail-gradient, var(--color-accent-fill));
   transform-origin: top center;
   will-change: transform;
 }
 
-/* Nodes ride the rail, centred on it. */
+/* Nodes ride the rail, centred on it, each in its own step's colour. */
 .railNode {
   position: absolute;
   left: 50%;
@@ -124,7 +127,7 @@
   margin-left: -0.25rem;
   margin-top: -0.25rem;
   border-radius: 50%;
-  background: var(--color-accent-fill);
+  background: var(--node-fill, var(--color-accent-fill));
 }
 
 /* --- The tracked region: rows left, cursor preview right --- */
@@ -136,7 +139,7 @@
 .steps {
   list-style: none;
   padding: 0;
-  border-top: 1px solid var(--color-border-inverse);
+  border-top: 1px solid var(--tone-border);
 }
 @media (min-width: 60rem) {
   .steps {
@@ -147,7 +150,7 @@
 }
 
 .step {
-  border-bottom: 1px solid var(--color-border-inverse);
+  border-bottom: 1px solid var(--tone-border);
 }
 
 /* Copy at the foot of the left half, image filling the right. */
@@ -175,12 +178,15 @@
   align-items: flex-start;
 }
 
-/* --- The step's image, right half --- */
+/* --- The step's photograph, right half ---
+   The picture is left alone; the step's practice colour arrives as
+   --step-fill from the row and is carried by the rule across the head of the
+   frame, the counter, and the dot. */
 .stepMedia {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-control);
-  background: var(--ink-900);
+  background: color-mix(in srgb, var(--step-fill) 12%, var(--color-bg));
   min-height: 14rem;
 }
 @media (min-width: 60rem) {
@@ -188,6 +194,16 @@
     align-self: stretch;
     min-height: 0;
   }
+}
+
+/* The step's coded accent, over the frame. */
+.stepMedia::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  height: 3px;
+  background: var(--step-fill);
 }
 
 /* Oversized inside its frame so the drift never exposes an edge. */
@@ -209,7 +225,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wide);
-  color: var(--color-accent-fill);
+  color: var(--step-text, var(--color-accent-text));
 }
 
 /* Fills in when the row is under the cursor, as in the reference. */
@@ -217,12 +233,12 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  border: 1px solid var(--color-accent-fill);
+  border: 1px solid var(--step-fill);
   background: transparent;
   transition: background-color var(--dur-fast) var(--ease-standard);
 }
 .stepActive .stepDot {
-  background: var(--color-accent-fill);
+  background: var(--step-fill);
 }
 
 
@@ -232,12 +248,12 @@
   font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
-  color: var(--color-text-inverse);
+  color: var(--tone-text);
   max-width: 18ch;
 }
 
 .stepText {
   line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
   max-width: 42ch;
 }

@@ -18,6 +18,10 @@ type CtaLocation =
   | 'snapshot'
   | 'closing'
   | 'footer'
+  /* The standalone /snapshot page, so its conversions can be told apart from
+     the landing page's block of the same name. */
+  | 'snapshot-page-faq'
+  | 'snapshot-page-closing'
 
 export type AnalyticsEvents = {
   cta_primary_click: { location: CtaLocation }

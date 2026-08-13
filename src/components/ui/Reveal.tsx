@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 type Variant = 'rise' | 'fade' | 'mask'
 
@@ -21,6 +21,8 @@ interface RevealProps {
   variant?: Variant
   as?: 'div' | 'section' | 'li' | 'span' | 'h1' | 'h2'
   className?: string
+  /** Inline style, in practice the custom properties a caller codes an item with. */
+  style?: CSSProperties
 }
 
 /**
@@ -34,12 +36,17 @@ export function Reveal({
   variant = 'rise',
   as = 'div',
   className,
+  style,
 }: RevealProps) {
   const reduce = useReducedMotion()
 
   if (reduce) {
     const Tag = as
-    return <Tag className={className}>{children}</Tag>
+    return (
+      <Tag className={className} style={style}>
+        {children}
+      </Tag>
+    )
   }
 
   const MotionTag = motion[as] as React.ComponentType<HTMLMotionProps<'div'>>
@@ -51,7 +58,7 @@ export function Reveal({
     return (
       <MotionTag
         className={className}
-        style={{ willChange: 'clip-path, transform' }}
+        style={{ ...style, willChange: 'clip-path, transform' }}
         initial={{ clipPath: 'inset(0 0 100% 0)', y: '0.18em' }}
         whileInView={{ clipPath: 'inset(-25% 0 -25% 0)', y: 0 }}
         viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
@@ -69,6 +76,7 @@ export function Reveal({
   return (
     <MotionTag
       className={className}
+      style={style}
       initial={{ opacity: 0, y: variant === 'fade' ? 0 : distance }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10% 0px -10% 0px' }}

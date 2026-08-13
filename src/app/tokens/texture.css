@@ -1,0 +1,40 @@
+/* ============================================================
+   TEXTURE — the surface layer. Soft grain, blue haze, halftone.
+   Every value here is decorative: nothing in this file may carry
+   meaning, and nothing may sit above content. The beds in
+   utilities.css are the only consumers.
+
+   Four of the five source textures ship as images (see
+   scripts/build-textures.mjs). The fifth was a light falloff over
+   fine grain; both halves are generated below instead, so the
+   grain tiles seamlessly, never bands, and its intensity is a
+   token rather than a baked-in pixel value.
+   ============================================================ */
+
+:root {
+  /* --- Shipped beds (public/texture/, ~650KB total) --- */
+  --texture-haze: url('/texture/haze.webp');
+  --texture-dark-01: url('/texture/dark-01.webp');
+  --texture-dark-02: url('/texture/dark-02.webp');
+  --texture-dark-03: url('/texture/dark-03.webp');
+
+  /* --- Fine grain, generated ---
+     fractalNoise desaturated to grey: over light it reads as tooth, over
+     dark as film. 240px tile with stitchTiles so the seams disappear. */
+  --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+
+  /* Held low. Grain is meant to be felt, not seen: above ~0.06 it starts
+     reading as noise on the type rather than as tooth in the paper. */
+  --grain-opacity: 0.035;
+
+  /* --- Halftone dot screen ---
+     The "Dot-Screen Gradient" from the texture board, as a gradient rather
+     than an asset so it can take any of the practice colours through
+     currentColor. */
+  --halftone-size: 7px;
+  --halftone-dot: 1px;
+  --halftone-opacity: 0.18;
+
+  /* How far the haze bed carries before it dissolves into the canvas. */
+  --haze-opacity: 1;
+}

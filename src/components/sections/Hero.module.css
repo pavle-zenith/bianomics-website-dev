@@ -3,36 +3,64 @@
   position: relative;
   min-height: 100svh;
   display: flex;
-  color: var(--color-text-inverse);
-  isolation: isolate;
+  background-color: var(--color-bg);
+  color: var(--tone-text);
   overflow: clip;
 }
 
-/* --- Background image + overlay --- */
-.bg {
+/* The old hero texture, kept as an underlay in the right-hand field. Held at
+   a fraction of its strength and multiplied into the haze, so what survives is
+   the silk's structure as tonal variation in the blue rather than a picture
+   sitting on top of it. Masked off the left so it never reaches the headline. */
+.underlay {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  /* soft-light rather than multiply: the silk's bright streaks lift and its
+     folds sink, so the structure reads without the whole right-hand field
+     going dark the way a straight darkening blend would take it. */
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: linear-gradient(100deg, transparent 6%, #000 42%);
+  mask-image: linear-gradient(100deg, transparent 6%, #000 42%);
 }
-.bgImage {
+.underlayImg {
   object-fit: cover;
   object-position: center right;
 }
-.overlay {
+
+/* Lifts the left half back toward the canvas so the headline clears its
+   background whatever the haze does behind it, and settles the foot of the
+   section into white where the next one begins. */
+.scrim {
   position: absolute;
   inset: 0;
-  /* Darken left for text legibility; let the blue breathe on the right.
-     Held heavier through the middle so the accent headline clears the
-     bright streak the texture runs diagonally behind it. */
+  z-index: 0;
+  pointer-events: none;
   background:
     linear-gradient(
       100deg,
-      rgb(6 7 9 / 0.88) 0%,
-      rgb(6 7 9 / 0.72) 34%,
-      rgb(6 7 9 / 0.44) 62%,
-      rgb(6 7 9 / 0.3) 100%
+      rgb(255 255 255 / 0.94) 0%,
+      rgb(255 255 255 / 0.82) 38%,
+      rgb(255 255 255 / 0.3) 68%,
+      rgb(255 255 255 / 0.05) 100%
     ),
-    linear-gradient(to top, rgb(6 7 9 / 0.6), transparent 42%);
+    linear-gradient(to top, var(--color-bg) 2%, transparent 26%);
+}
+
+/* Dot screen rising off the bottom edge, tinted with the brand blue. Reads as
+   the transition into the section below rather than as a pattern on the hero,
+   so it is masked to the lower third and fades upward. */
+.dots {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  z-index: 0;
+  pointer-events: none;
+  color: var(--color-accent-fill);
+  --halftone-opacity: 0.22;
+  --halftone-mask: linear-gradient(to top, transparent 4%, #000 46%, transparent 100%);
 }
 
 /* --- Layout: headline at the top, subline and CTA at the base --- */
@@ -99,12 +127,12 @@
   padding-bottom: 0.25rem;
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
-  color: var(--color-text-inverse);
-  border-bottom: 1.5px solid rgb(255 255 255 / 0.5);
+  color: var(--tone-text);
+  border-bottom: 1.5px solid var(--tone-border-strong);
   transition: border-color var(--dur-fast) var(--ease-standard);
 }
 .secondaryCta:hover {
-  border-color: var(--color-text-inverse);
+  border-color: var(--tone-text);
 }
 
 /* --- Base: recognition, a rule, then the subline and CTA --- */
@@ -120,7 +148,6 @@
   grid-template-columns: 1fr;
   gap: var(--space-6);
   padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border-inverse);
 }
 @media (min-width: 52rem) {
   .bottom {
@@ -141,9 +168,10 @@
 }
 
 .clarifier {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
-  color: color-mix(in srgb, var(--color-text-inverse) 92%, transparent);
+  color: color-mix(in srgb, var(--tone-text) 92%, transparent);
   max-width: 48ch;
 }
 
@@ -166,7 +194,7 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-muted);
 }
 .marks {
   display: flex;
@@ -178,7 +206,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wide);
-  color: color-mix(in srgb, var(--color-text-inverse) 82%, transparent);
+  color: color-mix(in srgb, var(--tone-text) 82%, transparent);
   text-decoration: none;
   cursor: help;
 }

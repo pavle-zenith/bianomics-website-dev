@@ -4,11 +4,14 @@
   position: fixed;
   inset: 0 0 auto 0;
   z-index: var(--z-nav);
-  color: var(--color-text-inverse);
+  color: var(--color-text);
 }
 
 /* --- Tone, driven by whatever canvas sits under the nav line ---
-   The shells read as glass either way; only the tint and ink flip. */
+   The shells read as glass either way; only the tint and ink flip.
+   These are the absolute -inverse roles, not the contextual --tone-*
+   ones: the nav is a fixed overlay that sits inside no canvas, so its
+   tone comes from the observer rather than from an ancestor. */
 .onDark {
   --nav-shell: rgb(255 255 255 / 0.1);
   --nav-border: rgb(255 255 255 / 0.16);
@@ -24,9 +27,12 @@
   color: var(--color-text);
 }
 
-/* The lockup ships white-on-transparent, so it needs inverting on light. */
-.onLight .logoImg {
-  filter: invert(1);
+/* Two lockups, one shown per tone. The full-colour mark is black type with a
+   Bondi dot, so it cannot simply be inverted for the dark canvases: a filter
+   would take the dot to orange. */
+.onLight .logoOnDark,
+.onDark .logoOnLight {
+  display: none;
 }
 
 .header,

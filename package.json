@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "convert-fonts": "node scripts/convert-fonts.mjs"
+    "convert-fonts": "node scripts/convert-fonts.mjs",
+    "build-textures": "node scripts/build-textures.mjs",
+    "build-photos": "node scripts/build-photos.mjs"
   },
   "dependencies": {
     "better-icons": "^1.0.4",

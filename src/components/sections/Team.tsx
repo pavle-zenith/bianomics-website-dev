@@ -3,21 +3,31 @@ import { team } from '@/content/site'
 import { TeamTrack } from './TeamTrack'
 import styles from './Team.module.css'
 
-import member1 from '../../../public/team/member-1.png'
-import member2 from '../../../public/team/member-2.png'
-import member3 from '../../../public/team/member-3.png'
-import member4 from '../../../public/team/member-4.png'
+import bianca from '../../../public/team/bianca.jpg'
+import hamna from '../../../public/team/hamna.jpg'
+import desiree from '../../../public/team/desiree.jpg'
+import milan from '../../../public/team/milan.jpg'
+import kandolite from '../../../public/team/kandolite.jpg'
+import chris from '../../../public/team/chris.jpg'
+import pavle from '../../../public/team/pavle.jpg'
+import vanessa from '../../../public/team/vanessa.jpg'
 
+/** Keyed by `member.photo`. Add an entry here when a new headshot lands. */
 const photos: Record<string, StaticImageData> = {
-  'member-1': member1,
-  'member-2': member2,
-  'member-3': member3,
-  'member-4': member4,
+  bianca,
+  hamna,
+  desiree,
+  milan,
+  kandolite,
+  chris,
+  pavle,
+  vanessa,
 }
 
 /**
  * Team — square headshots on a horizontal track that runs off the right edge,
- * paged with the arrow controls beside the title.
+ * paged with the arrow controls beside the title. Selecting a card opens that
+ * person's full bio in a panel from the right.
  */
 export function Team() {
   return (

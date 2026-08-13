@@ -49,6 +49,99 @@
   color: var(--color-text-inverse);
 }
 
+/* Tone flip without a canvas. `.section-inverse` both paints a background and
+   flips the tone; these two do only the flip, for panels that carry their own
+   background (a photograph, a colour fill, a texture bed) but still need their
+   copy to resolve against it. `.tone-light` exists so a light panel can sit
+   inside a dark section without inheriting the dark tone. */
+.section-inverse,
+.tone-dark {
+  --tone-text: var(--color-text-inverse);
+  --tone-text-muted: var(--color-text-inverse-muted);
+  --tone-text-subtle: var(--color-text-inverse-muted);
+  --tone-border: var(--color-border-inverse);
+  --tone-border-strong: rgb(255 255 255 / 0.28);
+}
+
+.tone-light {
+  --tone-text: var(--color-text);
+  --tone-text-muted: var(--color-text-muted);
+  --tone-text-subtle: var(--color-text-subtle);
+  --tone-border: var(--color-border);
+  --tone-border-strong: var(--color-border-strong);
+}
+
+/* Ink on a saturated practice colour. All four brand fills clear 5.8:1 against
+   near-black (Gooseberry ~15:1, Groundwork 8.3:1, Vision 5.9:1, Bondi 5.9:1),
+   which is why the reference sets every colour card in black rather than
+   flipping the light ones. The muted steps are alpha on the same ink so they
+   stay in gamut with whichever fill they land on. */
+.tone-oncolor {
+  --tone-text: var(--ink-950);
+  --tone-text-muted: rgb(6 7 9 / 0.74);
+  --tone-text-subtle: rgb(6 7 9 / 0.62);
+  --tone-border: rgb(6 7 9 / 0.18);
+  --tone-border-strong: rgb(6 7 9 / 0.34);
+  color: var(--tone-text);
+}
+
+/* ============================================================
+   TEXTURE BEDS — decorative surfaces behind a section's content.
+   All four follow the same contract: an ::before pinned to the
+   element, z-index -1 inside an isolated stacking context, and
+   pointer-events: none. A bed can never sit above content and can
+   never intercept a click. Tokens live in tokens/texture.css.
+   ============================================================ */
+
+.bed {
+  position: relative;
+  isolation: isolate;
+}
+.bed::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* Strength is a custom property rather than a rule a consumer overrides:
+     the modules that use these beds are CSS Modules, which load in a
+     different order from this file, so anything they set by selector would
+     win or lose by chance. Custom properties settle it on the element. */
+  opacity: var(--bed-opacity, 1);
+}
+
+/* Blue haze. The light canvas's colour moment: the wash sits to the right,
+   so copy set on the left keeps a plain surface under it. */
+.bed-haze::before {
+  background-image: var(--texture-haze);
+  background-position: center right;
+}
+
+/* The three dark grains. Which one a section takes is set by
+   --bed-dark-src; the default keeps a bare .bed-dark working. */
+.bed-dark::before {
+  background-image: var(--bed-dark-src, var(--texture-dark-01));
+  background-position: center;
+}
+
+/* Halftone dot screen. Takes its colour from currentColor, so a section can
+   tint it with any practice colour by setting `color` on the bed. The mask
+   fades it out so it reads as a transition rather than a pattern fill. */
+.bed-halftone::before {
+  background-image: radial-gradient(
+    currentColor var(--halftone-dot),
+    transparent calc(var(--halftone-dot) + 0.3px)
+  );
+  /* The other beds are single cover-sized images; this one is a tile. */
+  background-repeat: repeat;
+  background-size: var(--halftone-size) var(--halftone-size);
+  opacity: var(--bed-opacity, var(--halftone-opacity));
+  -webkit-mask-image: var(--halftone-mask, linear-gradient(to bottom, #000, transparent));
+  mask-image: var(--halftone-mask, linear-gradient(to bottom, #000, transparent));
+}
+
 /* Vertical stack with a token gap */
 .stack {
   display: flex;
@@ -97,20 +190,46 @@
   font-weight: var(--weight-regular);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-text-subtle);
-}
-.section-inverse .label,
-.label-inverse {
-  color: var(--color-text-inverse-muted);
+  color: var(--tone-text-subtle);
 }
 
 /* Hairline rule. The only divider in the system: 1px, horizontal, solid. */
 .rule {
   border: 0;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--tone-border);
 }
-.section-inverse .rule {
-  border-color: var(--color-border-inverse);
+
+/* ============================================================
+   INTRO REVEAL — the page pulling into focus as the panel goes.
+   Driven by :has() rather than a class the intro toggles, so
+   when the panel unmounts the selector stops matching and the
+   filter is removed outright. That matters: `filter: blur(0)`
+   still makes this element the containing block for the fixed
+   nav, whereas no filter at all leaves the page exactly as it
+   was. The animation's end state and the natural state are the
+   same, so the handover is invisible.
+   ============================================================ */
+body:has([data-intro]) .page-shell {
+  animation: intro-focus 800ms var(--ease-editorial) 1150ms both;
+}
+
+@keyframes intro-focus {
+  from {
+    filter: blur(12px);
+    transform: scale(1.02);
+  }
+  to {
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* The panel is only ever taken down by script, so without it the page must
+   not be left sitting behind a blur that never lifts. */
+@media (prefers-reduced-motion: reduce) {
+  body:has([data-intro]) .page-shell {
+    animation: none;
+  }
 }
 
 /* Screen-reader-only content */

@@ -1,152 +1,233 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import Image, { type StaticImageData } from 'next/image'
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
 import type { Lab, LabId } from '@/content/types'
 import { anchors } from '@/lib/routes'
+import { Reveal } from '@/components/ui/Reveal'
 import styles from './WhatWeDo.module.css'
 
-/** Below this the section un-pins and the practices stack vertically. */
-const PIN_MIN_WIDTH = 960
+/** How far a drag has to travel before it counts as a page, in px. */
+const DRAG_THRESHOLD = 70
 
 /**
- * The practices as a pinned horizontal track: while the section is on screen
- * the page's vertical scroll drives the slides sideways, so all four are seen
- * before the page moves on. Falls back to a plain vertical stack on narrow
- * viewports and under prefers-reduced-motion, where hijacking scroll is
- * hostile rather than helpful.
+ * The practices as a looping carousel: one card centred in the viewport, its
+ * neighbours peeking in at both edges, paged by dragging or by the arrows on
+ * the heading's line.
+ *
+ * This replaced a scroll-pinned horizontal track. Pinning spent the reader's
+ * scroll unevenly — the last practice arrived as the section was already
+ * releasing, so Groundwork was on screen for a fraction of the time Vision
+ * got. Paging gives all four the same turn, and the loop means neither end of
+ * the set is a dead stop.
  */
 export function WhatWeDoTrack({
   labs,
   textures,
+  heading,
+  accent,
 }: {
   labs: Lab[]
   textures: Record<LabId, StaticImageData>
+  heading: string
+  accent: string
 }) {
-  const pinRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLOListElement>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const slideRefs = useRef<(HTMLLIElement | null)[]>([])
   const reduce = useReducedMotion()
 
-  const [pinned, setPinned] = useState(false)
-  const [distance, setDistance] = useState(0)
+  const [index, setIndex] = useState(0)
+  const [offset, setOffset] = useState(0)
 
-  // Decide whether to pin at all.
+  // Live drag distance. Held in state so the track follows the pointer, and
+  // mirrored in a ref so the pointerup handler reads the final value without
+  // depending on a re-render having landed first. `dragging` is state rather
+  // than the ref's flag because render reads it to suspend the easing, and a
+  // ref read during render is not a dependable value.
+  const [drag, setDrag] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const dragState = useRef({ active: false, startX: 0, distance: 0 })
+
+  // Centre the active card: shift the track by the distance between the
+  // viewport's midline and the card's own. Measured rather than computed from
+  // a slide width, so the gap and the fluid card width need no bookkeeping.
+  const centre = useCallback(() => {
+    const viewport = viewportRef.current
+    const slide = slideRefs.current[index]
+    if (!viewport || !slide) return
+    setOffset(viewport.clientWidth / 2 - (slide.offsetLeft + slide.offsetWidth / 2))
+  }, [index])
+
+  useLayoutEffect(centre, [centre])
+
   useEffect(() => {
-    const decide = () => setPinned(window.innerWidth >= PIN_MIN_WIDTH && !reduce)
-    decide()
-    window.addEventListener('resize', decide)
-    return () => window.removeEventListener('resize', decide)
-  }, [reduce])
+    window.addEventListener('resize', centre)
+    return () => window.removeEventListener('resize', centre)
+  }, [centre])
 
-  // Measure only AFTER pinning has been applied: the track lays out as a
-  // vertical stack until then, so measuring in the same pass would read a
-  // width of zero and the transform would never move.
-  useEffect(() => {
-    if (!pinned) {
-      setDistance(0)
-      return
-    }
-    const measure = () => {
-      const track = trackRef.current
-      if (!track) return
-      setDistance(Math.max(0, track.scrollWidth - window.innerWidth))
-    }
-    const raf = requestAnimationFrame(measure)
-    window.addEventListener('resize', measure)
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('resize', measure)
-    }
-  }, [pinned])
+  // Wrapping in both directions, so the set has no first or last.
+  const step = useCallback(
+    (delta: number) => setIndex((i) => (i + delta + labs.length) % labs.length),
+    [labs.length],
+  )
 
-  const { scrollYProgress } = useScroll({
-    target: pinRef,
-    // Starts once the section is pinned, ends as it releases.
-    offset: ['start start', 'end end'],
-  })
+  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    // Let the browser keep secondary buttons and pen erasers to itself.
+    if (e.button !== 0) return
+    dragState.current = { active: true, startX: e.clientX, distance: 0 }
+    setDragging(true)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
 
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  })
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragState.current.active) return
+    dragState.current.distance = e.clientX - dragState.current.startX
+    setDrag(dragState.current.distance)
+  }
 
-  // The track finishes travelling at 0.8, leaving the last fifth of the pin
-  // as a hold so the final practice sits on screen instead of sliding into
-  // place just as the section releases.
-  const x = useTransform(progress, [0, 0.8], [0, -distance], { clamp: true })
-  const fill = useTransform(progress, [0, 0.8], [0.02, 1], { clamp: true })
-
-  const [active, setActive] = useState(1)
-  useEffect(() => {
-    return progress.on('change', (v) => {
-      setActive(Math.min(labs.length, Math.floor(v * labs.length) + 1))
-    })
-  }, [progress, labs.length])
+  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragState.current.active) return
+    const { distance } = dragState.current
+    dragState.current.active = false
+    e.currentTarget.releasePointerCapture(e.pointerId)
+    setDragging(false)
+    setDrag(0)
+    if (Math.abs(distance) > DRAG_THRESHOLD) step(distance < 0 ? 1 : -1)
+  }
 
   return (
-    <div
-      ref={pinRef}
-      className={`${styles.pin} ${pinned ? styles.pinActive : ''}`}
-      style={{ ['--slides' as string]: String(labs.length) }}
-    >
-      <div className={styles.sticky}>
-        <motion.ol
-          ref={trackRef}
-          className={styles.track}
-          style={pinned ? { x } : undefined}
+    <>
+      <div className={`${styles.head} container`}>
+        <div className={styles.headMain}>
+          <Reveal variant="mask">
+            <h2 id="what-heading" className={styles.heading}>
+              {heading}
+            </h2>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <p className={styles.accent}>{accent}</p>
+          </Reveal>
+        </div>
+
+        {/* On the heading's line, where the reader is already looking when the
+            set opens, rather than at the foot after four cards of scrolling. */}
+        <div className={styles.arrows}>
+          <button type="button" className={styles.arrow} onClick={() => step(-1)}>
+            <span className="visually-hidden">Previous practice</span>
+            <Chevron direction="left" />
+          </button>
+          <button type="button" className={styles.arrow} onClick={() => step(1)}>
+            <span className="visually-hidden">Next practice</span>
+            <Chevron direction="right" />
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.carousel}>
+        <div
+          className={styles.viewport}
+          ref={viewportRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
         >
-          {labs.map((lab, i) => (
-            <li key={lab.id} className={styles.slide}>
-              <article className={styles.slideInner}>
-                <p className={styles.counter}>
-                  Practice {String(i + 1).padStart(2, '0')}
-                </p>
+          <ol
+            className={styles.track}
+            style={{
+              transform: `translate3d(${offset + drag}px, 0, 0)`,
+              // No easing while the pointer is down: the track has to track
+              // the finger exactly, or the drag feels like it is lagging.
+              transition:
+                reduce || dragging
+                  ? 'none'
+                  : `transform var(--dur-reveal) var(--ease-editorial)`,
+            }}
+          >
+            {labs.map((lab, i) => (
+              <li
+                key={lab.id}
+                ref={(el) => {
+                  slideRefs.current[i] = el
+                }}
+                className={`${styles.slide} ${i === index ? styles.slideActive : ''}`}
+                // Only the centred card is in the reading order; the ones
+                // peeking in at the edges are decoration until they are paged to.
+                aria-hidden={i === index ? undefined : true}
+              >
+                {/* The card IS the practice's colour. `tone-oncolor` resolves
+                    the copy to ink, which all four fills clear at AA. */}
+                <article
+                  className={`${styles.slideInner} tone-oncolor`}
+                  style={
+                    {
+                      '--slide-fill': `var(--lab-${lab.color}-fill)`,
+                    } as CSSProperties
+                  }
+                >
+                  {/* The haze, soft-lit into the fill the way the hero does
+                      it, so the card carries the texture's form in its own
+                      colour rather than the texture's cyan. */}
+                  <div className={styles.slideHaze} aria-hidden="true" />
 
-                <div className={styles.media}>
-                  <Image
-                    src={textures[lab.id]}
-                    alt=""
-                    fill
-                    sizes="(min-width: 60rem) 40vw, 85vw"
-                    className={styles.mediaImage}
-                  />
-                </div>
+                  <p className={styles.counter}>
+                    Practice {String(i + 1).padStart(2, '0')}
+                  </p>
 
-                {/* Above the image and blending where it crosses. */}
-                <h3 className={styles.title}>
-                  <LabName name={lab.name} />
-                </h3>
+                  <div className={styles.media}>
+                    <Image
+                      src={textures[lab.id]}
+                      alt=""
+                      fill
+                      draggable={false}
+                      sizes="(min-width: 60rem) 40vw, 85vw"
+                      className={styles.mediaImage}
+                    />
+                  </div>
 
-                <div className={styles.meta}>
-                  <p className={styles.mode}>{lab.mode}</p>
-                  <ul className={styles.services}>
-                    {lab.subservices.map((s) => (
-                      <li key={s} className={styles.service}>
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className={styles.desc}>{lab.description}</p>
-                </div>
-              </article>
-            </li>
-          ))}
-        </motion.ol>
+                  {/* Straddles the frame's right edge. */}
+                  <h3 className={styles.title}>
+                    <LabName name={lab.name} />
+                  </h3>
+
+                  <div className={styles.meta}>
+                    <p className={styles.mode}>{lab.mode}</p>
+                    <ul className={styles.services}>
+                      {lab.subservices.map((s) => (
+                        <li key={s} className={styles.service}>
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className={styles.desc}>{lab.description}</p>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ol>
+        </div>
 
         {/* Foot: progress, counter, and the way on. */}
         <div className={`${styles.foot} container`}>
           <div className={styles.progress} aria-hidden="true">
-            <motion.span
+            <span
               className={styles.progressFill}
-              style={pinned ? { scaleX: fill } : { scaleX: 1 }}
+              style={{ transform: `scaleX(${(index + 1) / labs.length})` }}
             />
           </div>
 
           <div className={styles.footRow}>
             <p className={styles.count}>
-              [ {String(pinned ? active : labs.length).padStart(2, '0')} /{' '}
+              [ {String(index + 1).padStart(2, '0')} /{' '}
               {String(labs.length).padStart(2, '0')} ]
             </p>
 
@@ -157,7 +238,7 @@ export function WhatWeDoTrack({
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -172,6 +253,20 @@ function LabName({ name }: { name: string }) {
       {name.slice(0, -1)}
       <sup className={styles.tm}>™</sup>
     </>
+  )
+}
+
+function Chevron({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true">
+      <path
+        d={direction === 'left' ? 'M10 3 5 8l5 5' : 'M6 3l5 5-5 5'}
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }
 

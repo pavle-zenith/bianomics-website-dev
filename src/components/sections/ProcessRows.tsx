@@ -1,9 +1,9 @@
 'use client'
 
-import { useRef, useState, type MouseEvent } from 'react'
+import { useRef, useState, type CSSProperties, type MouseEvent } from 'react'
 import Image, { type StaticImageData } from 'next/image'
 import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
-import type { LabColorKey, Step } from '@/content/types'
+import type { Step } from '@/content/types'
 import { Reveal } from '@/components/ui/Reveal'
 import { ProcessPath } from './ProcessPath'
 import styles from './HowItWorks.module.css'
@@ -14,15 +14,16 @@ const DRIFT = 10
 
 /**
  * The process steps as tall tabs: copy at the foot of the left half, the
- * step's image filling the right. Every image stays on screen; the cursor
- * only drifts them a few pixels, so the section breathes without moving.
+ * step's photograph filling the right. Each step already carries one of the
+ * four practice colours, which the counter, the dot, and the rule across the
+ * head of the frame take, so the section codes without tinting the pictures.
  */
 export function ProcessRows({
   steps,
-  textures,
+  photos,
 }: {
   steps: readonly Step[]
-  textures: Record<LabColorKey, StaticImageData>
+  photos: StaticImageData[]
 }) {
   const zoneRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<number | null>(null)
@@ -56,6 +57,13 @@ export function ProcessRows({
               key={step.n}
               className={`${styles.step} ${active === i ? styles.stepActive : ''}`}
               onMouseEnter={() => setActive(i)}
+              style={
+                {
+                  '--step-fill': `var(--lab-${step.color}-fill)`,
+                  // The AA-safe step of the same colour, for the counter.
+                  '--step-text': `var(--lab-${step.color}-text)`,
+                } as CSSProperties
+              }
             >
               <Reveal className={styles.stepInner} distance={32}>
                 <div className={styles.stepBody}>
@@ -73,7 +81,7 @@ export function ProcessRows({
                     style={reduce ? undefined : { x: sx, y: sy }}
                   >
                     <Image
-                      src={textures[step.color]}
+                      src={photos[i] ?? photos[0]!}
                       alt=""
                       fill
                       sizes="(min-width: 60rem) 46vw, 100vw"

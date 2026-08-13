@@ -3,221 +3,157 @@
   color: var(--color-text);
 }
 
-/* --- Intro band: statement full width, supporting line beneath --- */
-.intro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-7);
-  margin-bottom: var(--space-8);
-}
-
-/* Weight 400; tracking does the work the weight used to. Held between the
-   2xl and 3xl steps: full width at 4xl this runs to a wall of type. */
-.introText {
-  font-size: clamp(1.5rem, 1.05rem + 2.1vw, 2.875rem);
-  font-weight: var(--weight-heading);
-  line-height: 1.24;
-  letter-spacing: var(--tracking-snug);
-  color: var(--color-text);
-  text-align: left;
-  text-wrap: pretty;
-}
-
-/* --- The CTA band: one full-width rectangle carrying the photograph --- */
-.band {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  background: var(--ink-900);
-  isolation: isolate;
-}
-
-/* Invisible; exists only as a region for the nav's tone observer. */
-.bandTone {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.bandBg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-.bandImg {
-  object-fit: cover;
-  object-position: center 35%;
-}
-/* Carries the photograph well back so the copy reads as the subject. */
-.bandScrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    100deg,
-    rgb(6 7 9 / 0.92) 0%,
-    rgb(6 7 9 / 0.86) 45%,
-    rgb(6 7 9 / 0.68) 100%
-  );
-}
-
-/* Taller than the copy needs, so the photograph has room to read and the
-   content settles at the foot of the frame. */
-.bandInner {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  gap: var(--space-6);
-  min-height: 22rem;
-  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
+/* --- Head: statement runs the width, CTA parked on its last line --- */
+.head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
 }
 @media (min-width: 60rem) {
-  .bandInner {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
+  .head {
+    grid-template-columns: 1fr auto;
     gap: var(--space-8);
-    min-height: 30rem;
+    /* The button sits on the baseline of the statement's closing line. */
+    align-items: end;
   }
 }
 
-.introSubText {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+.headMain {
+  min-width: 0;
 }
 
-.introLabel {
+.eyebrow {
+  margin-bottom: var(--space-4);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--color-accent-fill);
+  color: var(--color-text-subtle);
 }
 
-.introBody {
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse-muted);
-  max-width: 52ch;
+/* Weight 400; tracking does the work the weight used to. Given a measure so
+   it breaks into three or four lines rather than running edge to edge. */
+.heading {
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
+  font-weight: var(--weight-heading);
+  line-height: 1.14;
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-text);
+  max-width: 26ch;
+  text-wrap: pretty;
 }
 
-/* The closing line carries more weight than the paragraph above it. */
-.introClose {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-relaxed);
-  color: var(--color-text-inverse);
-  max-width: 52ch;
-}
-
-/* --- Evidence row: the testimonial card, then the two stat cards --- */
-.evidence {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-5);
-  margin-top: var(--space-6);
-}
-/* Stacked, the quote reads as a footnote to the numbers, so it follows them.
-   It only leads once there is a column beside them to lead from. */
-.quoteCard {
-  order: 1;
-}
-@media (min-width: 48rem) {
-  .evidence {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .quoteCard {
-    grid-column: 1 / -1;
-  }
+.headCta {
+  display: flex;
 }
 @media (min-width: 60rem) {
-  .evidence {
-    grid-template-columns: 0.85fr 1fr 1fr;
-    gap: var(--space-6);
-  }
-  .quoteCard {
-    grid-column: auto;
-    order: 0;
-  }
-  .evidenceNoRail {
-    grid-template-columns: 1fr 1fr;
+  .headCta {
+    justify-content: flex-end;
+    padding-bottom: 0.35rem;
   }
 }
 
-/* One shell for all three cards, so the row reads as a set. */
-.card {
+/* The closing line, set as its own beat under the statement. */
+.close {
+  margin-top: var(--space-5);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+  max-width: 44ch;
+}
+
+/* --- Body: the pills carry the left, one number holds the right --- */
+.body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+@media (min-width: 60rem) {
+  .body {
+    grid-template-columns: 1.7fr 1fr;
+    gap: var(--space-7);
+    align-items: stretch;
+  }
+}
+
+.pills {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 40rem) {
+  .pills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Outlined in its own practice's colour at rest, filled with it on hover, so
+   the coding is legible across the whole set before anything is touched and
+   the hover resolves it rather than introducing it. */
+.pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 2px solid var(--pill-fill);
+  border-radius: var(--radius-control);
+  background: transparent;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
+}
+/* Filled, the copy resolves to ink on the colour. Same contract the practice
+   cards run on: all four brand fills clear AA against near-black, which is why
+   the label does not flip to white with the dot. */
+.pill:hover {
+  --tone-text: var(--ink-950);
+  background: var(--pill-fill);
+}
+
+/* Filled with the practice's colour at rest. */
+.pillMark {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--pill-fill);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard);
+}
+/* White against the fill, so the marker reads as switched on. The hairline
+   ink ring is what makes that work on Gooseberry: white on it is about 1.4:1,
+   far too light to hold an edge on its own, where the other three fills carry
+   a plain white dot at around 3.5:1. The ring is uniform rather than a
+   Stage-only exception so the six read as one set. */
+.pill:hover .pillMark {
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px rgb(6 7 9 / 0.22);
+}
+
+.pillLabel {
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--tone-text);
+}
+
+/* --- The one headline number --- */
+.statCard {
   position: relative;
   display: flex;
   flex-direction: column;
   /* The ghost numeral bleeds past the top and right edges; this clips it. */
   overflow: hidden;
-  min-height: 20rem;
+  min-height: 18rem;
   padding: var(--space-6);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   background: var(--color-bg-subtle);
-}
-@media (min-width: 60rem) {
-  .card {
-    min-height: 24rem;
-  }
-}
-
-/* --- The testimonial: rating at the head, attribution at the foot --- */
-.quoteFigure {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  height: 100%;
-}
-.quoteCard .attribution {
-  margin-top: auto;
-  padding-top: var(--space-5);
-}
-
-.rating {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
-}
-.stars {
-  color: var(--color-accent-fill);
-  letter-spacing: 0.1em;
-}
-.ratingValue {
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
-.ratingOutOf {
-  font-size: var(--text-xs);
-  color: var(--color-text-subtle);
-}
-
-.quote {
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
-  color: var(--color-text-muted);
-  max-width: 34ch;
-  text-wrap: pretty;
-}
-
-.attribution {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-.attributionName {
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
-.attributionRole {
-  font-size: var(--text-sm);
-  color: var(--color-text-subtle);
 }
 
 /* The same numeral, oversized and faded, running off the top of the card.
@@ -271,7 +207,7 @@
   margin-left: 0.2em;
 }
 
-/* Pushed to the foot so both cards' labels share a baseline. */
+/* Pushed to the foot so the label sits on the card's baseline. */
 .statLabel {
   position: relative;
   z-index: 1;

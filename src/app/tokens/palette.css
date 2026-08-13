@@ -6,11 +6,13 @@
    ============================================================ */
 
 :root {
-  /* --- Primary brand --- */
-  --bondi-blue: #0094b3; /* Vision Lab   — primary brand / logo dot */
-  --first-love: #ef4257; /* Stage        — energy / emphasis */
-  --gooseberry: #cfde56; /* Groundwork   — highlight (low contrast on white) */
-  --trendy-orange: #f28820; /* Blueprint — warm accent (low contrast on white) */
+  /* --- Primary brand ---
+     Practice mapping confirmed by Pavle 2026-08-13. The brandbook handoff
+     had these scrambled; this is the corrected structure. */
+  --bondi-blue: #0094b3; /* Blueprint  — primary brand / logo dot */
+  --first-love: #ef4457; /* Vision Lab — energy / emphasis */
+  --gooseberry: #cfde56; /* Stage      — highlight (low contrast on white) */
+  --trendy-orange: #f28820; /* Groundwork — warm accent (low contrast on white) */
 
   --white: #ffffff;
   --black: #000000;
@@ -34,7 +36,7 @@
   --red-200: #f7b5ba;
   --red-300: #f5949d;
   --red-400: #f26b7a;
-  --red-500: #ef4257; /* = first-love */
+  --red-500: #ef4457; /* = first-love */
   --red-600: #d93c4f;
   --red-700: #c43647;
   --red-800: #a92f3d;

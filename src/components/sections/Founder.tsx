@@ -1,22 +1,27 @@
+import Image from 'next/image'
 import { founder } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
+import portrait from '../../../public/team/bianca.jpg'
 import styles from './Founder.module.css'
 
 /**
  * Founder card: portrait on the left with the attribution on glass at its
- * foot, a word from the founder on the right. The portrait is a labeled
- * placeholder until the real photograph lands (plan open item #4).
+ * foot, a word from the founder on the right.
  */
 export function Founder() {
   return (
     <section id="founder" className="section" aria-labelledby="founder-heading">
       <div className="container">
         <Reveal className={styles.card}>
-          {/* Portrait slot — swap for <Image> when the photo lands. */}
           <div className={styles.portrait}>
-            <span className={styles.portraitInitials} aria-hidden="true">
-              BC
-            </span>
+            <Image
+              src={portrait}
+              alt={`${founder.name}, ${founder.role}`}
+              fill
+              sizes="(min-width: 52rem) 24rem, 100vw"
+              placeholder="blur"
+              className={styles.portraitImg}
+            />
 
             {/* Attribution rides inside the frame, on glass. */}
             <div className={styles.attribution}>

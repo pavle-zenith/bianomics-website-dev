@@ -3,41 +3,47 @@ import { brand } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
 import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
 import { HeroCtas } from './HeroCtas'
-import heroBg from '../../../public/hero/hero-bg.png'
+import heroBg from '../../../public/hero/underlay.webp'
 import styles from './Hero.module.css'
 
 /**
- * Full-bleed hero: dark abstract background image + overlay, an oversized
- * two-line headline (the Brand Anchor, the page's single H1), a primary
- * pill CTA with an arrow badge plus a text secondary CTA, and a bottom row
- * carrying the clarifier paragraph, a scroll cue, and the trust line.
+ * Full-bleed hero on a light canvas: the blue haze texture washing in from the
+ * right, a halftone screen rising off the bottom edge, an oversized two-line
+ * headline (the Brand Anchor, the page's single H1), a primary pill CTA with an
+ * arrow badge plus a text secondary CTA, and a bottom row carrying the
+ * clarifier paragraph and the trust line.
  */
 export function Hero() {
   return (
     <section
       id="hero"
-      className={styles.hero}
+      className={`${styles.hero} bed bed-haze`}
       aria-labelledby="hero-heading"
-      data-nav-tone="dark"
     >
-      <div className={styles.bg} aria-hidden="true">
+      {/* Layers over the haze bed, in paint order: the old hero texture as a
+          barely-there underlay in the right-hand field, multiplied into the
+          haze so it reads as grain in the colour rather than as an image; a
+          scrim that lifts the left half back to near-white so the headline
+          always clears its background; and the dot screen that carries the
+          eye into the section below. */}
+      <div className={styles.underlay} aria-hidden="true">
         <Image
           src={heroBg}
           alt=""
           fill
           priority
-          placeholder="blur"
           sizes="100vw"
-          className={styles.bgImage}
+          className={styles.underlayImg}
         />
-        <div className={styles.overlay} />
       </div>
+      <div className={styles.scrim} aria-hidden="true" />
+      <div className={`${styles.dots} bed bed-halftone`} aria-hidden="true" />
 
       <div className={`${styles.inner} container`}>
         <div className={styles.top}>
           <Reveal>
             <div className={styles.badgeRow}>
-              <AntiAgencyBadge label={brand.lockupHero} tone="inverse" />
+              <AntiAgencyBadge label={brand.lockupHero} />
             </div>
           </Reveal>
 
