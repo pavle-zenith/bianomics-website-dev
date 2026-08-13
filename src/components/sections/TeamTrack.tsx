@@ -45,7 +45,12 @@ export function TeamTrack({ members, photos, heading }: TeamTrackProps) {
     if (!el) return
     const card = el.querySelector<HTMLElement>(`.${styles.card}`)
     const step = card ? card.offsetWidth + 16 : el.clientWidth * 0.6
-    el.scrollBy({ left: step * 2 * direction, behavior: 'smooth' })
+
+    // Advance by however many cards are fully on screen, never more. A fixed
+    // two-card page skipped someone on a phone, where only one card fits at a
+    // time. Capped at two so the wider layouts keep the rhythm they had.
+    const visible = Math.max(1, Math.floor(el.clientWidth / step))
+    el.scrollBy({ left: step * Math.min(2, visible) * direction, behavior: 'smooth' })
   }
 
   return (

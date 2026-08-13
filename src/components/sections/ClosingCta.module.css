@@ -1,7 +1,8 @@
-/* Inset panel on the light canvas, carrying the haze bed. `.bed` supplies the
-   position and the stacking context; only the shape and floor are set here. */
+/* Full-bleed band on the light canvas, carrying the haze bed. `.bed` supplies
+   the position and the stacking context; only the shape and floor are set
+   here. No radius and no inset: the band runs to both edges of the viewport,
+   and `.content` is what holds the copy on the page's measure. */
 .panel {
-  border-radius: var(--radius-card);
   overflow: hidden;
   background-color: var(--color-bg);
   min-height: 26rem;
@@ -43,17 +44,18 @@
     linear-gradient(to top, rgb(255 255 255 / 0.75) 0%, transparent 55%);
 }
 
-/* Lockup at the top, the ask and actions at the foot. */
-/* Stretches to the panel so the lockup and foot pin to top and bottom. */
+/* Lockup at the top, the ask and actions at the foot. In normal flow rather
+   than stretched over the panel, so the band grows with its content and the
+   `container` class it also carries can do the horizontal work. */
 .content {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-8);
-  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.5rem);
+  min-height: inherit;
+  padding-block: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
 }
 
 .lockup {
@@ -85,10 +87,22 @@
   text-wrap: balance;
 }
 
+/* Stacked and full width on a phone, where a row of two wraps awkwardly and
+   neither target is comfortable. Back to a row at the breakpoint, where they
+   sit beside the ask. */
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-3);
   flex: none;
+  width: 100%;
+}
+@media (min-width: 52rem) {
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: auto;
+  }
 }

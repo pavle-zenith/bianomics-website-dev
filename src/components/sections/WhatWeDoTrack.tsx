@@ -219,12 +219,11 @@ export function WhatWeDoTrack({
                     />
                   </div>
 
-                  {/* Straddles the frame's right edge. */}
-                  <h3 className={styles.title}>
-                    <LabName name={lab.name} />
-                  </h3>
-
                   <div className={styles.meta}>
+                    {/* Leads the copy column, directly above its mode. */}
+                    <h3 className={styles.title}>
+                      <LabName name={lab.name} />
+                    </h3>
                     <p className={styles.mode}>{lab.mode}</p>
                     <ul className={styles.services}>
                       {lab.subservices.map((s) => (

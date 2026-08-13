@@ -261,7 +261,7 @@ export const team = {
     },
     {
       id: 'milan',
-      name: 'Milan',
+      name: 'Milan Petojevic',
       role: 'Chief Operating Officer',
       photo: 'milan',
       bio: [

@@ -176,9 +176,10 @@
   mix-blend-mode: soft-light;
 }
 
-/* Single column, the copy leads and the picture closes the card. The DOM
-   order is the desktop one, where the title has to sit next to the frame it
-   straddles, so the reordering is done here. */
+/* The copy leads and the picture follows, at every width: stacked on a phone
+   that reads top to bottom, and in two columns above the breakpoint it puts
+   the copy on the left and the frame on the right. The DOM keeps the media
+   first so `next/image` sits high in the document; the order is set here. */
 .counter {
   order: 0;
   font-family: var(--font-mono);
@@ -187,14 +188,11 @@
   text-transform: uppercase;
   color: var(--tone-text-muted);
 }
-.slideInner > .title {
+.slideInner > .meta {
   order: 1;
 }
-.slideInner > .meta {
-  order: 2;
-}
 .slideInner > .media {
-  order: 3;
+  order: 2;
 }
 @media (min-width: 60rem) {
   .counter {
@@ -202,32 +200,20 @@
   }
 }
 
-/* --- The oversized title ---
-   Straddles the frame's right edge, difference-blended in the practice's own
-   colour rather than in white. That choice is what makes both halves work:
-   over the fill, the colour differenced against itself resolves to black;
-   over the dark texture it resolves back to the colour at full strength. One
-   declaration, ink on the card and brand colour on the picture, and it
-   re-solves itself for whichever colour the slide carries. */
+/* --- The practice's name ---
+   Leads the copy column, sitting directly on its mode label. It used to
+   straddle the frame's edge on a difference blend, which needed the type to
+   be its own colour so it could invert whatever it crossed; in the column it
+   only ever sits on the fill, so it takes the ink role like the rest of the
+   card and the blend goes with it. */
 .title {
+  margin-bottom: var(--space-2);
   font-size: var(--text-4xl);
   font-weight: var(--weight-heading);
   line-height: 0.98;
   letter-spacing: var(--tracking-display);
-  color: var(--slide-fill);
-  mix-blend-mode: difference;
+  color: var(--tone-text);
   max-width: 12ch;
-}
-@media (min-width: 60rem) {
-  .title {
-    position: absolute;
-    top: 6rem;
-    left: 30%;
-    z-index: 2;
-    width: 70%;
-    max-width: none;
-    pointer-events: none;
-  }
 }
 .tm {
   font-size: 0.32em;

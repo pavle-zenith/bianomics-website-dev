@@ -16,18 +16,11 @@
   max-width: 20ch;
 }
 
-/* Below the breakpoint the track is a grid with everyone already on it, so
-   there is nothing left to page through. */
 .controls {
-  display: none;
+  display: flex;
   gap: var(--space-3);
   flex: none;
   padding-bottom: 0.35rem;
-}
-@media (min-width: 52rem) {
-  .controls {
-    display: flex;
-  }
 }
 
 .arrow {
@@ -55,53 +48,47 @@
   cursor: default;
 }
 
-/* --- Track: runs off the right edge of the viewport --- */
-/* On a phone the track showed about one and a half of eight people, with no
-   edge visible to say the rest were there, so below the breakpoint it becomes
-   a two-up grid and everyone is on the page. The horizontal track only earns
-   its place once several cards fit at once. */
+/* --- Track: runs off the right edge of the viewport, at every width --- */
 .track {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-5) var(--space-4);
+  display: flex;
+  gap: var(--space-4);
   margin-top: var(--space-7);
   list-style: none;
-  padding-inline: var(--container-pad);
+  overflow-x: auto;
+  /* Proximity, not mandatory: under mandatory snapping the nearest snap
+     point to the true scroll end sits before it, so the last card could
+     never come off the right edge and stayed half cut. */
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  /* Start at the container's left edge, but let cards bleed off the right.
+     scroll-padding keeps snapped cards aligned to that same edge. */
+  padding-inline-start: max(
+    var(--container-pad),
+    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+  );
+  /* Room past the last card so it can travel clear of the right edge rather
+     than stopping against it. */
+  padding-inline-end: max(var(--container-pad), 24vw);
+  scroll-padding-inline-start: max(
+    var(--container-pad),
+    calc((100vw - var(--container-max)) / 2 + var(--container-pad))
+  );
+  padding-bottom: var(--space-2);
+}
+.track::-webkit-scrollbar {
+  display: none;
 }
 
+.card {
+  flex: none;
+  /* On a phone the card is most of the width, so the portrait is large enough
+     to read a face in and the next card still shows an edge. */
+  width: clamp(15rem, 68vw, 19rem);
+  scroll-snap-align: start;
+}
 @media (min-width: 52rem) {
-  .track {
-    display: flex;
-    gap: var(--space-4);
-    overflow-x: auto;
-    /* Proximity, not mandatory: under mandatory snapping the nearest snap
-       point to the true scroll end sits before it, so the last card could
-       never come off the right edge and stayed half cut. */
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    /* Start at the container's left edge, but let cards bleed off the right.
-       scroll-padding keeps snapped cards aligned to that same edge. */
-    padding-inline-start: max(
-      var(--container-pad),
-      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-    );
-    /* Room past the last card so it can travel clear of the right edge rather
-       than stopping against it. */
-    padding-inline-end: max(var(--container-pad), 24vw);
-    scroll-padding-inline-start: max(
-      var(--container-pad),
-      calc((100vw - var(--container-max)) / 2 + var(--container-pad))
-    );
-    padding-bottom: var(--space-2);
-  }
-  .track::-webkit-scrollbar {
-    display: none;
-  }
-
   .card {
-    flex: none;
     width: clamp(13rem, 10rem + 12vw, 19rem);
-    scroll-snap-align: start;
   }
 }
 
@@ -136,10 +123,13 @@
   line-height: var(--leading-snug);
 }
 
+/* Portrait at every width. The square crop on phones was the reason the faces
+   read as small: it took a third of the height out of a frame that was
+   already the narrowest on the page. */
 .photoWrap {
   position: relative;
   display: block;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: var(--ink-100);
   border-radius: var(--radius-sm);
@@ -185,12 +175,6 @@
 .cardButton:focus-visible .readBio {
   opacity: 1;
   transform: translateY(0);
-}
-
-@media (min-width: 48rem) {
-  .photoWrap {
-    aspect-ratio: 3 / 4;
-  }
 }
 
 /* --- Bio panel, in from the right --- */
