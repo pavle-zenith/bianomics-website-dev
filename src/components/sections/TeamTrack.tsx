@@ -87,33 +87,56 @@ export function TeamTrack({ members, photos, heading }: TeamTrackProps) {
       </div>
 
       <ul ref={trackRef} className={styles.track} onScroll={updateEdges}>
-        {members.map((member) => (
-          <li key={member.id} className={styles.card}>
-            <button
-              type="button"
-              className={styles.cardButton}
-              onClick={() => setOpenId(member.id)}
-              aria-haspopup="dialog"
-            >
+        {members.map((member) => {
+          const photo = member.photo ? photos[member.photo] : undefined
+          const openable = Boolean(member.bio?.length)
+
+          const inner = (
+            <>
               <span className={styles.label}>
                 <span className={styles.name}>{member.name}</span>
                 <span className={styles.role}>{member.role}</span>
               </span>
               <span className={styles.photoWrap}>
-                <Image
-                  src={photos[member.photo] ?? Object.values(photos)[0]!}
-                  alt={`${member.name}, ${member.role}`}
-                  fill
-                  sizes="(min-width: 48rem) 20rem, 70vw"
-                  className={styles.photo}
-                />
-                <span className={styles.readBio} aria-hidden="true">
-                  Read bio
-                </span>
+                {photo ? (
+                  <Image
+                    src={photo}
+                    alt={`${member.name}, ${member.role}`}
+                    fill
+                    sizes="(min-width: 48rem) 20rem, 70vw"
+                    className={styles.photo}
+                  />
+                ) : (
+                  <Initials name={member.name} />
+                )}
+                {openable ? (
+                  <span className={styles.readBio} aria-hidden="true">
+                    Read bio
+                  </span>
+                ) : null}
               </span>
-            </button>
-          </li>
-        ))}
+            </>
+          )
+
+          return (
+            <li key={member.id} className={styles.card}>
+              {/* Nothing to open until the bio lands, so the card stays a
+                  plain block rather than a button that does nothing. */}
+              {openable ? (
+                <button
+                  type="button"
+                  className={styles.cardButton}
+                  onClick={() => setOpenId(member.id)}
+                  aria-haspopup="dialog"
+                >
+                  {inner}
+                </button>
+              ) : (
+                <div className={styles.cardStatic}>{inner}</div>
+              )}
+            </li>
+          )
+        })}
       </ul>
 
       <BioPanel member={open} photos={photos} onClose={() => setOpenId(null)} />
@@ -190,13 +213,17 @@ function BioPanel({
 
             <div className={styles.panelScroll}>
               <div className={styles.panelPhoto}>
-                <Image
-                  src={photos[member.photo] ?? Object.values(photos)[0]!}
-                  alt=""
-                  fill
-                  sizes="(min-width: 48rem) 34rem, 100vw"
-                  className={styles.panelImg}
-                />
+                {member.photo && photos[member.photo] ? (
+                  <Image
+                    src={photos[member.photo]!}
+                    alt=""
+                    fill
+                    sizes="(min-width: 48rem) 34rem, 100vw"
+                    className={styles.panelImg}
+                  />
+                ) : (
+                  <Initials name={member.name} />
+                )}
               </div>
 
               <div className={styles.panelBody}>
@@ -205,7 +232,7 @@ function BioPanel({
                   {member.name}
                 </h3>
                 <div className={styles.panelBio}>
-                  {member.bio.map((paragraph) => (
+                  {member.bio?.map((paragraph) => (
                     <p key={paragraph.slice(0, 32)}>{paragraph}</p>
                   ))}
                 </div>
@@ -215,6 +242,25 @@ function BioPanel({
         </motion.div>
       ) : null}
     </AnimatePresence>
+  )
+}
+
+/**
+ * Stands in for a headshot that has not landed yet. Initials on the section's
+ * own field rather than a grey box, so an incomplete card still belongs to the
+ * page. Never substitute another member's photo here.
+ */
+function Initials({ name }: { name: string }) {
+  const letters = name
+    .split(' ')
+    .slice(0, 2)
+    .map((word) => word[0] ?? '')
+    .join('')
+
+  return (
+    <span className={styles.initials} aria-hidden="true">
+      {letters}
+    </span>
   )
 }
 

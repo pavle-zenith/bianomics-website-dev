@@ -216,9 +216,9 @@ export const founder = {
  * Team. Bios and headshots are the real thing, taken verbatim from
  * "Bianomics Website Team Bios-.docx". Only the paragraph breaks are ours.
  *
- * `members` carries the seven people whose headshots have landed. The rest of
- * the roster is authored below in `teamPending` and is not rendered; move an
- * entry up once its photo is in public/team/.
+ * `members` is the published roster, in the order the client set. The rest is
+ * authored below in `teamPending` and is not rendered; move an entry up once
+ * its photo is in public/team/.
  */
 export const team = {
   eyebrow: 'Team',
@@ -271,6 +271,17 @@ export const team = {
       ],
     },
     {
+      id: 'chris',
+      name: 'Chris Lechuga',
+      role: 'Public Relations & Communications Lead',
+      photo: 'chris',
+      bio: [
+        'Chris has spent 15 years helping schools, nonprofits, and coalitions tell the truth about their work in ways people actually listen to. El Paso native, national public affairs consultant, and a rockstar with PR who has the receipts, stories in The New York Times, CNBC, and CBS News, leaders coached through congressional testimony.',
+        'He has stood at the podium as a school district PIO on the worst day of the school year, and he has never lost the instinct that came from it. A good pitch works like a good riff, hook first, no filler. He chases impact, not headlines, not column inches.',
+        'He brings a rock and roll mindset to a suit-and-tie industry, and it shows. Clarity over noise, every single time.',
+      ],
+    },
+    {
       id: 'kandolite',
       name: 'Kandolite Carson',
       role: 'Strategic Communications',
@@ -294,17 +305,6 @@ export const team = {
       ],
     },
     {
-      id: 'chris',
-      name: 'Chris Lechuga',
-      role: 'Public Relations & Communications Lead',
-      photo: 'chris',
-      bio: [
-        'Chris has spent 15 years helping schools, nonprofits, and coalitions tell the truth about their work in ways people actually listen to. El Paso native, national public affairs consultant, and a rockstar with PR who has the receipts, stories in The New York Times, CNBC, and CBS News, leaders coached through congressional testimony.',
-        'He has stood at the podium as a school district PIO on the worst day of the school year, and he has never lost the instinct that came from it. A good pitch works like a good riff, hook first, no filler. He chases impact, not headlines, not column inches.',
-        'He brings a rock and roll mindset to a suit-and-tie industry, and it shows. Clarity over noise, every single time.',
-      ],
-    },
-    {
       id: 'pavle',
       name: 'Pavle Maodus',
       role: 'Web Development & Automations',
@@ -314,6 +314,24 @@ export const team = {
         "Four languages, three modes: zen, focus, deal-closer, whichever the moment calls for. He also helps run his family's alcohol distilling business on the side, because clearly one job was never going to be enough for him.",
         'House music never turns off, and neither does his love for cinematography, history, and proper European pub culture with friends once the weekend hits. Work hard, play hard is not a slogan for him, it is the whole operating system.',
       ],
+    },
+    {
+      id: 'minerva',
+      name: 'Minerva Bugarin',
+      role: 'Groundwork Facilitator',
+      photo: 'minerva',
+      bio: [
+        'Minerva flips the script on healing. Self-care is not the reward at the end of it. It is where it starts. She learned that the hard way, sitting with families through the toughest parts of substance abuse, and now she teaches it for a living.',
+        'Licensed cosmetologist by trade, recovery coach at heart, she treats those two worlds like they were never separate to begin with. Small, repeatable acts of care beat willpower every time.',
+        'Off the clock, she is laughing too hard to finish her own stories, hunting down the next great food spot, and yes, she really does own an exact replica of the Grail Diary from Indiana Jones.',
+      ],
+    },
+    {
+      // Placeholder: no headshot and no bio yet, so the card draws a lettered
+      // tile and does not open. Add `photo` and `bio` to publish her properly.
+      id: 'celisse',
+      name: 'Celisse Villagrana',
+      role: 'Collaborator, Branding/Design',
     },
   ],
 } as const
@@ -354,17 +372,6 @@ export const teamPending = [
       "Nova is Bianomics' secret weapon. Give her a rough idea and she will hand you back a brand system that actually holds together, branding, decks, print, digital, all of it clean, all of it hers.",
       'She has an eye that catches the one detail everyone else missed, and she never turns it off. Every deck, every layout, every brand asset gets that same level of attention.',
       'Off the clock, she is at the piano, in a book, or chasing down a new café. Same eye for detail, just pointed at the rest of life.',
-    ],
-  },
-  {
-    id: 'minerva',
-    name: 'Minerva',
-    role: 'Recovery & Self-Care Instructor',
-    photo: 'minerva',
-    bio: [
-      'Minerva flips the script on healing. Self-care is not the reward at the end of it. It is where it starts. She learned that the hard way, sitting with families through the toughest parts of substance abuse, and now she teaches it for a living.',
-      'Licensed cosmetologist by trade, recovery coach at heart, she treats those two worlds like they were never separate to begin with. Small, repeatable acts of care beat willpower every time.',
-      'Off the clock, she is laughing too hard to finish her own stories, hunting down the next great food spot, and yes, she really does own an exact replica of the Grail Diary from Indiana Jones.',
     ],
   },
   {

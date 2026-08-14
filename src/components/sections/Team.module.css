@@ -92,14 +92,26 @@
   }
 }
 
-/* The whole card is the control that opens the bio. */
+/* The whole card is the control that opens the bio. The padding reset is load
+   bearing: the UA puts 1px 6px on every button and the global reset only
+   clears background and border, which left the portrait inset inside its own
+   card and a card without a button sitting wider than its neighbours. */
 .cardButton {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   width: 100%;
+  padding: 0;
   text-align: left;
   cursor: pointer;
+}
+
+/* Same card, minus the affordance: used while a member has no bio to open. */
+.cardStatic {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
 }
 
 /* Label above the photo, aligned to the card's left edge. */
@@ -147,6 +159,25 @@
 .cardButton:focus-visible .photo {
   filter: grayscale(0);
   transform: scale(1.03);
+}
+
+/* Stands in for a headshot that has not landed. The grain keeps it in the
+   same material as the rest of the page, so it reads as a card waiting on a
+   photo rather than a broken image. */
+.initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    var(--texture-grain),
+    color-mix(in srgb, var(--color-accent-fill) 7%, var(--ink-100));
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-text-subtle);
+  user-select: none;
 }
 
 /* Rides in at the foot of the photo to say the card is openable. */

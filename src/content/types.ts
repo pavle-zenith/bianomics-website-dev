@@ -146,9 +146,17 @@ export interface TeamMember {
   id: string
   name: string
   role: string
-  /** Image key resolved to a portrait in public/team/. */
-  photo: string
-  /** Full bio, one string per paragraph. Shown in the detail panel. */
-  bio: readonly string[]
+  /**
+   * Image key resolved to a portrait in public/team/. Absent while a headshot
+   * is outstanding, which draws a lettered tile in the frame instead. Never
+   * fall back to another member's photo: that puts the wrong face under a
+   * name.
+   */
+  photo?: string
+  /**
+   * Full bio, one string per paragraph. Shown in the detail panel. Absent
+   * means there is nothing to open, so the card renders inert.
+   */
+  bio?: readonly string[]
   linkedinUrl?: string
 }
