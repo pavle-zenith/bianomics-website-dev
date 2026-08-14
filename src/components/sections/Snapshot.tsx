@@ -26,7 +26,7 @@ export function Snapshot() {
               </li>
               <li className={styles.point}>
                 <span className={styles.pointMark} aria-hidden="true" />
-                Our senior team does the read, not a junior.
+                No hand-off. The person who reads it leads it.
               </li>
               <li className={styles.point}>
                 <span className={styles.pointMark} aria-hidden="true" />

@@ -132,7 +132,7 @@ export const fitSituations: FitSituation[] = [
 export const howItWorks = {
   heading: 'From a first conversation to work people move toward.',
   description:
-    'Four steps. It starts with a Snapshot and ends with senior people building alongside you.',
+    'Four steps. It starts with a Snapshot and ends with one team building it with you.',
   /** Floating line under the subhead. Give it room to breathe. */
   floatingLine: "We get you first. That's why your audience gets you after.",
 } as const
@@ -143,7 +143,7 @@ export const steps: Step[] = [
     n: 1,
     title: 'Start with a free Snapshot',
     description:
-      'Tell us where you stand. Our senior team gives you a straight read on your communications or brand position. This is a read, not a pitch.',
+      'Tell us where you stand. A straight read on your communications or brand position. No spin.',
     color: 'vision',
   },
   {
@@ -179,8 +179,8 @@ export const comparison: ComparisonRow[] = [
   },
   {
     dimension: 'Who does the work',
-    typical: 'Sold by seniors, delivered by juniors',
-    bianomics: 'The senior team that scopes it is the team that builds it',
+    typical: 'One team sells it. Another team builds it.',
+    bianomics: 'The team that scopes it builds it.',
   },
   {
     dimension: 'Hand-off',
@@ -420,7 +420,7 @@ export const snapshot = {
   /** Block headline above the form. */
   heading: 'Where you stand, no spin.',
   intro:
-    'A complimentary read of your communications or brand position, done by our senior team. We take a limited number each month, because every one is reviewed personally and every submission comes to Bianca directly.',
+    "A complimentary read of your communications or brand position, done by the team you'll actually work with. We take a limited number each month, because every one is reviewed personally and every submission comes to Bianca directly.",
   submitLabel: 'Apply for a Snapshot →',
   success:
     "Every submission is reviewed personally. If you're a fit, you'll hear from us within 3 business days.",
