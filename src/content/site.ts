@@ -214,7 +214,8 @@ export const founder = {
 
 /**
  * Team. Bios and headshots are the real thing, taken verbatim from
- * "Bianomics Website Team Bios-.docx". Only the paragraph breaks are ours.
+ * "Bianomics Website Team Bios-.docx" or from the client's later revisions,
+ * which supersede it. Only the paragraph breaks are ours.
  *
  * `members` is the published roster, in the order the client set. The rest is
  * authored below in `teamPending` and is not rendered; move an entry up once
@@ -317,7 +318,7 @@ export const team = {
     },
     {
       id: 'minerva',
-      name: 'Minerva Bugarin',
+      name: 'Minerva Saucedo',
       role: 'Groundwork Facilitator',
       photo: 'minerva',
       bio: [
@@ -338,6 +339,19 @@ export const team = {
         'Off the clock, she is on the dance floor, sketchbook in hand, chasing her next stamp in her passport. Moksha the dog and Micho the cat hold down the fort while she is out being a visionary in real time.',
       ],
     },
+    {
+      id: 'greg',
+      name: 'Greg Kruger',
+      role: 'Nervous System Coach, US Marine veteran',
+      photo: 'greg',
+      bio: [
+        'Greg used to think willpower was the answer. Turns out, willpower was getting way too much credit.',
+        'He spent years figuring out what was actually running the show underneath all that effort and trying harder. Once he figured it out, he fixed his own patterns, then built a career helping other people fix theirs.',
+        'U.S.M.C. veteran. Licensed NLP practitioner. Certified breathwork facilitator. Founder of Forgotten Truth Coaching. His rule is simple: leadership starts with self-leadership. Skip that part and everything else gets harder.',
+        'Inside Beyond Duty, Greg skips the motivational speech and starts with the breath. No slogans. No trying harder. Just a shift people can actually feel.',
+        'Off the clock, he is chasing waves, riding his bike, and making music. Apparently, sitting still was never really his thing.',
+      ],
+    },
   ],
 } as const
 
@@ -355,17 +369,6 @@ export const teamPending = [
       "Leila's origin story starts in electrical engineering. Somewhere along the way, creativity won the fight, and she never looked back.",
       'Now she moves between video editing, 3D in Blender, and building AI automations like it is all one language. Learn how it works, master it fast, repeat. That instinct even took her across the MENA region training teams at Aramco and ADNOC on how to actually use AI, not just talk about it at a conference.',
       'Off the clock, she is chasing 10k steps, a good book, or 18 holes. Coffee is non negotiable. She treats life like one long experiment and documents the whole thing, one photo at a time.',
-    ],
-  },
-  {
-    id: 'greg',
-    name: 'Greg Kruger',
-    role: 'Instructor, Forgotten Truth Coaching',
-    photo: 'greg',
-    bio: [
-      'Greg spent years untangling the patterns he inherited before he ever taught anyone else how to do it.',
-      'He is a U.S.M.C. veteran, a licensed NLP practitioner, and a certified breathwork facilitator. Inside Beyond Duty, he teaches breathwork as a tool, not a trend. As he puts it, this is not motivation that fades by Monday morning. It is a physiological shift your audience feels in the room.',
-      'He does not sell willpower. He teaches practical, repeatable change, the kind that actually holds.',
     ],
   },
   {
