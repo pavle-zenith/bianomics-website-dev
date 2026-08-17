@@ -327,11 +327,16 @@ export const team = {
       ],
     },
     {
-      // Placeholder: no headshot and no bio yet, so the card draws a lettered
-      // tile and does not open. Add `photo` and `bio` to publish her properly.
       id: 'celisse',
       name: 'Celisse Villagrana',
-      role: 'Collaborator, Branding/Design',
+      role: 'Brand Consultant & Creative Director',
+      photo: 'celisse',
+      bio: [
+        'Celisse gives brands a pulse. 15+ years across creative agencies, architecture and development, and her own consulting practice, and she still treats every project like the first one. Branding, advertising, visual systems, creative direction. She runs the full range and makes it look easy.',
+        'She translates strategy into something people actually feel. Print, digital, environmental, marketing, she keeps the story consistent wherever it shows up.',
+        'Campaigns, production, stakeholders, deadlines, she holds the whole thing together without losing the thread from first concept to final execution. Fluent in English and Spanish, she has zero patience for a brand with no personality.',
+        'Off the clock, she is on the dance floor, sketchbook in hand, chasing her next stamp in her passport. Moksha the dog and Micho the cat hold down the fort while she is out being a visionary in real time.',
+      ],
     },
   ],
 } as const
