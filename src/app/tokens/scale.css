@@ -12,8 +12,14 @@
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* --- Fluid type scale (min .. max across ~360 -> 1440px) --- */
-  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
-  --text-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  /* 14px is the floor for every step: below it the mono labels and the small
+     print stopped being comfortably readable, and `xs` was landing at 12.1px
+     on a phone. Raising the floor lifts every label on the site at once,
+     which is where all of the sub-14 text lived. `xs` and `sm` are close
+     together as a result — that is the cost of the floor, and they stay
+     separate steps because `xs` is the label size and `sm` is small copy. */
+  --text-xs: clamp(0.875rem, 0.855rem + 0.1vw, 0.9375rem);
+  --text-sm: clamp(0.9375rem, 0.9rem + 0.18vw, 1rem);
   --text-base: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
   --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
   --text-xl: clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);

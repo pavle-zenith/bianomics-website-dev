@@ -142,12 +142,16 @@
   gap: 0.15rem;
   line-height: var(--leading-snug);
 }
+/* The dimension label. It was 55% of currentColor, which measured 2.74:1 on
+   the panel and made the one word that says what the row compares the least
+   readable thing in it. 80% holds the step down from the row text and clears
+   AA at 4.98:1. */
 .rowDim {
   font-size: var(--text-xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: color-mix(in srgb, currentColor 55%, transparent);
+  color: color-mix(in srgb, currentColor 80%, transparent);
 }
 .panelUs .rowText {
   font-weight: var(--weight-bold);

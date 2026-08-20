@@ -12,7 +12,15 @@ import type {
 export const brand = {
   name: 'Bianomics',
   anchor:
-    'You built something real. We make the world feel it, fund it, and remember it.',
+    "You're building something real. We align everything it needs to move.",
+  /**
+   * The anchor as the hero sets it, one line per beat. Split here rather than
+   * in the component so the H1 and the metadata title cannot drift apart.
+   */
+  anchorLines: [
+    "You're building something real.",
+    'We align everything it needs to move.',
+  ],
   descriptor: 'We find the reason you started, and make the world fluent in it.',
   tagline: 'Your purpose is our power source.',
   framework:
@@ -23,9 +31,9 @@ export const brand = {
   lockupHero: 'A HUMAN SYSTEMS COMPANY',
   lockupComparison: "HOW WE'RE BUILT",
   lockupClosing: 'YOUR PURPOSE IS OUR POWER SOURCE',
-  /** Plain one-line clarifier of what the firm does (Hero). */
+  /** The hero subhead, under the anchor. */
   clarifier:
-    'Brand, events, operations, and the people doing the work, orchestrated into one ecosystem tuned to the same voice. Or one piece, done well enough to earn the standing ovation your work has been owed.',
+    'Bianomics brings strategy, story, people, and operations into one coherent system, so ambitious work can earn belief, build momentum, and last.',
 } as const
 
 /** Contact + external links. */
@@ -74,14 +82,20 @@ export const about = {
    * The capability pills. Six drawn from across the four practices, each
    * coded to the practice it belongs to, so the section reads as the range of
    * the work without repeating the practices block further down.
+   *
+   * The order is the coherent pattern the client asked for. The grid fills
+   * two across, so reading down the columns each one steps through the
+   * practices in order, offset by a row: vision / stage / blueprint on the
+   * left, stage / blueprint / groundwork on the right. Reorder these and the
+   * cascade breaks.
    */
   capabilities: [
-    { label: 'Brand strategy', color: 'vision' },
-    { label: 'Public relations', color: 'vision' },
-    { label: 'Conferences and launches', color: 'stage' },
-    { label: 'Project management', color: 'blueprint' },
-    { label: 'Operations systems', color: 'blueprint' },
-    { label: 'Workforce development', color: 'groundwork' },
+    { label: 'Brand & Marketing Strategy', color: 'vision' },
+    { label: 'Public Relations & Crisis Management', color: 'stage' },
+    { label: 'Event Architecture & Management', color: 'stage' },
+    { label: 'Project Management', color: 'blueprint' },
+    { label: 'Operational Blueprints', color: 'blueprint' },
+    { label: 'Workforce Development', color: 'groundwork' },
   ] satisfies AboutCapability[],
   /** The two headline numbers, shown as cards with a ghosted numeral behind. */
   stats: [
@@ -97,44 +111,48 @@ export const about = {
   ] satisfies AboutStat[],
 } as const
 
-/** Who we work with — three "is this you" fit situations. */
+/**
+ * Who we work with — the two halves of the offer. The client's copy already
+ * splits each one into a lead-in and the audience it names, which is the
+ * shape these cards were built for, so it maps across unchanged.
+ *
+ * `public/serve/operators.webp` is left on disk but no longer used: the third
+ * card went when this became a pair.
+ */
 export const fitSituations: FitSituation[] = [
   {
-    id: 'founders',
-    lead: 'Recognition for',
-    title: 'Founders and leaders',
+    id: 'social-impact',
+    lead: 'Marketing, PR, and infrastructure guidance for',
+    title: 'Social impact and purpose-driven organizations',
     description:
-      'The results are there. The story has not caught up to the substance yet.',
+      'The work is true. We make it undeniable, we put it on the stage it deserves, and we make sure every piece moves toward the same vision.',
     color: 'vision',
     photo: 'founders',
   },
   {
-    id: 'people-leaders',
-    lead: 'Steadier support for',
-    title: 'People leaders',
+    id: 'workforce',
+    lead: 'Workforce development for',
+    title: 'Organizations and at-risk populations',
     description:
-      'A capable team, stretched thin. Clearer systems, not another push.',
-    color: 'stage',
+      'A career does not start with a job posting. It starts with being seen. We build what gets someone from ready to hired, and further.',
+    color: 'groundwork',
     photo: 'people-leaders',
-  },
-  {
-    id: 'operators',
-    lead: 'One connected system for',
-    title: 'Operators',
-    description:
-      'A designer here, an events company there. We make the parts connect.',
-    color: 'blueprint',
-    photo: 'operators',
   },
 ]
 
-/** How it works — section intro copy. */
+/**
+ * How it works — section intro copy. The long title and the "we get you
+ * first" line were both cut by the client, so the margin label is now the
+ * section's heading and this paragraph carries it alone.
+ *
+ * The client's draft read "a senior read" and "ends with senior people
+ * building alongside you". It predates the instruction to take "senior" out
+ * of the site, so the substitutions from that pass are applied here too.
+ */
 export const howItWorks = {
-  heading: 'From a first conversation to work people move toward.',
+  label: 'Our process',
   description:
-    'Four steps. It starts with a Snapshot and ends with one team building it with you.',
-  /** Floating line under the subhead. Give it room to breathe. */
-  floatingLine: "We get you first. That's why your audience gets you after.",
+    'Four steps to align it. The same people through all of them. It starts with a Snapshot, a straight read of where your story, systems, and people actually stand, and ends with that same team building alongside you.',
 } as const
 
 /** How it works — four plain steps, starting with the free Snapshot. */

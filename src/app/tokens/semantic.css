@@ -49,9 +49,13 @@
   --color-accent-text: var(--blue-800);
 
   /* --- Primary call-to-action ---
-     One CTA color site-wide: the brand blue (matches the hero pill). */
-  --color-cta-bg: var(--bondi-blue);
-  --color-cta-bg-hover: var(--blue-800);
+     One CTA color site-wide, and it has to carry white text at AA. Bondi Blue
+     itself only reaches 3.57:1 against white, so the CTA takes the darker step
+     of the same ramp (5.49:1) exactly as this file's contract says text and UI
+     roles should. The raw brand blue is unchanged and still fills every
+     decorative use through --color-accent-fill. */
+  --color-cta-bg: var(--blue-800);
+  --color-cta-bg-hover: var(--blue-900);
   --color-cta-fg: var(--white);
 
   /* --- Secondary call-to-action (outline on light) --- */

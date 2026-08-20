@@ -1,6 +1,9 @@
+/* Three sentences now, so it needs a wider measure than the old four-word
+   title had. */
 .heading {
   font-size: var(--text-3xl);
-  max-width: 18ch;
+  max-width: 26ch;
+  text-wrap: pretty;
 }
 
 .grid {
@@ -13,7 +16,14 @@
 
 @media (min-width: 52rem) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+  /* Landscape at two-up. Two cards this wide do not need the height as well:
+     portrait ran each one past the fold, and the copy sits at the foot either
+     way, so the extra height was empty image. */
+  .cardInner {
+    --card-ratio: 4 / 3;
   }
 }
 
@@ -25,7 +35,7 @@
 .cardInner {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: var(--card-ratio, 3 / 4);
   border-radius: var(--radius-card);
   overflow: hidden;
   background: var(--ink-900);
@@ -97,9 +107,13 @@
   background: var(--fit-fill);
 }
 
+/* Sampled against the photograph rather than assumed: at 72% white, 26.7% of
+   the area behind this line fell under 4.5:1, and at 90% it was still 5%.
+   Solid white clears it outright; the step back from the title comes from
+   size and the title's weight instead. */
 .lead {
   font-size: var(--text-base);
-  color: color-mix(in srgb, var(--white) 72%, transparent);
+  color: var(--white);
 }
 
 .cardTitle {

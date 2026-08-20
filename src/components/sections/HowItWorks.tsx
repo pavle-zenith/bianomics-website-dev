@@ -25,18 +25,17 @@ export function HowItWorks() {
       aria-labelledby="how-heading"
     >
       <div className="container">
-        {/* Header: label in the margin, title and description to the right. */}
+        {/* Header: the label in the margin, the intro to the right. With the
+            long title cut, the label carries the heading role — the section
+            still needs an accessible name, and it is the only thing left
+            naming it. */}
         <div className={styles.head}>
-          <p className={styles.headLabel}>Our process</p>
+          <h2 id="how-heading" className={styles.headLabel}>
+            {howItWorks.label}
+          </h2>
           <div className={styles.headMain}>
             <Reveal variant="mask">
-              <h2 id="how-heading" className={styles.heading}>
-                {howItWorks.heading}
-              </h2>
-            </Reveal>
-            <Reveal delay={0.12} className={styles.headRow}>
               <p className={styles.headDesc}>{howItWorks.description}</p>
-              <p className={styles.framework}>{howItWorks.floatingLine}</p>
             </Reveal>
           </div>
         </div>

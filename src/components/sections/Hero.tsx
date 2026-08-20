@@ -47,20 +47,22 @@ export function Hero() {
             </div>
           </Reveal>
 
-          {/* The single H1 on the page: the Brand Anchor (verbatim).
-              Each line masks in on its own beat so the statement assembles. */}
+          {/* The single H1 on the page: the Brand Anchor (verbatim), read from
+              `brand.anchorLines` rather than typed here, so it cannot drift
+              from the metadata title. Each line masks in on its own beat so
+              the statement assembles. */}
           <h1 id="hero-heading" className={styles.anchor}>
-            <Reveal as="span" variant="mask" delay={0.08} className={styles.line}>
-              You built something real.
-            </Reveal>
-            <Reveal
-              as="span"
-              variant="mask"
-              delay={0.2}
-              className={`${styles.line} ${styles.line2}`}
-            >
-              We make the world feel it, fund it, and remember it.
-            </Reveal>
+            {brand.anchorLines.map((line, i) => (
+              <Reveal
+                key={line}
+                as="span"
+                variant="mask"
+                delay={0.08 + i * 0.12}
+                className={`${styles.line} ${i > 0 ? styles.line2 : ''}`}
+              >
+                {line}
+              </Reveal>
+            ))}
           </h1>
 
         </div>

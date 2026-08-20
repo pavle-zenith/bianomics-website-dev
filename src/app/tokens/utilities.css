@@ -76,10 +76,15 @@
    which is why the reference sets every colour card in black rather than
    flipping the light ones. The muted steps are alpha on the same ink so they
    stay in gamut with whichever fill they land on. */
+/* Ink on a saturated practice fill. The alphas are set by the worst of the
+   four fills, which is Vision red: at 0.74 the muted step measured 4.10:1 on
+   it and 4.17:1 on Blueprint, both short of AA. At 0.84 muted reaches 4.72:1
+   and at 0.82 subtle reaches 4.60:1 on that same worst case, so every role
+   clears on all four practices. Lower either and Vision fails first. */
 .tone-oncolor {
   --tone-text: var(--ink-950);
-  --tone-text-muted: rgb(6 7 9 / 0.74);
-  --tone-text-subtle: rgb(6 7 9 / 0.62);
+  --tone-text-muted: rgb(6 7 9 / 0.84);
+  --tone-text-subtle: rgb(6 7 9 / 0.82);
   --tone-border: rgb(6 7 9 / 0.18);
   --tone-border-strong: rgb(6 7 9 / 0.34);
   color: var(--tone-text);

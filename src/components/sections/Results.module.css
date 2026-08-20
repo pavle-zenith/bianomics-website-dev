@@ -154,7 +154,11 @@
   padding: 0.5em 0.85em;
   border-radius: var(--radius-control);
   border: 1px solid rgb(255 255 255 / 0.3);
-  background: rgb(255 255 255 / 0.14);
+  /* The glass has to do more than look like glass: at 0.14 the photograph
+     came through brightly enough that 2.2% of the label area dropped under
+     4.5:1. Darkening the plate rather than lightening the type keeps the
+     effect and fixes the cause. */
+  background: rgb(6 7 9 / 0.42);
   backdrop-filter: blur(12px);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -201,7 +205,9 @@
    title and the result line each hold to one or two lines. */
 .title {
   margin-top: var(--space-3);
-  font-size: var(--text-base);
+  /* A step up from body copy: at `base` the title carried no more weight than
+     the paragraph under it, in a column 660px wide. */
+  font-size: var(--text-lg);
   font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);

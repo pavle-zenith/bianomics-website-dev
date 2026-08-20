@@ -6,17 +6,16 @@ import styles from './WhoWeWorkWith.module.css'
 
 import founders from '../../../public/serve/founders.webp'
 import peopleLeaders from '../../../public/serve/people-leaders.webp'
-import operators from '../../../public/serve/operators.webp'
 
+/** Keyed by `fit.photo`. operators.webp is unused since this became a pair. */
 const photos: Record<string, StaticImageData> = {
   founders,
   'people-leaders': peopleLeaders,
-  operators,
 }
 
 /**
- * Who we serve — tall photo cards, one per role, with the copy set over a
- * gradient at the foot of each image.
+ * Who we serve — tall photo cards, one per half of the offer, with the copy
+ * set over a gradient at the foot of each image.
  */
 export function WhoWeWorkWith() {
   return (
@@ -28,7 +27,8 @@ export function WhoWeWorkWith() {
       <div className="container">
         <Reveal>
           <h2 id="who-heading" className={styles.heading}>
-            Different roles. Same team.
+            Purpose needs a voice loud enough to be heard. A workforce strong
+            enough to carry it. We build both.
           </h2>
         </Reveal>
 

@@ -38,13 +38,18 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  /* The headline runs most of the width, and the second line is set in the
+     accent rather than ink, so it has the least room to spare. Sampling the
+     pixels behind it, 5.4% of the line fell under 3:1 where it crossed the
+     ridge. Carrying the lift further right fixes it at the source; the field
+     still opens up on the right, just later. */
   background:
     linear-gradient(
       100deg,
       rgb(255 255 255 / 0.94) 0%,
-      rgb(255 255 255 / 0.88) 45%,
-      rgb(255 255 255 / 0.66) 72%,
-      rgb(255 255 255 / 0.34) 100%
+      rgb(255 255 255 / 0.92) 55%,
+      rgb(255 255 255 / 0.82) 78%,
+      rgb(255 255 255 / 0.44) 100%
     ),
     linear-gradient(to top, var(--color-bg) 2%, transparent 26%);
 }

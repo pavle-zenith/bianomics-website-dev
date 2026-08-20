@@ -5,10 +5,22 @@ import { AGENCY_HISTORY_OPTIONS, type SnapshotInput } from './validation'
 
 /**
  * The delivery seam. Everything about WHERE a Snapshot submission goes
- * lives behind this one function. Swapping Resend for a CRM/HubSpot/etc.
- * later means reimplementing only `deliverSnapshot` — the route handler,
- * schema, and form never change.
+ * lives behind this one function. Both forms on the site — the landing
+ * section and /snapshot — post to the same route, so both are wired by
+ * whatever this file does.
+ *
+ * Two destinations, tried together and independently:
+ *   - the Make webhook, which is what feeds Monday
+ *   - Resend, which emails the submission
+ * Either one being configured is enough. A submission counts as delivered if
+ * at least one destination accepted it, so a Make outage does not lose a lead
+ * that the email still carries, and vice versa.
  */
+
+const MAKE_WEBHOOK_URL = process.env.MAKE_WEBHOOK_URL
+const MAKE_API_KEY = process.env.MAKE_API_KEY
+/** A slow webhook must not hold the user's submit button hostage. */
+const MAKE_TIMEOUT_MS = 10_000
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 const SNAPSHOT_TO_EMAIL = process.env.SNAPSHOT_TO_EMAIL
@@ -67,16 +79,58 @@ export type DeliverResult =
   | { ok: true }
   | { ok: false; reason: 'not_configured' | 'send_failed' }
 
-export async function deliverSnapshot(data: SnapshotInput): Promise<DeliverResult> {
-  if (!RESEND_API_KEY || !SNAPSHOT_TO_EMAIL) {
-    // Not wired yet (missing env). Log so submissions aren't silently lost
-    // in dev, and report a clear reason to the caller.
-    console.warn(
-      '[snapshot] RESEND_API_KEY or SNAPSHOT_TO_EMAIL not set — submission not delivered.',
-      { org: data.org, email: data.email },
-    )
-    return { ok: false, reason: 'not_configured' }
+/** `null` means this destination is not configured, so it is not a failure. */
+type Attempt = boolean | null
+
+/**
+ * The Make webhook that feeds Monday. The key names and the exact option
+ * strings are Make's contract, not ours: `worked_with_agency` has to arrive as
+ * one of the four labels, which is why it sends `historyLabel()` rather than
+ * the internal enum value the form holds.
+ */
+async function deliverToMake(data: SnapshotInput): Promise<Attempt> {
+  if (!MAKE_WEBHOOK_URL || !MAKE_API_KEY) return null
+
+  const payload = {
+    organization: data.org,
+    name: data.name,
+    email: data.email,
+    what_they_do: data.orgDoes,
+    pain_point: data.biggestChallenge,
+    future_state: data.winIn90Days,
+    worked_with_agency: historyLabel(data.workedWithAgency),
   }
+
+  try {
+    const res = await fetch(MAKE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-make-apikey': MAKE_API_KEY,
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(MAKE_TIMEOUT_MS),
+    })
+
+    if (!res.ok) {
+      // The body is Make's, not a user's, so it is safe to log and it is the
+      // only thing that says which scenario step rejected the payload.
+      const detail = await res.text().catch(() => '')
+      console.error(
+        `[snapshot] Make webhook rejected the submission: ${res.status} ${detail.slice(0, 300)}`,
+      )
+      return false
+    }
+    return true
+  } catch (error) {
+    console.error('[snapshot] Make webhook failed:', error)
+    return false
+  }
+}
+
+/** The email copy of the submission. */
+async function deliverByEmail(data: SnapshotInput): Promise<Attempt> {
+  if (!RESEND_API_KEY || !SNAPSHOT_TO_EMAIL) return null
 
   const resend = new Resend(RESEND_API_KEY)
   const { text, html } = buildEmail(data)
@@ -92,8 +146,28 @@ export async function deliverSnapshot(data: SnapshotInput): Promise<DeliverResul
 
   if (error) {
     console.error('[snapshot] Resend send failed:', error)
-    return { ok: false, reason: 'send_failed' }
+    return false
+  }
+  return true
+}
+
+export async function deliverSnapshot(data: SnapshotInput): Promise<DeliverResult> {
+  // Both at once: the webhook and the email have nothing to say to each other,
+  // and running them in series would add the slower one's latency to submit.
+  const attempts = await Promise.all([deliverToMake(data), deliverByEmail(data)])
+
+  if (attempts.every((a) => a === null)) {
+    // Not wired yet (missing env). Log so submissions aren't silently lost
+    // in dev, and report a clear reason to the caller.
+    console.warn(
+      '[snapshot] No delivery destination configured (Make webhook and Resend both unset) — submission not delivered.',
+      { org: data.org, email: data.email },
+    )
+    return { ok: false, reason: 'not_configured' }
   }
 
-  return { ok: true }
+  // One destination accepting it is enough to call the lead captured.
+  if (attempts.some((a) => a === true)) return { ok: true }
+
+  return { ok: false, reason: 'send_failed' }
 }

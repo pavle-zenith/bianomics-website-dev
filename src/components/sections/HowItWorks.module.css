@@ -37,45 +37,18 @@
   min-width: 0;
 }
 
-.heading {
-  font-size: var(--text-4xl);
-  font-weight: var(--weight-heading);
-  line-height: 1.02;
-  letter-spacing: var(--tracking-display);
-  color: var(--tone-text);
-  max-width: 20ch;
-}
-
-.headRow {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-@media (min-width: 60rem) {
-  .headRow {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--space-8);
-  }
-}
-
+/* The intro carries the section on its own now that the title is cut, so it
+   is set up from body copy: large enough to open the section, still a step
+   below the headings elsewhere because it is a paragraph, not a title. */
 .headDesc {
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
-  color: var(--tone-text-muted);
-  max-width: 38ch;
-}
-
-/* The line that carries the section. Given room to breathe. */
-.framework {
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
-  /* The AA-safe step: at 22px this is normal-size text on white, so the raw
-     Bondi fill (3.4:1) would not clear the 4.5:1 contract. */
-  color: var(--color-accent-text);
-  max-width: 24ch;
+  letter-spacing: var(--tracking-snug);
+  color: var(--tone-text);
+  max-width: 46ch;
+  text-wrap: pretty;
 }
+
 
 /* --- Track: rows with the progress rail down the left margin --- */
 .track {
