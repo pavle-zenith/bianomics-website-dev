@@ -79,12 +79,28 @@
   }
 }
 
+/* The heading and its optional paragraph travel together, so the row keeps
+   aligning the actions to the foot of the copy rather than to the headline. */
+.copy {
+  min-width: 0;
+}
+
 .heading {
   font-size: var(--text-3xl);
   line-height: var(--leading-tight);
   color: var(--color-text);
   max-width: 16ch;
   text-wrap: balance;
+}
+
+/* Only /snapshot passes a body. */
+.body {
+  margin-top: var(--space-4);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  max-width: 46ch;
+  text-wrap: pretty;
 }
 
 /* Stacked and full width on a phone, where a row of two wraps awkwardly and

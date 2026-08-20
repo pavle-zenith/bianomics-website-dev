@@ -8,7 +8,7 @@ import posthog from 'posthog-js'
  * track() before init (or when the key is absent) is a safe no-op.
  */
 
-type CtaLocation =
+export type CtaLocation =
   | 'nav'
   | 'hero'
   | 'what-we-do'

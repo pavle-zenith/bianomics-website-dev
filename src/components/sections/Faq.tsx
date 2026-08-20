@@ -9,6 +9,7 @@ import styles from './Faq.module.css'
  * FAQ: intro and a support prompt on the left, a hairline-divided
  * accordion on the right. No cards — the rules do the separating.
  * Uses native <details>/<summary> — accessible, keyboard-friendly, no JS.
+ * The `disclosure` class animates the open/close (see utilities.css).
  */
 export function Faq({ items }: { items: FaqItem[] }) {
   return (
@@ -40,7 +41,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
           <div className={styles.list}>
             {items.map((item, i) => (
               <Reveal key={item.id} delay={i * 0.05}>
-                <details className={styles.item}>
+                <details className={`${styles.item} disclosure`}>
                   <summary className={styles.question}>
                     <span className={styles.questionText}>{item.question}</span>
                     <span className={styles.icon} aria-hidden="true" />

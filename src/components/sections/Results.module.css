@@ -15,24 +15,62 @@
   max-width: 20ch;
 }
 
-/* --- 2x2 editorial grid. Every card starts on the same line. --- */
+/* --- The list. One engagement per row, divided by a hairline rather than by
+   whitespace alone: eight rows of this height need something that says where
+   one ends. --- */
 .grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
+  display: flex;
+  flex-direction: column;
   margin-top: var(--space-8);
-}
-@media (min-width: 60rem) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    column-gap: var(--space-8);
-    row-gap: var(--space-10);
-    align-items: start;
-  }
 }
 
 .card {
   display: block;
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--tone-border);
+}
+.card:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* --- The row: mockup left, everything written about it right. --- */
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 60rem) {
+  .row {
+    /* The image column is sized outright rather than in `fr`, so the row's
+       height is a decision rather than a by-product of the grid maths. The
+       frames are square, so this width is also the row's height. */
+    grid-template-columns: clamp(18rem, 40vw, 37rem) minmax(0, 1fr);
+    gap: clamp(2rem, 1.4rem + 2.6vw, 4rem);
+    /* Stretch, not centre: the copy column is as tall as the picture and
+       distributes itself across it. Centred, the copy sat in the middle with
+       200px of empty column above and below it. */
+    align-items: stretch;
+  }
+}
+
+/* Stacked, this is a plain column. In a row it becomes the full height of the
+   frame with the two groups pushed to its ends. */
+.body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+@media (min-width: 60rem) {
+  .body {
+    justify-content: space-between;
+  }
+}
+
+.bodyTop,
+.bodyFoot {
+  min-width: 0;
 }
 
 /* --- Media. Square, because the mockups are composed square. --- */
@@ -98,68 +136,32 @@
   transform: scale(1.02);
 }
 
-/* Keeps the glass legible whatever the texture underneath does. */
-.scrim {
-  /* Only there to hold the pills legible, so it is drawn only where they
-     sit on the image. */
-  display: none;
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    to top,
-    rgb(0 0 0 / 0.62) 0%,
-    rgb(0 0 0 / 0.32) 32%,
-    rgb(0 0 0 / 0) 62%
-  );
-  pointer-events: none;
-}
-@media (min-width: 60rem) {
-  .scrim {
-    display: block;
-  }
-}
 
 /* --- Services provided ---
-   Under the frame by default, lifted onto the image on glass once there is
-   width for them. Measured before moving them: on a phone the longest list
-   ran five rows and covered 55% of the artwork, against 12% on desktop. */
-.frame {
-  position: relative;
-}
-
+   In the copy column, closing the row under the paragraph. They used to ride
+   on glass over the artwork, which worked while the frame was half the grid
+   and stopped working when it became a column: the longest list covered half
+   the picture. Measured at the time — 50% for the five-service rows. */
 .services {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   list-style: none;
   padding: 0;
-  margin: var(--space-3) 0 0;
-}
-@media (min-width: 60rem) {
-  .services {
-    position: absolute;
-    z-index: 2;
-    left: var(--space-4);
-    right: var(--space-4);
-    bottom: var(--space-4);
-    margin: 0;
-  }
+  margin: var(--space-5) 0 0;
 }
 
+/* On the section's own canvas now rather than on a photograph, so the plate
+   lifts off the black instead of darkening a bright image, and there is
+   nothing left behind them to blur. */
 .service {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   padding: 0.5em 0.85em;
   border-radius: var(--radius-control);
-  border: 1px solid rgb(255 255 255 / 0.3);
-  /* The glass has to do more than look like glass: at 0.14 the photograph
-     came through brightly enough that 2.2% of the label area dropped under
-     4.5:1. Darkening the plate rather than lightening the type keeps the
-     effect and fixes the cause. */
-  background: rgb(6 7 9 / 0.42);
-  backdrop-filter: blur(12px);
+  border: 1px solid var(--tone-border-strong);
+  background: rgb(255 255 255 / 0.05);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
@@ -181,10 +183,11 @@
 /* On the dark canvas the raw brand fills all clear AA, so the category takes
    the engagement's colour outright rather than the darkened text step (which
    is tuned for white and would go muddy here). */
-/* The two label lines under the frame: who it was, then which practices ran
-   it. Both mono, told apart by colour rather than by a second type treatment. */
+/* The two mono labels, told apart by colour rather than by a second type
+   treatment: the practices run at the top of the row, the client sits with
+   the title it belongs to at the foot. */
 .client {
-  margin-top: var(--space-5);
+  margin-bottom: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
@@ -193,7 +196,6 @@
 }
 
 .category {
-  margin-top: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
@@ -204,20 +206,22 @@
 /* Card copy runs the full width of its column — no measure cap, so the
    title and the result line each hold to one or two lines. */
 .title {
-  margin-top: var(--space-3);
-  /* A step up from body copy: at `base` the title carried no more weight than
-     the paragraph under it, in a column 660px wide. */
-  font-size: var(--text-lg);
+  /* The row gives the copy a column of its own, so the title can take the
+     size it wants: `lg` was set for a half-width card sat under an image. */
+  font-size: var(--text-xl);
   font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-snug);
+  /* Tighter than it was: the tracking that suited an 18px card title reads
+     loose once the same line is set at 30. */
+  letter-spacing: var(--tracking-tight);
   color: var(--tone-text);
+  text-wrap: balance;
 }
 
 /* The one-line read on the engagement, set small and wide. */
 .summary {
-  margin-top: var(--space-3);
-  font-size: var(--text-sm);
+  margin-top: var(--space-4);
+  font-size: var(--text-base);
   line-height: var(--leading-normal);
   letter-spacing: var(--tracking-normal);
   color: var(--tone-text-subtle);
@@ -227,6 +231,8 @@
   margin-top: var(--space-4);
   line-height: var(--leading-relaxed);
   color: var(--tone-text-muted);
+  /* A measure, now that there is width to overrun. */
+  max-width: 62ch;
 }
 
 .link {

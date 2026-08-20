@@ -8,6 +8,7 @@ import { Footer } from '@/components/sections/Footer'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { SnapshotForm } from '@/components/form/SnapshotForm'
+import { ClosingCta } from '@/components/sections/ClosingCta'
 import { CoverIcon } from './CoverIcons'
 import styles from './snapshot.module.css'
 
@@ -141,7 +142,7 @@ export default function SnapshotPage() {
               <div className={styles.faqList}>
                 {faq.items.map((item, i) => (
                   <Reveal key={item.id} delay={i * 0.05}>
-                    <details className={styles.faqItem}>
+                    <details className={`${styles.faqItem} disclosure`}>
                       <summary className={styles.faqQuestion}>
                         <span>{item.question}</span>
                         <span className={styles.faqIcon} aria-hidden="true" />
@@ -155,30 +156,18 @@ export default function SnapshotPage() {
           </div>
         </section>
 
-        {/* --- Closing band, on the same grain as the projects section --- */}
-        <section className="section" aria-labelledby="snapshot-closing-heading">
-          <div className="container">
-            <Reveal
-              className={`${styles.closing} section-inverse bed bed-dark`}
-            >
-              <div className={styles.closingCopy}>
-                <h2 id="snapshot-closing-heading" className={styles.closingHeading}>
-                  {closing.heading}
-                </h2>
-                <p className={styles.closingBody}>{closing.body}</p>
-              </div>
-              <Button
-                href={`${routes.snapshot}#top`}
-                variant="primary"
-                event="cta_primary_click"
-                location="snapshot-page-closing"
-                arrow
-              >
-                Book a Snapshot
-              </Button>
-            </Reveal>
-          </div>
-        </section>
+        {/* --- Closing band. The landing page's treatment, shared rather than
+            rebuilt: the two pages end on the same image and the same pair of
+            actions. The primary points at this page's own form, and the
+            secondary needs the leading slash to leave /snapshot. --- */}
+        <ClosingCta
+          heading={closing.heading}
+          body={closing.body}
+          primaryHref={`${routes.snapshot}#top`}
+          secondaryHref={`/${anchors.whatWeDo}`}
+          location="snapshot-page-closing"
+          headingId="snapshot-closing-heading"
+        />
       </main>
       <Footer links={nav} />
     </>

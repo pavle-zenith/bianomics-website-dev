@@ -265,3 +265,60 @@ body:has([data-intro]) .page-shell {
 .skip-link:focus {
   top: var(--space-4);
 }
+
+/* ============================================================
+   DISCLOSURE — an animated <details>.
+
+   Native <details> snaps open, because the panel's height is
+   `auto` and `auto` is not an animatable value. Two modern
+   pieces fix that without giving up the element: `::details-
+   content` gives the panel a box to style, and
+   `interpolate-size: allow-keywords` lets a transition resolve
+   `auto` to a used value so it can be animated to.
+
+   Progressive enhancement by construction: a browser without
+   `::details-content` ignores the whole block and gets today's
+   instant open, which is the correct fallback. Nothing here is
+   load-bearing for reading the answer.
+
+   Applied via a global class rather than duplicated into the two
+   FAQ modules, so both accordions open the same way.
+   ============================================================ */
+
+/* Inherits, so it is set once at the root. Only elements that
+   declare a size transition are affected by it. */
+:root {
+  interpolate-size: allow-keywords;
+}
+
+/* Closed. Also the closing transition: the copy fades out over
+   the fast step while the panel takes the base step to collapse,
+   so the text is gone before the rule arrives rather than being
+   seen sliding up underneath the question. */
+.disclosure::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    block-size var(--dur-base) var(--ease-inout),
+    opacity var(--dur-fast) var(--ease-standard),
+    content-visibility var(--dur-base) allow-discrete;
+}
+
+/* Open. The height leads and the copy follows it in, which is
+   what stops the answer appearing to be pushed down the page. */
+.disclosure[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+  transition:
+    block-size 320ms var(--ease-editorial),
+    opacity 260ms var(--ease-standard) 90ms,
+    content-visibility 320ms allow-discrete;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure::details-content,
+  .disclosure[open]::details-content {
+    transition: none;
+  }
+}
