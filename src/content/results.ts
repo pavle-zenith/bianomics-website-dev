@@ -1,98 +1,152 @@
 import type { ResultsContent } from './types'
 
 /**
- * Results content. NOTE: these case studies are PLACEHOLDERS pending real,
- * approved client stories with hard numbers (plan open item #5). The structure
- * and layout are final; replace the client names, copy, metrics, and the
- * background textures in public/results/ with real content before launch.
- * Testimonials remain empty until approved quotes land.
+ * Results content. These are the real engagements, in the client's order, with
+ * the copy taken verbatim from their handoff. Three edits only, all mechanical:
+ * a tense slip in the Groundwork Youth intro ("now ran" -> "now run"), a
+ * trailing full stop dropped from the Beyond Duty title so it sets like the
+ * other seven, and a broken clause in Driven Against Silence ("then sat down
+ * and are supporting") rewritten to hold one tense.
  *
- * case-4 reuses the case-1 texture — there are only three images in
- * public/results/. Add a fourth before launch.
+ * Way Out West has no image yet. `texture` is left off rather than pointed at
+ * a neighbour's, which draws the lettered fallback frame instead; add
+ * `way-out-west` to scripts/build-portfolio.mjs and set the key when it lands.
+ *
+ * Testimonials remain empty until approved quotes land.
  */
 export const results: ResultsContent = {
   caseStudies: [
     {
-      id: 'case-1',
-      client: 'Borderplex Alliance',
-      category: 'Brand & Launch',
-      title: 'A regional brand that finally matched the ambition',
-      summary: 'Rebuilt the story, then filled the room.',
+      id: 'groundwork-youth',
+      client: 'Groundwork Youth Program',
+      category: 'Multi-State Licensing',
+      title: 'A curriculum built once, now running in four states',
+      summary: "What started in El Paso didn't stay in El Paso.",
       intro:
-        'We rebuilt the story and the identity, then carried it through a launch event that filled the room.',
-      texture: 'case-1',
-      color: 'vision',
-      metrics: [
-        { value: '3x', label: 'Increase in qualified inbound' },
-        { value: '6 states', label: 'Reach after the relaunch' },
-      ],
-      services: ['Brand strategy', 'Visual identity', 'Public relations', 'Launch event'],
-    },
-    {
-      id: 'case-2',
-      client: 'Sun City Summit',
-      category: 'Event & Press',
-      title: 'A flagship conference people still talk about',
-      summary: 'Two days, one connected push.',
-      intro:
-        'From concept to production, we ran the event and the press moment as one connected push.',
-      texture: 'case-2',
-      color: 'stage',
-      metrics: [
-        { value: '1,200+', label: 'Attendees across two days' },
-        { value: '18', label: 'Press placements earned' },
-      ],
-      services: ['Event production', 'Press moments', 'Community activation', 'Creative'],
-    },
-    {
-      id: 'case-3',
-      client: 'Rio Grande Works',
-      category: 'Operations',
-      title: 'Operations that let a stretched team breathe',
-      summary: 'Systems that outlast the engagement.',
-      intro:
-        'We put the systems in place, trained the people, and stayed until the work ran on its own.',
-      texture: 'case-3',
-      color: 'blueprint',
-      metrics: [
-        { value: '40%', label: 'Faster project delivery' },
-        { value: '90 days', label: 'To a working system' },
-      ],
-      services: ['Project management', 'Operations systems', 'Team training', 'Workflow design'],
-    },
-    {
-      id: 'case-4',
-      client: 'Paso del Norte Institute',
-      category: 'Team Development',
-      title: 'A team that could finally tell its own story',
-      summary: 'The message holds without us.',
-      intro:
-        'We built the internal playbook and trained the people who use it, so the message holds when we are not in the room.',
-      texture: 'case-1',
+        'We built the youth curriculum, then built it to travel. Georgia, New Jersey, New York, and Texas now run the same methodology under their own name. Proof that what works here works anywhere.',
+      texture: 'groundwork-youth',
       color: 'groundwork',
-      metrics: [
-        { value: '4 teams', label: 'Trained on the new system' },
-        { value: '2x', label: 'Faster campaign turnaround' },
-      ],
-      services: ['Team training', 'Messaging', 'Internal comms', 'Workshops'],
+      services: ['Workforce Development', 'Curriculum Design', 'Program Licensing'],
     },
-  ],
-  /**
-   * PLACEHOLDER. The quote, the attribution, and the rating are all invented
-   * and must not ship. A fabricated rating is a claim about the business, so
-   * this needs sign-off alongside the client permissions in the copy doc
-   * before launch. The About band reads testimonials[0]; empty the array and
-   * it stops rendering the rail on its own.
-   */
-  testimonials: [
     {
-      id: 'testimonial-1',
-      quote:
-        'They found the thing we had been doing well by accident and turned it into something we could repeat.',
-      attribution: 'Marisa Delgado',
-      role: 'Executive Director',
-      org: 'Borderplex Alliance',
-      rating: '5.0',
+      id: 'beyond-duty',
+      client: 'Beyond Duty',
+      category: 'Groundwork · Flagship Program',
+      title: 'A veteran program built to thaw a frozen nervous system',
+      summary: 'From first cohort to a program running through 2027.',
+      intro:
+        'We designed the curriculum, built the sales kit and partnership deck that earned it sponsor funding, and ran the press campaign that carried it into public view. Still running. Still growing.',
+      texture: 'beyond-duty',
+      color: 'groundwork',
+      services: [
+        'Program Design',
+        'Brand Strategy',
+        'Public Relations',
+        'Presentation Design',
+      ],
+    },
+    {
+      id: 'workforce-solutions',
+      client: 'Workforce Solutions Borderplex',
+      category: 'Groundwork · Systems Partner',
+      title: 'The workforce board that handed us the whole operation',
+      summary:
+        'Staff development and youth readiness, backed by the infrastructure to run it without us.',
+      intro:
+        "Continuation of brand strategy, communications guidelines, a mapped consumer journey, and the project management systems underneath all of it. Not a workshop vendor. A comms department they didn't have to build themselves.",
+      texture: 'workforce-solutions',
+      color: 'groundwork',
+      services: [
+        'Brand Audit',
+        'Strategy',
+        'Communications Infrastructure',
+        'Project Management',
+        'Workforce Development',
+      ],
+    },
+    {
+      id: 'challenge-foundation',
+      client: 'The Challenge Foundation El Paso',
+      category: 'Vision Lab',
+      title: 'A nonprofit trained to run its own comms, not rent ours forever',
+      summary: "We didn't just reinforce the brand. We taught the team to hold it.",
+      intro:
+        "A full brand audit and reinforcement, an active public relations practice, and communications strategy training built so leadership could manage the message themselves. The kind of work that's supposed to make you obsolete, on purpose.",
+      texture: 'challenge-foundation',
+      color: 'vision',
+      services: [
+        'Brand Audit',
+        'Public Relations',
+        'Communications Strategy',
+        'Leadership Empowerment',
+      ],
+    },
+    {
+      id: 'epla',
+      client: 'El Paso Leadership Academy',
+      category: 'Groundwork + Vision Lab',
+      title: 'Workshops and press, working the same story from two directions',
+      summary: 'One campaign, one purpose-alignment curriculum, one team building both.',
+      intro:
+        'We built customized workforce and purpose alignment workshops from the ground up, then ran the public relations campaign that put the results in front of the region.',
+      texture: 'epla',
+      color: 'groundwork',
+      services: [
+        'Workforce Development',
+        'Purpose Alignment Workshops',
+        'Public Relations',
+        'Campaign Strategy',
+      ],
+    },
+    {
+      id: 'readyone',
+      client: 'ReadyOne Industries',
+      category: 'Blueprint · Operations · Vision Lab',
+      title: 'Built by Ability, told the way it deserved to be told',
+      summary:
+        "HR video, staff messaging, and the campaign carrying a mission-driven employer's story.",
+      intro:
+        'We produced the HR video series, trained staff on messaging that actually sounds like people, produced the Built by Ability campaign, and built the communications training and workflow systems that keep it running without a consultant in the room.',
+      texture: 'readyone',
+      color: 'blueprint',
+      services: [
+        'HR Video Production',
+        'Staff Messaging Training',
+        'Campaign Strategy',
+        'Communications Training',
+        'Workflow Design',
+      ],
+    },
+    {
+      // No image yet: the frame falls back to a lettered panel in the
+      // engagement's own colour until one lands.
+      id: 'way-out-west',
+      client: 'Way Out West',
+      category: 'Stage',
+      title: 'Production support for a campaign on festival relocation built to be seen',
+      summary: 'The press and the production, handled by Bianomics.',
+      intro:
+        'We supported the production campaign end to end and ran the public relations alongside it, so the work and the story of the work moved at the same pace.',
+      color: 'stage',
+      services: ['Production Support', 'Public Relations'],
+    },
+    {
+      id: 'driven-against-silence',
+      client: 'Driven Against Silence',
+      category: 'Vision Lab · Nonprofit Consulting',
+      title: 'A nonprofit that needed a strategy, not just a logo',
+      summary: 'Brand identity, messaging, and the plan to carry both forward.',
+      intro:
+        'We built the brand identity and the messaging behind it, and we are supporting the strategic plan build, so the organization has a direction, not just a look.',
+      texture: 'driven-against-silence',
+      color: 'vision',
+      services: [
+        'Nonprofit Consulting',
+        'Brand Identity',
+        'Messaging',
+        'Strategic Planning',
+      ],
     },
   ],
+  testimonials: [],
 }

@@ -65,32 +65,27 @@ export interface AboutStat {
   label: string
 }
 
-export interface CaseStudyMetric {
-  /** The hard number, e.g. "3x" or "+42%". */
-  value: string
-  /** What it measures, e.g. "increase in qualified leads". */
-  label: string
-}
-
 export interface CaseStudy {
   id: string
-  /** Client name (tab label and left-panel wordmark). */
+  /** Client name, set above the category. */
   client: string
-  /** Engagement type, set small above the title. */
+  /** Engagement type, set small under the client. */
   category: string
-  /** Headline for the case study (bottom-left of the left panel). */
+  /** Headline for the engagement. */
   title: string
-  /** One-line summary, set in small caps between the title and the intro. */
+  /** One line under the title, carrying the point of the work. */
   summary: string
-  /** Short intro under the title. */
+  /** Short paragraph under the summary. */
   intro: string
-  /** Background texture image key, resolved to public/results/<texture>.png. */
-  texture: string
-  /** Which of the four services drives the coded accent. */
+  /**
+   * Image key, resolved to public/results/<texture>.webp by the map in
+   * Results.tsx. Absent while the image is outstanding, which draws a lettered
+   * frame instead. Never point it at another engagement's image.
+   */
+  texture?: string
+  /** Which of the four practices drives the coded accent. */
   color: LabColorKey
-  /** Result stats listed on the right panel. */
-  metrics: CaseStudyMetric[]
-  /** Services provided on this engagement (shown where a testimonial would go). */
+  /** Services provided on this engagement. */
   services: string[]
 }
 

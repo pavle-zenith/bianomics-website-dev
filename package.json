@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "convert-fonts": "node scripts/convert-fonts.mjs",
     "build-textures": "node scripts/build-textures.mjs",
-    "build-photos": "node scripts/build-photos.mjs"
+    "build-photos": "node scripts/build-photos.mjs",
+    "build-portfolio": "node scripts/build-portfolio.mjs"
   },
   "dependencies": {
     "better-icons": "^1.0.4",

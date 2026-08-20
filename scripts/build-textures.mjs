@@ -1,5 +1,9 @@
-// Dev-only, one-shot: derive the shipped texture beds from the raw 6000x3375
-// PNGs in _source/textures/ (gitignored, ~64MB) into public/texture/.
+// Dev-only, one-shot: derive the shipped texture beds from the raw PNGs in
+// _source/textures/ (gitignored, ~64MB) into public/texture/.
+//
+// The projects bed arrived as a HEIC, which sharp's build here cannot decode.
+// It was converted once with `sips -s format png` on the way into _source/;
+// do the same for any future HEIC drop rather than pointing this at one.
 // Run with: npm run build-textures
 //
 // Only four of the five raw textures ship. The fifth (5.png) is a soft light
@@ -24,6 +28,9 @@ const jobs = [
   { from: '1 (1).png', to: 'dark-01.webp', width: 1920, quality: 70 },
   { from: '2.png', to: 'dark-02.webp', width: 1920, quality: 70 },
   { from: '3.png', to: 'dark-03.webp', width: 1920, quality: 70 },
+  // The projects bed. Portrait and soft-focus, so it takes the section's full
+  // height on `cover` and the upscale never shows; 1600 is plenty.
+  { from: 'projects-background.png', to: 'projects.webp', width: 1600, quality: 72 },
 ]
 
 await mkdir(out, { recursive: true })

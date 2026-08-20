@@ -17,6 +17,8 @@
   --texture-dark-01: url('/texture/dark-01.webp');
   --texture-dark-02: url('/texture/dark-02.webp');
   --texture-dark-03: url('/texture/dark-03.webp');
+  /* Soft diagonal light on near-black, behind the projects grid. */
+  --texture-projects: url('/texture/projects.webp');
 
   /* --- Fine grain, generated ---
      fractalNoise desaturated to grey: over light it reads as tooth, over
