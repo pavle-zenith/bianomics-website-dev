@@ -44,16 +44,6 @@
   }
 }
 
-/* The closing line, set as its own beat under the statement. */
-.close {
-  margin-top: var(--space-5);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-normal);
-  color: var(--color-text-muted);
-  max-width: 44ch;
-}
-
 /* --- Body: the pills carry the left, one number holds the right --- */
 .body {
   display: grid;

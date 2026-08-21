@@ -47,7 +47,7 @@ export const results: ResultsContent = {
     {
       id: 'workforce-solutions',
       client: 'Workforce Solutions Borderplex',
-      category: 'Groundwork · Systems Partner',
+      category: 'Groundwork + Vision Lab · Systems Partner',
       title: 'The workforce board that handed us the whole operation',
       summary:
         'Staff development and youth readiness, backed by the infrastructure to run it without us.',
@@ -55,6 +55,7 @@ export const results: ResultsContent = {
         "Continuation of brand strategy, communications guidelines, a mapped consumer journey, and the project management systems underneath all of it. Not a workshop vendor. A comms department they didn't have to build themselves.",
       texture: 'workforce-solutions',
       color: 'groundwork',
+      colorSecondary: 'vision',
       services: [
         'Brand Audit',
         'Strategy',

@@ -84,14 +84,24 @@
 
 /* The engagement's coded accent as a rule across the head of the frame. The
    dot on the service pills was the only place the four colours reached; this
-   is what makes the coding legible from across the grid. */
+   is what makes the coding legible from across the grid.
+
+   An engagement spanning two practices splits the marker between them at a
+   hard stop — no blend, because a gradient between two coded colours reads as
+   a third colour that means nothing. When there is only one practice
+   `--case-fill-2` resolves to the same value and the bar is solid, so this one
+   declaration covers both cases. */
 .media::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
   z-index: 2;
   height: 3px;
-  background: var(--case-fill);
+  background: linear-gradient(
+    90deg,
+    var(--case-fill) 0 50%,
+    var(--case-fill-2, var(--case-fill)) 50% 100%
+  );
 }
 /* Stands in until the image lands: the engagement's own colour, dark enough
    that a card with no artwork does not outshine the seven that have it.

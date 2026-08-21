@@ -83,8 +83,6 @@ export const about = {
   introLabel: 'What we do',
   /** Right-side CTA in the intro row. */
   introCta: 'Book a Snapshot',
-  /** Closing line of the supporting copy, set as its own paragraph. */
-  introClose: 'The people who scope the work are the people who build it.',
   /**
    * The capability pills. Six drawn from across the four practices, each
    * coded to the practice it belongs to, so the section reads as the range of
@@ -194,7 +192,7 @@ export const steps: Step[] = [
     n: 3,
     title: 'We build the plan',
     description:
-      'One connected plan across brand, events, operations, and people, sized to what you actually need right now.',
+      'With a customized Comms OS, one connected plan across brand, events, operations, and people, sized to what you actually need right now.',
     color: 'blueprint',
   },
   {

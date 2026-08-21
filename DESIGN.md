@@ -335,8 +335,10 @@ edge of a media frame, filled with the practice colour of the work inside it. It
 eight case-study frames and the four process step frames, and it is a legend mark rather than a
 rule — which is why it is allowed a width the Hairline Rule forbids. Its bounds are exact: 3px, the
 top edge only, a practice `-fill` colour only, and only on a frame whose content belongs to that
-practice. A coloured bar on any other edge, at any other width, or in any other colour is the
-side-tab anti-pattern and is off-system.
+practice. An engagement that genuinely spans two practices splits the marker between them at a hard
+stop, never a blend — a gradient between two coded colours reads as a third colour that means
+nothing. Two is the limit. A coloured bar on any other edge, at any other width, or in any other
+colour is the side-tab anti-pattern and is off-system.
 
 ## Shapes
 

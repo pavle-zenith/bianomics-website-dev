@@ -44,10 +44,6 @@ export function About() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.08}>
-          <p className={styles.close}>{about.introClose}</p>
-        </Reveal>
-
         <div className={styles.body}>
           <ul className={styles.pills}>
             {about.capabilities.map((capability, i) => (

@@ -83,7 +83,14 @@ function Card({ study }: { study: CaseStudy }) {
         className={styles.row}
         // The coded accent for this engagement, used on the category and dots.
         // Cast because CSS custom properties are not in the CSSProperties type.
-        style={{ ['--case-fill' as string]: `var(--lab-${study.color}-fill)` } as CSSProperties}
+        style={
+          {
+            ['--case-fill' as string]: `var(--lab-${study.color}-fill)`,
+            // Falls through to the primary when the engagement is one
+            // practice, so the marker below needs no conditional.
+            ['--case-fill-2' as string]: `var(--lab-${study.colorSecondary ?? study.color}-fill)`,
+          } as CSSProperties
+        }
       >
         <div className={styles.media}>
           {image ? (

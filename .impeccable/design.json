@@ -622,7 +622,7 @@
       {
         "name": "The Practice Marker",
         "section": "elevation",
-        "body": "The one bar in the system that is not a divider: a 3px band across the top edge of a media frame, filled with the practice colour of the work inside it. A legend mark rather than a rule, which is why it is allowed a width the Hairline Rule forbids. Bounds are exact: 3px, top edge only, a practice -fill colour only, and only on a frame whose content belongs to that practice. Any other edge, width, or colour is the side-tab anti-pattern."
+        "body": "The one bar in the system that is not a divider: a 3px band across the top edge of a media frame, filled with the practice colour of the work inside it. A legend mark rather than a rule, which is why it is allowed a width the Hairline Rule forbids. Bounds are exact: 3px, top edge only, a practice -fill colour only, and only on a frame whose content belongs to that practice. An engagement spanning two practices splits the marker between them at a hard stop, never a blend; two is the limit. Any other edge, width, or colour is the side-tab anti-pattern."
       }
     ],
     "dos": [

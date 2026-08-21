@@ -35,7 +35,7 @@ export const labs: Lab[] = [
     color: 'stage',
     subservices: [
       'Conferences',
-      'Product launches',
+      'Entertainment',
       'Press moments',
       'Community events',
       'Activations',
@@ -55,7 +55,7 @@ export const labs: Lab[] = [
       'Operations systems',
       'Workflow design',
       'Vendor coordination',
-      'Timelines & delivery',
+      'Employee Experience & Onboarding',
     ],
     href: '#what-we-do',
   },
@@ -64,7 +64,7 @@ export const labs: Lab[] = [
     name: 'Groundwork™',
     mode: 'Regulate',
     description:
-      'Workforce development built for how people actually change. Every participant completes nervous system regulation work before anything else, because that is the step every other program skips and the reason the rest of the training sticks. Our proprietary PowerPrint assessment maps strengths, stress patterns, and values to real roles in real industries.',
+      'Workforce development built for how people actually change. Every participant completes nervous system regulation work before anything else, because that is the step every other program skips and the reason the rest of the training sticks. Careers move forward when people are seen for what they can become. We build the programs, tools, and pathways that move talent from ready to hired, and keep them growing.',
     color: 'groundwork',
     subservices: [
       'Beyond Duty, veteran workforce readiness',
@@ -73,6 +73,7 @@ export const labs: Lab[] = [
       'Builders, hands-on trades apprenticeship',
       'Money with Purpose, bilingual financial literacy',
       'PowerPrint, proprietary Career DNA assessment',
+      'Customized curriculums to fit culture, objectives, and skills gaps',
     ],
     href: '#what-we-do',
   },

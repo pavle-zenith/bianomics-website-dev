@@ -88,6 +88,12 @@ export interface CaseStudy {
   texture?: string
   /** Which of the four practices drives the coded accent. */
   color: LabColorKey
+  /**
+   * A second practice, when the engagement genuinely spans two. The frame's
+   * marker splits into both colours; the category label and the service dots
+   * stay with `color`, which remains the engagement's primary practice.
+   */
+  colorSecondary?: LabColorKey
   /** Services provided on this engagement. */
   services: string[]
 }
