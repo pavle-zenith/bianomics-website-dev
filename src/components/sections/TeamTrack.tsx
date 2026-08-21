@@ -11,6 +11,8 @@ interface TeamTrackProps {
   members: readonly TeamMember[]
   photos: Record<string, StaticImageData>
   heading: string
+  /** Unique per track: the section renders more than one of these. */
+  headingId: string
 }
 
 /**
@@ -19,7 +21,7 @@ interface TeamTrackProps {
  * scroll-snap does the movement, so it stays swipeable on touch. Selecting a
  * card opens the full bio in a panel that slides in from the right.
  */
-export function TeamTrack({ members, photos, heading }: TeamTrackProps) {
+export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProps) {
   const trackRef = useRef<HTMLUListElement>(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
@@ -27,6 +29,8 @@ export function TeamTrack({ members, photos, heading }: TeamTrackProps) {
 
   const open = members.find((m) => m.id === openId) ?? null
 
+  // Both true at once means the track does not overflow, which is the signal
+  // the controls use to take themselves off the page.
   const updateEdges = useCallback(() => {
     const el = trackRef.current
     if (!el) return
@@ -58,12 +62,12 @@ export function TeamTrack({ members, photos, heading }: TeamTrackProps) {
       <div className="container">
         <Reveal className={styles.head}>
           <div>
-            <h2 id="team-heading" className={styles.heading}>
+            <h2 id={headingId} className={styles.heading}>
               {heading}
             </h2>
           </div>
 
-          <div className={styles.controls}>
+          <div className={styles.controls} hidden={atStart && atEnd}>
             <button
               type="button"
               className={styles.arrow}

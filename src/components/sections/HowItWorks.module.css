@@ -216,7 +216,7 @@
 
 .stepTitle {
   font-size: var(--text-xl);
-  font-weight: var(--weight-heading);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
   color: var(--tone-text);

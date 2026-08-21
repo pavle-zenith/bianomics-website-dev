@@ -154,9 +154,13 @@
   margin-bottom: -1.5%;
 }
 
+/* Was the full container width, which put the wordmark at display scale
+   across the foot of every page. Held to two thirds and centred, so it still
+   closes the page without being the largest thing on it. */
 .wordmark {
   display: block;
-  width: 100%;
+  width: min(100%, 62%);
   height: auto;
+  margin-inline: auto;
   user-select: none;
 }

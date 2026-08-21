@@ -4,6 +4,11 @@
   justify-content: center;
   gap: var(--space-2);
   padding: 0.85em 1.5em;
+  /* The arrow variant is 2.5rem of badge plus 0.5rem of padding either side,
+     so it stands 3.5rem tall and everything else stood shorter. Stating the
+     height here rather than patching one variant means a primary and a
+     secondary side by side always match, arrow or no arrow. */
+  min-block-size: 3.5rem;
   border-radius: var(--radius-control);
   font-weight: var(--weight-bold);
   font-size: var(--text-base);
@@ -98,26 +103,26 @@
   background-color: var(--color-cta-bg-hover);
 }
 
-/* Secondary — outline on light */
+/* Secondary — filled white.
+   It used to be a transparent outline, which assumed a plain canvas behind
+   it. Both places it appears beside the primary sit on the hero photograph,
+   where a 1.5px hairline over a busy image all but disappeared. A white plate
+   holds the button's shape whatever is behind it, and carries ink text at far
+   better than AA on any of them. */
 .secondary {
-  background-color: transparent;
+  background-color: var(--white);
   color: var(--color-cta-secondary-fg);
-  border: 1.5px solid var(--color-cta-secondary-border);
+  border: 1.5px solid var(--color-border);
 }
 .secondary:hover {
   background-color: var(--color-cta-secondary-bg-hover);
   border-color: var(--color-border-strong);
 }
 
-/* On dark canvases the secondary needs light-on-dark treatment. Both hooks
-   are listed: .section-inverse paints a dark canvas, .tone-dark marks a panel
-   that supplies its own dark background (photograph, colour fill, texture). */
-:global(.section-inverse) .secondary,
-:global(.tone-dark) .secondary {
-  color: var(--tone-text);
-  border-color: var(--tone-border);
-}
+/* No inverse treatment: a white plate with ink on it reads on a dark canvas
+   as well as a light one, which is the point of filling it. */
 :global(.section-inverse) .secondary:hover,
 :global(.tone-dark) .secondary:hover {
-  background-color: rgb(255 255 255 / 0.08);
+  background-color: var(--white);
+  border-color: var(--color-border-strong);
 }

@@ -57,7 +57,14 @@ export const recognitionMarks: RecognitionMark[] = [
   { label: 'NAWB', full: 'National Association of Workforce Boards' },
 ]
 
-export const reachStatement = 'Working across six states'
+/**
+ * The footprint, per the client: Texas, New Mexico, Arizona, New York, New
+ * Jersey, Georgia, Indiana, Washington D.C. That is eight places but seven
+ * states — D.C. is a federal district — so the count is carried as "markets"
+ * rather than "states", which would be a false claim on a public page. The
+ * FAQ answer names the two categories outright.
+ */
+export const reachStatement = 'Working across eight markets'
 
 /** About section — the statement, the supporting line, and two headline stats. */
 export const about = {
@@ -100,9 +107,9 @@ export const about = {
   /** The two headline numbers, shown as cards with a ghosted numeral behind. */
   stats: [
     {
-      value: '6',
-      suffix: ' states',
-      label: 'Reach across the region and beyond',
+      value: '8',
+      suffix: ' markets',
+      label: 'Texas to Washington D.C., and internationally',
     },
     {
       value: '4 + 1',
@@ -218,15 +225,14 @@ export const founder = {
   name: 'Bianca Cervantes',
   role: 'Founder',
   promise:
-    "I'd rather take the risk that makes you unforgettable than the safe one that makes you fine. Most rooms won't tell you that. I will.",
+    "I'd rather take the calculated risk that makes you unforgettable than the safe route that keeps you floating with the average. I'll tell you what I really think, because serving the vision matters more than simply telling you what you want to hear.",
   /**
    * The founder's note, broken into paragraphs for readability. The wording is
    * verbatim from the approved copy — only the paragraph breaks are ours.
    */
   note: [
-    "I started Bianomics after watching too many good organizations get handed a strategy deck and left to figure out the rest. We coach, we support, and we build capacity inside your team, so what we make together doesn't walk out the door when we do.",
-    'Our team runs lean by design, with systems and technology carrying the load that used to require six people and a retainer to match. That means more of your budget lands in the work itself, which matters most for the organizations doing real good in the world.',
-    'Reach and responsible spending were never supposed to be a tradeoff.',
+    "I started Bianomics after watching too many good organizations get handed a strategy deck and left to figure out the rest. I'd been on the client side of that dynamic enough times to recognize what was missing: transparency, shared understanding, and a partner genuinely invested in the mission. Too often, we were made to feel like another contract number. Those gaps became the foundation of Bianomics and the values we still operate by. We coach, support, and build capacity within your team, so what we create together doesn't walk out the door when we do.",
+    "Our team runs lean by design, using smart systems to put more of your budget where it belongs: into the work itself. But lean doesn't mean distant. We embed ourselves as an extension of your team, the people you can call when the path shifts, the pressure hits, or the deliverables alone aren't enough. We're not here to check boxes and disappear. We're here to help carry the mission.",
   ],
 } as const
 
@@ -242,6 +248,7 @@ export const founder = {
 export const team = {
   eyebrow: 'Team',
   heading: 'Leadership, start to finish',
+  /** The people who run the work, in the order the client set. */
   members: [
     {
       id: 'bianca',
@@ -253,17 +260,6 @@ export const team = {
         'She thinks in nervous systems, paying attention to what is actually driving behavior, not just what is on the surface. She never sits still on an idea either. The moment one lands, she is already three ideas past it, looking for the version that is bigger and better.',
         'Off the clock, she is always moving. Golf, gym, yoga, running. She will stop for live music, blues to house to EDM, and she will always stop for a dog.',
         'Her favorite title is not CEO. It is Mom, to her daughter Ava. That one runs the show.',
-      ],
-    },
-    {
-      id: 'hamna',
-      name: 'Hamna Arif',
-      role: 'Chief of Staff',
-      photo: 'hamna',
-      bio: [
-        'Hamna is the reason nothing falls through the cracks. Timelines, deliverables, a dozen moving pieces, she keeps it all on track and keeps the team one step ahead of the deadline.',
-        'She does not just manage the chaos, she quietly fixes what causes it. She spots the clunky process before anyone else does and smooths it out so the rest of the team can move faster.',
-        'Off the clock, she is chasing sunsets, good food, and good tea. Music is always on. Cats over most humans, no argument there.',
       ],
     },
     {
@@ -290,6 +286,28 @@ export const team = {
       ],
     },
     {
+      id: 'hamna',
+      name: 'Hamna Arif',
+      role: 'Chief of Staff',
+      photo: 'hamna',
+      bio: [
+        'Hamna is the reason nothing falls through the cracks. Timelines, deliverables, a dozen moving pieces, she keeps it all on track and keeps the team one step ahead of the deadline.',
+        'She does not just manage the chaos, she quietly fixes what causes it. She spots the clunky process before anyone else does and smooths it out so the rest of the team can move faster.',
+        'Off the clock, she is chasing sunsets, good food, and good tea. Music is always on. Cats over most humans, no argument there.',
+      ],
+    },
+    {
+      id: 'pavle',
+      name: 'Pavle Maodus',
+      role: 'Web Development & Automations',
+      photo: 'pavle',
+      bio: [
+        "Pavle's first computer session was at age 3, back in 2007. Nearly two decades later, he is a master of web design, moving fast across sites, automations, and SEO through his own studio, fast enough that clients keep forgetting he is only 22.",
+        "Four languages, three modes: zen, focus, deal-closer, whichever the moment calls for. He also helps run his family's alcohol distilling business on the side, because clearly one job was never going to be enough for him.",
+        'House music never turns off, and neither does his love for cinematography, history, and proper European pub culture with friends once the weekend hits. Work hard, play hard is not a slogan for him, it is the whole operating system.',
+      ],
+    },
+    {
       id: 'chris',
       name: 'Chris Lechuga',
       role: 'Public Relations & Communications Lead',
@@ -300,6 +318,38 @@ export const team = {
         'He brings a rock and roll mindset to a suit-and-tie industry, and it shows. Clarity over noise, every single time.',
       ],
     },
+    {
+      id: 'minerva',
+      name: 'Minerva Saucedo',
+      role: 'Groundwork Facilitator',
+      photo: 'minerva',
+      bio: [
+        'Minerva flips the script on healing. Self-care is not the reward at the end of it. It is where it starts. She learned that the hard way, sitting with families through the toughest parts of substance abuse, and now she teaches it for a living.',
+        'Licensed cosmetologist by trade, recovery coach at heart, she treats those two worlds like they were never separate to begin with. Small, repeatable acts of care beat willpower every time.',
+        'Off the clock, she is laughing too hard to finish her own stories, hunting down the next great food spot, and yes, she really does own an exact replica of the Grail Diary from Indiana Jones.',
+      ],
+    },
+    {
+      id: 'greg',
+      name: 'Greg Kruger',
+      role: 'Nervous System Coach, US Marine veteran',
+      photo: 'greg',
+      bio: [
+        'Greg used to think willpower was the answer. Turns out, willpower was getting way too much credit.',
+        'He spent years figuring out what was actually running the show underneath all that effort and trying harder. Once he figured it out, he fixed his own patterns, then built a career helping other people fix theirs.',
+        'U.S.M.C. veteran. Licensed NLP practitioner. Certified breathwork facilitator. Founder of Forgotten Truth Coaching. His rule is simple: leadership starts with self-leadership. Skip that part and everything else gets harder.',
+        'Inside Beyond Duty, Greg skips the motivational speech and starts with the breath. No slogans. No trying harder. Just a shift people can actually feel.',
+        'Off the clock, he is chasing waves, riding his bike, and making music. Apparently, sitting still was never really his thing.',
+      ],
+    },
+  ],
+  collaboratorsHeading: 'Comms collaborators',
+  /**
+   * Not staff. Consultants who work alongside the team often enough to
+   * belong on the page, kept in their own group so the roster does not
+   * imply they are employees.
+   */
+  collaborators: [
     {
       id: 'kandolite',
       name: 'Kandolite Carson',
@@ -324,28 +374,6 @@ export const team = {
       ],
     },
     {
-      id: 'pavle',
-      name: 'Pavle Maodus',
-      role: 'Web Development & Automations',
-      photo: 'pavle',
-      bio: [
-        "Pavle's first computer session was at age 3, back in 2007. Nearly two decades later, he is a master of web design, moving fast across sites, automations, and SEO through his own studio, fast enough that clients keep forgetting he is only 22.",
-        "Four languages, three modes: zen, focus, deal-closer, whichever the moment calls for. He also helps run his family's alcohol distilling business on the side, because clearly one job was never going to be enough for him.",
-        'House music never turns off, and neither does his love for cinematography, history, and proper European pub culture with friends once the weekend hits. Work hard, play hard is not a slogan for him, it is the whole operating system.',
-      ],
-    },
-    {
-      id: 'minerva',
-      name: 'Minerva Saucedo',
-      role: 'Groundwork Facilitator',
-      photo: 'minerva',
-      bio: [
-        'Minerva flips the script on healing. Self-care is not the reward at the end of it. It is where it starts. She learned that the hard way, sitting with families through the toughest parts of substance abuse, and now she teaches it for a living.',
-        'Licensed cosmetologist by trade, recovery coach at heart, she treats those two worlds like they were never separate to begin with. Small, repeatable acts of care beat willpower every time.',
-        'Off the clock, she is laughing too hard to finish her own stories, hunting down the next great food spot, and yes, she really does own an exact replica of the Grail Diary from Indiana Jones.',
-      ],
-    },
-    {
       id: 'celisse',
       name: 'Celisse Villagrana',
       role: 'Brand Consultant & Creative Director',
@@ -355,19 +383,6 @@ export const team = {
         'She translates strategy into something people actually feel. Print, digital, environmental, marketing, she keeps the story consistent wherever it shows up.',
         'Campaigns, production, stakeholders, deadlines, she holds the whole thing together without losing the thread from first concept to final execution. Fluent in English and Spanish, she has zero patience for a brand with no personality.',
         'Off the clock, she is on the dance floor, sketchbook in hand, chasing her next stamp in her passport. Moksha the dog and Micho the cat hold down the fort while she is out being a visionary in real time.',
-      ],
-    },
-    {
-      id: 'greg',
-      name: 'Greg Kruger',
-      role: 'Nervous System Coach, US Marine veteran',
-      photo: 'greg',
-      bio: [
-        'Greg used to think willpower was the answer. Turns out, willpower was getting way too much credit.',
-        'He spent years figuring out what was actually running the show underneath all that effort and trying harder. Once he figured it out, he fixed his own patterns, then built a career helping other people fix theirs.',
-        'U.S.M.C. veteran. Licensed NLP practitioner. Certified breathwork facilitator. Founder of Forgotten Truth Coaching. His rule is simple: leadership starts with self-leadership. Skip that part and everything else gets harder.',
-        'Inside Beyond Duty, Greg skips the motivational speech and starts with the breath. No slogans. No trying harder. Just a shift people can actually feel.',
-        'Off the clock, he is chasing waves, riding his bike, and making music. Apparently, sitting still was never really his thing.',
       ],
     },
   ],

@@ -34,11 +34,29 @@ const photos: Record<string, StaticImageData> = {
  * Team — square headshots on a horizontal track that runs off the right edge,
  * paged with the arrow controls beside the title. Selecting a card opens that
  * person's full bio in a panel from the right.
+ *
+ * Two tracks, not one: the collaborators are consultants rather than staff,
+ * and a single roster would read as though they were on the payroll. Same
+ * component either way, so the two groups behave identically.
  */
 export function Team() {
   return (
     <section id="team" className={`${styles.team} section`} aria-labelledby="team-heading">
-      <TeamTrack members={team.members} photos={photos} heading={team.heading} />
+      <TeamTrack
+        members={team.members}
+        photos={photos}
+        heading={team.heading}
+        headingId="team-heading"
+      />
+
+      <div className={styles.group}>
+        <TeamTrack
+          members={team.collaborators}
+          photos={photos}
+          heading={team.collaboratorsHeading}
+          headingId="collaborators-heading"
+        />
+      </div>
     </section>
   )
 }

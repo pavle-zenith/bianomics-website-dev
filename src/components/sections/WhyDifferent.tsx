@@ -39,7 +39,7 @@ export function WhyDifferent() {
           <div className={styles.compare}>
             {/* Typical agency panel */}
             <div className={`${styles.panel} ${styles.panelTypical}`}>
-              <p className={styles.panelLabel}>A typical agency</p>
+              <p className={styles.panelLabel}>Outsourcing an agency</p>
               <ul className={styles.rows}>
                 {comparison.map((row) => (
                   <li key={row.dimension} className={styles.row}>
@@ -58,10 +58,12 @@ export function WhyDifferent() {
             {/* Bianomics panel — the elevated, winning side */}
             <div className={`${styles.panel} ${styles.panelUs}`}>
               <p className={styles.panelLabel}>
-                {/* The wordmark stands in for the name. The asset is
-                    white-on-transparent, so it is inverted for this light
-                    panel, the same way the nav handles its light state. */}
+                {/* The wordmark stands in for the name, then says what kind of
+                    thing it is — the label opposite names an arrangement
+                    ("outsourcing an agency"), so this one has to name one too
+                    rather than just a company. */}
                 <Image src={logo} alt={brand.name} className={styles.panelLogo} />
+                <span className={styles.panelLabelSuffix}>embedded team</span>
               </p>
               <ul className={styles.rows}>
                 {comparison.map((row) => (

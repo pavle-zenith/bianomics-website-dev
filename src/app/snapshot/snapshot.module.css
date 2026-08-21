@@ -230,7 +230,7 @@
 
 .coverTitle {
   font-size: var(--text-lg);
-  font-weight: var(--weight-heading);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
   max-width: 22ch;

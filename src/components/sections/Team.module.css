@@ -3,6 +3,12 @@
   color: var(--color-text);
 }
 
+/* The second track needs room off the first; the track's own bottom padding
+   is only there for the scrollbar. */
+.group {
+  margin-top: var(--space-9);
+}
+
 /* --- Header row: title left, arrow controls right --- */
 .head {
   display: flex;

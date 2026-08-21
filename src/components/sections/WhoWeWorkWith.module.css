@@ -59,16 +59,20 @@
   transform: scale(1.03);
 }
 
-/* Gradient carrying the copy at the foot of the image. */
+/* Gradient carrying the copy at the foot of the image. Deeper and held
+   further up the card than it was: the cards went landscape at two-up, so the
+   caption now occupies a much larger share of a much shorter frame, and the
+   old stops ran out of density before the copy ran out of lines. */
 .scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgb(6 7 9 / 0.9) 0%,
-    rgb(6 7 9 / 0.6) 30%,
-    rgb(6 7 9 / 0.05) 62%
+    rgb(6 7 9 / 0.96) 0%,
+    rgb(6 7 9 / 0.88) 24%,
+    rgb(6 7 9 / 0.58) 50%,
+    rgb(6 7 9 / 0.06) 80%
   );
 }
 
@@ -118,7 +122,7 @@
 
 .cardTitle {
   font-size: var(--text-xl);
-  font-weight: var(--weight-heading);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-snug);
   color: var(--white);
 }

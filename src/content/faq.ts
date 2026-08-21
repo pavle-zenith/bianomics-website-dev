@@ -24,7 +24,7 @@ export const faqItems: FaqItem[] = [
     question: 'Do you only work with organizations in El Paso?',
     // NOTE: the international claim is pending Bianca's confirmation before publishing.
     answer:
-      "No. We're based in El Paso and our work runs across six states and internationally. The Snapshot and much of the work happen remotely, and we travel when the project calls for it.",
+      "No. We're based in El Paso and our work runs across seven states and Washington D.C., and internationally. The Snapshot and much of the work happen remotely, and we travel when the project calls for it.",
   },
   {
     id: 'cost',
