@@ -13,7 +13,6 @@ import {
 import Image, { type StaticImageData } from 'next/image'
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
 import type { Lab, LabId } from '@/content/types'
-import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './WhatWeDo.module.css'
 
@@ -249,9 +248,11 @@ export function WhatWeDoTrack({
                         the colour. */}
                     <div className={styles.slideGrain} aria-hidden="true" />
 
-                    <p className={styles.counter}>
-                      Practice {String(i + 1).padStart(2, '0')}
-                    </p>
+                    {/* The practice's mode, holding the position the
+                        "Practice 01" counter used to. The counter said which
+                        of four this was, which the progress bar and the
+                        [01 / 04] readout at the foot already say twice. */}
+                    <p className={styles.counter}>{lab.mode}</p>
 
                     <div className={styles.media}>
                       <Image
@@ -265,11 +266,10 @@ export function WhatWeDoTrack({
                     </div>
 
                     <div className={styles.meta}>
-                      {/* Leads the copy column, directly above its mode. */}
+                      {/* Leads the copy column. */}
                       <h3 className={styles.title}>
                         <LabName name={lab.name} />
                       </h3>
-                      <p className={styles.mode}>{lab.mode}</p>
                       <ul className={styles.services}>
                         {lab.subservices.map((s) => (
                           <li key={s} className={styles.service}>
@@ -285,9 +285,12 @@ export function WhatWeDoTrack({
             </motion.ol>
           </div>
 
-          {/* Foot: progress, counter, and the way on. */}
-          <div className={`${styles.foot} container`}>
-            <div className={styles.progress} aria-hidden="true" hidden={!pinned}>
+          {/* Foot: the pin's progress and its readout. Everything in here is
+              pin-only, so off the pin the whole block goes — hidden rather
+              than unrendered, so the markup matches on both sides of
+              hydration. */}
+          <div className={`${styles.foot} container`} hidden={!pinned}>
+            <div className={styles.progress} aria-hidden="true">
               <motion.span
                 className={styles.progressFill}
                 style={pinned ? { scaleX: fill } : { scaleX: 1 }}
@@ -295,15 +298,10 @@ export function WhatWeDoTrack({
             </div>
 
             <div className={styles.footRow}>
-              <p className={styles.count} hidden={!pinned}>
+              <p className={styles.count}>
                 [ {String(active).padStart(2, '0')} /{' '}
                 {String(labs.length).padStart(2, '0')} ]
               </p>
-
-              <a href={anchors.snapshot} className={styles.footLink}>
-                Book a Snapshot
-                <ArrowUpRight />
-              </a>
             </div>
           </div>
         </div>
@@ -340,16 +338,3 @@ function Chevron({ direction }: { direction: 'left' | 'right' }) {
   )
 }
 
-function ArrowUpRight() {
-  return (
-    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
-      <path
-        d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}

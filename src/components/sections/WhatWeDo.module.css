@@ -149,7 +149,13 @@
 @media (min-width: 60rem) {
   .slideInner {
     grid-template-columns: 1fr 1.05fr;
-    gap: var(--space-8);
+    /* The mode takes its own height; the copy takes the rest, so it can sit
+       on the frame's baseline. */
+    grid-template-rows: auto 1fr;
+    /* Column gap only: the row gap here would reopen the space between the
+       mode and the copy that this layout exists to close. */
+    column-gap: var(--space-8);
+    row-gap: var(--space-4);
   }
 }
 
@@ -181,7 +187,9 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--tone-text-muted);
+  /* The full ink step, not the muted one: this is the practice's mode now,
+     which is a label on the card rather than a footnote to it. */
+  color: var(--tone-text);
 }
 .slideInner > .meta {
   order: 1;
@@ -189,9 +197,23 @@
 .slideInner > .media {
   order: 2;
 }
+/* Two columns proper, rather than a full-width strip above them. The mode
+   used to span both, which put a line of type and its leading above the frame
+   and started the picture that much further down the card. Placed in the left
+   column instead, with the frame spanning both rows, the two start on the
+   same edge. */
 @media (min-width: 60rem) {
   .counter {
-    grid-column: 1 / -1;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .slideInner > .meta {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .slideInner > .media {
+    grid-column: 2;
+    grid-row: 1 / -1;
   }
 }
 
@@ -256,14 +278,6 @@
   }
 }
 
-.mode {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--tone-text-muted);
-}
-
 .services {
   display: flex;
   flex-direction: column;
@@ -287,11 +301,13 @@
   text-decoration-color: var(--tone-border);
 }
 
+/* No measure cap: the copy column is already narrower than a comfortable
+   line, so 36ch was breaking it a second time and leaving a ragged strip of
+   empty card beside it. */
 .desc {
   margin-top: var(--space-3);
   line-height: var(--leading-relaxed);
   color: var(--tone-text-muted);
-  max-width: 36ch;
 }
 
 /* --- Foot: progress, counter, controls --- */
@@ -358,15 +374,3 @@
   cursor: default;
 }
 
-.footLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-normal);
-  color: var(--tone-text);
-  transition: color var(--dur-fast) var(--ease-standard);
-}
-.footLink:hover {
-  color: var(--color-accent-text);
-}

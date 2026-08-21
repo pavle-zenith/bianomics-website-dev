@@ -1,0 +1,69 @@
+/* Closes the About section, under the capability pills and the reach card.
+   Inside the container, so it takes the same measure as the row above it and
+   needs only its own separation from that row. */
+.banner {
+  margin-top: var(--space-6);
+}
+
+/* The strip itself: held to the page's measure, on the practice's own fill. */
+.strip {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-card);
+  background: var(--lab-groundwork-fill);
+  color: var(--tone-text);
+}
+@media (min-width: 48rem) {
+  .strip {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+}
+
+/* The same fine grit the practice cards carry, so the strip reads as the same
+   material rather than a flat band of colour dropped into the page. */
+.strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--texture-grain);
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+}
+
+/* Name and date on one line where there is room, wrapped as a unit where
+   there is not. */
+.copy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  min-width: 0;
+}
+
+.program {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.message {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+}
+
+.cta {
+  flex: none;
+}

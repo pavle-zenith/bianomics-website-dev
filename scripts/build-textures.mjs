@@ -31,6 +31,9 @@ const jobs = [
   // The projects bed. Portrait and soft-focus, so it takes the section's full
   // height on `cover` and the upscale never shows; 1600 is plenty.
   { from: 'projects-background.png', to: 'projects.webp', width: 1600, quality: 72 },
+  // Behind the reach card. It only ever fills a card, and it is held at low
+  // opacity there, so it does not need the width the beds do.
+  { from: 'map.jpg', to: 'map.webp', width: 1200, quality: 70 },
 ]
 
 await mkdir(out, { recursive: true })

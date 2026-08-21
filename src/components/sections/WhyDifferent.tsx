@@ -84,7 +84,7 @@ export function WhyDifferent() {
 
 function XIcon() {
   return (
-    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 16 16" width="17" height="17" fill="none" aria-hidden="true">
       <path
         d="M4 4l8 8M12 4l-8 8"
         stroke="currentColor"
@@ -97,7 +97,7 @@ function XIcon() {
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 16 16" width="17" height="17" fill="none" aria-hidden="true">
       <path
         d="M3.5 8.5l3 3 6-7"
         stroke="currentColor"

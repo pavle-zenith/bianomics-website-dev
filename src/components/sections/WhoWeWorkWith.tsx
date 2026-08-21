@@ -1,16 +1,24 @@
 import type { CSSProperties } from 'react'
 import Image, { type StaticImageData } from 'next/image'
+import type { FitSituation } from '@/content/types'
 import { fitSituations } from '@/content/site'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './WhoWeWorkWith.module.css'
 
-import founders from '../../../public/serve/founders.webp'
-import peopleLeaders from '../../../public/serve/people-leaders.webp'
+import socialImpact from '../../../public/serve/social-impact.webp'
+import careerSeekers from '../../../public/serve/career-seekers.webp'
 
-/** Keyed by `fit.photo`. operators.webp is unused since this became a pair. */
-const photos: Record<string, StaticImageData> = {
-  founders,
-  'people-leaders': peopleLeaders,
+/**
+ * Keyed by `fit.photo`. Derived from _source/ by `npm run build-photos`.
+ *
+ * Typed to the key union rather than to `string`, so adding a situation
+ * without its photograph is a compile error. It used to be a loose record
+ * with a fallback to the first image, which would have put the wrong
+ * photograph under a heading rather than failing.
+ */
+const photos: Record<FitSituation['photo'], StaticImageData> = {
+  'social-impact': socialImpact,
+  'career-seekers': careerSeekers,
 }
 
 /**
@@ -49,10 +57,10 @@ export function WhoWeWorkWith() {
               >
                 <div className={styles.cardFill}>
                   <Image
-                    src={photos[fit.photo] ?? founders}
+                    src={photos[fit.photo]}
                     alt=""
                     fill
-                    sizes="(min-width: 52rem) 33vw, 100vw"
+                    sizes="(min-width: 52rem) 50vw, 100vw"
                     className={styles.photo}
                   />
                 </div>

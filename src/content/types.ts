@@ -58,12 +58,14 @@ export interface AboutCapability {
 
 /** A single headline number in the About band. */
 export interface AboutStat {
-  /** The number itself, e.g. "6" or "4 + 1". */
+  /** The number itself, e.g. "8" or "4 + 1". */
   value: string
-  /** Unit set small beside the value, e.g. " states". */
+  /** Unit set small beside the value, e.g. " markets". */
   suffix?: string
-  /** What it measures. */
-  label: string
+  /** What it measures. Omit when `places` says it instead. */
+  label?: string
+  /** Named out in full under the number, in place of a label. */
+  places?: readonly string[]
 }
 
 export interface CaseStudy {
@@ -113,7 +115,7 @@ export interface FitSituation {
   /** Which coded accent the card carries. */
   color: LabColorKey
   /** Photo key, resolved to public/serve/<photo>.webp. */
-  photo: 'founders' | 'people-leaders' | 'operators'
+  photo: 'social-impact' | 'career-seekers'
 }
 
 export interface Step {

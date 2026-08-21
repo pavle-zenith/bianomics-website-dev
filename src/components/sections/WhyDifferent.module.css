@@ -52,8 +52,8 @@
 .panel {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  gap: var(--space-6);
+  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
   border-radius: var(--radius-card);
 }
 
@@ -107,27 +107,33 @@
   display: inline-block;
 }
 
+/* Four rows in a panel, so the gap between them is most of what the panel
+   feels like. Opened up from space-4 to give each comparison its own beat. */
 .rows {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
 
 .row {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
+/* Rounded squares rather than small circles: at 1.5rem the marks read as
+   bullets, and the point of this table is that one column is ticks and the
+   other is crosses. Sized to the two lines of text beside them and nudged to
+   sit on the cap height of the first. */
 .mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-control);
   flex: none;
-  margin-top: 0.1rem;
+  margin-top: 0.05rem;
 }
 .markX {
   background: var(--color-border);

@@ -37,3 +37,19 @@
 .inverse .text {
   color: var(--tone-text);
 }
+
+/* On a phone the label ran nearly the full width and the pill read as a bar
+   across the top of the hero rather than a mark on it. The width comes from
+   the tracking, not the size, so that is what gives: mono uppercase at
+   `wider` is mostly air. Type stays at 14px, the floor set for the site.
+   Kept at the foot of the file because it overrides `.text` above, and at
+   equal specificity source order decides. */
+@media (max-width: 47.99rem) {
+  .badge {
+    padding: 0.4em 0.8em;
+    gap: 0.4em;
+  }
+  .text {
+    letter-spacing: var(--tracking-normal);
+  }
+}

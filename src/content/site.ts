@@ -109,7 +109,19 @@ export const about = {
     {
       value: '8',
       suffix: ' markets',
-      label: 'Texas to Washington D.C., and internationally',
+      /* Named rather than summarised. Seven states and a federal district,
+         which is why the count above says markets and not states. */
+      places: [
+        'Texas',
+        'New Mexico',
+        'Arizona',
+        'New York',
+        'New Jersey',
+        'Georgia',
+        'Indiana',
+        'Washington D.C.',
+        'International',
+      ],
     },
     {
       value: '4 + 1',
@@ -123,8 +135,8 @@ export const about = {
  * splits each one into a lead-in and the audience it names, which is the
  * shape these cards were built for, so it maps across unchanged.
  *
- * `public/serve/operators.webp` is left on disk but no longer used: the third
- * card went when this became a pair.
+ * Each card now has its own photograph of the work it names, so the three
+ * stock portraits the section opened with are gone from the repo.
  */
 export const fitSituations: FitSituation[] = [
   {
@@ -134,16 +146,16 @@ export const fitSituations: FitSituation[] = [
     description:
       'The work is true. We make it undeniable, we put it on the stage it deserves, and we make sure every piece moves toward the same vision.',
     color: 'vision',
-    photo: 'founders',
+    photo: 'social-impact',
   },
   {
     id: 'workforce',
     lead: 'Workforce development for',
-    title: 'Organizations and at-risk populations',
+    title: 'Organizations and career seekers',
     description:
       'A career does not start with a job posting. It starts with being seen. We build what gets someone from ready to hired, and further.',
     color: 'groundwork',
-    photo: 'people-leaders',
+    photo: 'career-seekers',
   },
 ]
 
@@ -385,6 +397,28 @@ export const team = {
         'Off the clock, she is on the dance floor, sketchbook in hand, chasing her next stamp in her passport. Moksha the dog and Micho the cat hold down the fort while she is out being a visionary in real time.',
       ],
     },
+    {
+      id: 'nova',
+      name: 'Nova Rizki Ananda',
+      role: 'Creative Design Lead',
+      photo: 'nova',
+      bio: [
+        "Nova is Bianomics' secret weapon. Give her a rough idea and she will hand you back a brand system that actually holds together, branding, decks, print, digital, all of it clean, all of it hers.",
+        'She has an eye that catches the one detail everyone else missed, and she never turns it off. Every deck, every layout, every brand asset gets that same level of attention.',
+        'Off the clock, she is at the piano, in a book, or chasing down a new café. Same eye for detail, just pointed at the rest of life.',
+      ],
+    },
+    {
+      id: 'talha',
+      name: 'Talha Zunair',
+      role: 'Lead Graphic Designer',
+      photo: 'talha',
+      bio: [
+        'Talha turns a rough idea or a wall of text into something people actually stop and look at. Deck, brand asset, print piece, doesn\'t matter, he finds the version that holds attention every time.',
+        "One rule runs everything he makes. Clarity over decoration. If it doesn't support the message, it doesn't make the cut.",
+        "He is always one tool ahead of everyone else, chasing the next thing before it's cool, powered by a coffee habit that could sponsor its own brand.",
+      ],
+    },
   ],
 } as const
 
@@ -402,28 +436,6 @@ export const teamPending = [
       "Leila's origin story starts in electrical engineering. Somewhere along the way, creativity won the fight, and she never looked back.",
       'Now she moves between video editing, 3D in Blender, and building AI automations like it is all one language. Learn how it works, master it fast, repeat. That instinct even took her across the MENA region training teams at Aramco and ADNOC on how to actually use AI, not just talk about it at a conference.',
       'Off the clock, she is chasing 10k steps, a good book, or 18 holes. Coffee is non negotiable. She treats life like one long experiment and documents the whole thing, one photo at a time.',
-    ],
-  },
-  {
-    id: 'nova',
-    name: 'Nova Rizki Ananda',
-    role: 'Creative Design Lead',
-    photo: 'nova',
-    bio: [
-      "Nova is Bianomics' secret weapon. Give her a rough idea and she will hand you back a brand system that actually holds together, branding, decks, print, digital, all of it clean, all of it hers.",
-      'She has an eye that catches the one detail everyone else missed, and she never turns it off. Every deck, every layout, every brand asset gets that same level of attention.',
-      'Off the clock, she is at the piano, in a book, or chasing down a new café. Same eye for detail, just pointed at the rest of life.',
-    ],
-  },
-  {
-    id: 'talha',
-    name: 'Talha',
-    role: 'Lead Graphic Designer',
-    photo: 'talha',
-    bio: [
-      'Talha turns a rough idea or a wall of text into something people actually stop and look at. Deck, brand asset, print piece, doesn\'t matter, he finds the version that holds attention every time.',
-      "One rule runs everything he makes. Clarity over decoration. If it doesn't support the message, it doesn't make the cut.",
-      "He is always one tool ahead of everyone else, chasing the next thing before it's cool, powered by a coffee habit that could sponsor its own brand.",
     ],
   },
 ] satisfies TeamMember[]
@@ -445,6 +457,19 @@ export const opportunityLab = {
       'Organizations doing good that cannot otherwise afford this work. If that sounds like you, or like someone you know, tell us.',
     ctaLabel: 'Start with a Snapshot',
   },
+} as const
+
+/**
+ * The cohort strip under the hero. Time-bound: when the cohort closes this
+ * comes off the page rather than going stale, so it is authored as one block
+ * that can be removed in a single edit.
+ */
+export const programBanner = {
+  program: 'Beyond Duty',
+  message: 'Veteran workforce readiness cohort starts September 1.',
+  ctaLabel: 'Apply Now',
+  /** Off-site application form. */
+  href: 'https://wkf.ms/4uPVAgU',
 } as const
 
 /** FAQ section intro copy. */

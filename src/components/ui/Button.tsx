@@ -23,6 +23,8 @@ interface ButtonProps {
   fullWidth?: boolean
   /** Renders the accent arrow square beside the button. */
   arrow?: boolean
+  /** Opens in a new tab, with the rel that makes that safe. */
+  external?: boolean
 }
 
 /**
@@ -41,6 +43,7 @@ export function Button({
   className,
   fullWidth,
   arrow,
+  external,
 }: ButtonProps) {
   const classes = [
     styles.button,
@@ -79,7 +82,13 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes} onClick={handleClick} aria-disabled={disabled}>
+      <a
+        href={href}
+        className={classes}
+        onClick={handleClick}
+        aria-disabled={disabled}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
         {content}
       </a>
     )

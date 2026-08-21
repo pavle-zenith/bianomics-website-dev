@@ -27,6 +27,10 @@ const jobs = [
   { from: 'labs/Stage.png', to: 'labs/stage.webp', width: 1000 },
   { from: 'labs/BluePrint.png', to: 'labs/blueprint.webp', width: 1000 },
   { from: 'labs/Groundwork.png', to: 'labs/groundwork.webp', width: 1000 },
+  // One per half of the offer. The cards are landscape at two-up and never
+  // wider than half the container, so 1400 covers them at 2x.
+  { from: 'serve/social-impact.png', to: 'serve/social-impact.webp', width: 1400 },
+  { from: 'serve/career-seekers.png', to: 'serve/career-seekers.webp', width: 1400 },
 ]
 
 for (const job of jobs) {

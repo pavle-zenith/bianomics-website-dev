@@ -22,6 +22,9 @@ export type CtaLocation =
      the landing page's block of the same name. */
   | 'snapshot-page-faq'
   | 'snapshot-page-closing'
+  /* The Beyond Duty cohort strip. Off-site, so this is the only record of
+     the click we get. */
+  | 'program-banner'
 
 export type AnalyticsEvents = {
   cta_primary_click: { location: CtaLocation }

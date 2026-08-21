@@ -19,6 +19,8 @@
   --texture-dark-03: url('/texture/dark-03.webp');
   /* Soft diagonal light on near-black, behind the projects grid. */
   --texture-projects: url('/texture/projects.webp');
+  /* Old survey maps, behind the reach card. */
+  --texture-map: url('/texture/map.webp');
 
   /* --- Fine grain, generated ---
      fractalNoise desaturated to grey: over light it reads as tooth, over

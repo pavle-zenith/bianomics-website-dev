@@ -3,6 +3,7 @@ import { about } from '@/content/site'
 import { routes } from '@/lib/routes'
 import type { AboutStat } from '@/content/types'
 import { Reveal } from '@/components/ui/Reveal'
+import { ProgramBanner } from './ProgramBanner'
 import { Button } from '@/components/ui/Button'
 import styles from './About.module.css'
 
@@ -73,6 +74,9 @@ export function About() {
             </Reveal>
           ) : null}
         </div>
+
+        {/* Closes the section, directly under the pills and the reach card. */}
+        <ProgramBanner />
       </div>
     </section>
   )
@@ -81,10 +85,9 @@ export function About() {
 function StatCard({ stat }: { stat: AboutStat }) {
   return (
     <>
-      {/* Decorative: the same numeral, oversized and clipped by the card. */}
-      <span className={styles.ghost} aria-hidden="true">
-        {stat.value}
-      </span>
+      {/* Old survey maps, held right back: the card is about where the work
+          reaches, so the texture says it before the list does. */}
+      <span className={styles.map} aria-hidden="true" />
 
       <Mark className={styles.markTop} />
       <Mark className={styles.markBottom} />
@@ -93,7 +96,17 @@ function StatCard({ stat }: { stat: AboutStat }) {
         {stat.value}
         {stat.suffix ? <span className={styles.statSuffix}>{stat.suffix}</span> : null}
       </p>
-      <p className={styles.statLabel}>{stat.label}</p>
+      {stat.places ? (
+        <ul className={styles.places}>
+          {stat.places.map((place) => (
+            <li key={place} className={styles.place}>
+              {place}
+            </li>
+          ))}
+        </ul>
+      ) : stat.label ? (
+        <p className={styles.statLabel}>{stat.label}</p>
+      ) : null}
     </>
   )
 }

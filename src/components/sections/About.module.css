@@ -147,23 +147,21 @@
   background: var(--color-bg-subtle);
 }
 
-/* The same numeral, oversized and faded, running off the top of the card.
-   Decorative texture rather than a step in the type hierarchy, which is why
-   it carries a bespoke size instead of a scale token. */
-.ghost {
+/* Replaces the oversized ghosted numeral that used to fill the card. Held at
+   a low opacity and desaturated toward the canvas, so it reads as paper the
+   card is printed on rather than as a picture of maps. */
+.map {
   position: absolute;
-  top: -0.34em;
-  left: var(--space-5);
+  inset: 0;
   z-index: 0;
-  font-size: clamp(7rem, 4rem + 12vw, 13rem);
-  font-weight: var(--weight-heading);
-  line-height: 1;
-  letter-spacing: var(--tracking-display);
-  color: var(--ink-200);
-  opacity: 0.7;
-  white-space: nowrap;
-  user-select: none;
   pointer-events: none;
+  background-image: var(--texture-map);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.22;
+  filter: grayscale(0.35);
+  mix-blend-mode: multiply;
+  user-select: none;
 }
 
 /* Hairline corner ticks, from the reference. */
@@ -199,6 +197,36 @@
 }
 
 /* Pushed to the foot so the label sits on the card's baseline. */
+/* The markets, named. Set as a wrapped row of hairline chips rather than a
+   sentence: nine place names in prose reads as a paragraph to skip, and the
+   point of the card is that you can count them. */
+.places {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-6);
+  list-style: none;
+}
+
+.place {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+
+/* The last one is not a place, it is the rest of the world. */
+.place:last-child {
+  border-color: var(--color-accent-text);
+  color: var(--color-accent-text);
+}
+
 .statLabel {
   position: relative;
   z-index: 1;

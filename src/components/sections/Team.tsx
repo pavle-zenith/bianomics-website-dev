@@ -14,6 +14,8 @@ import vanessa from '../../../public/team/vanessa.jpg'
 import minerva from '../../../public/team/minerva.jpg'
 import celisse from '../../../public/team/celisse.jpg'
 import greg from '../../../public/team/greg.jpg'
+import nova from '../../../public/team/nova.jpg'
+import talha from '../../../public/team/talha.jpg'
 
 /** Keyed by `member.photo`. Add an entry here when a new headshot lands. */
 const photos: Record<string, StaticImageData> = {
@@ -28,6 +30,8 @@ const photos: Record<string, StaticImageData> = {
   minerva,
   celisse,
   greg,
+  nova,
+  talha,
 }
 
 /**

@@ -96,7 +96,10 @@
    negative tracking is what keeps it chiselled rather than loose. Sized a
    step below the raw token so it still shares the fold with the CTAs. */
 .anchor {
-  font-size: clamp(2.25rem, 1.15rem + 4.9vw, 5.75rem);
+  /* The floor is what a phone gets, and it was set before the headline was
+     two short sentences. 2.6rem still breaks cleanly at 390 and gives the
+     statement the weight it has on every other width. */
+  font-size: clamp(2.6rem, 1.3rem + 4.9vw, 5.75rem);
   font-weight: var(--weight-heading);
   letter-spacing: var(--tracking-display);
   line-height: 0.98;
@@ -127,6 +130,15 @@
   align-items: center;
   gap: var(--space-5);
   margin-top: var(--space-4);
+}
+/* Stacked and full width on a phone, where the wide gap read as two unrelated
+   controls rather than a primary and its alternative. */
+@media (max-width: 47.99rem) {
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
 }
 
 /* --- Base: recognition, a rule, then the subline and CTA --- */
