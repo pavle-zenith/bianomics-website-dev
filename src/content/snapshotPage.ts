@@ -6,19 +6,19 @@
  */
 
 export const snapshotPage = {
-  eyebrow: 'Free senior read',
+  eyebrow: 'Free read',
 
   /** The page's single H1, set in two lines. */
   headingLead: 'One read.',
   headingRest: 'An honest look at where you stand.',
 
   intro:
-    'Tell us where you are. Our senior team reads your communications and brand position and tells you what is actually working, what is not, and what we would do about it.',
+    'Tell us where you are. We read your communications and brand position and tell you what is actually working, what is not, and what we would do about it.',
 
   /** The three qualifiers under the headline. */
   assurances: [
     'Complimentary, with no obligation',
-    'Read by our senior team, not a junior',
+    'Read by the people who would do the work',
     'Every submission reviewed personally',
   ],
 
@@ -48,9 +48,9 @@ export const snapshotPage = {
         body: 'What a first stretch of work would cover, who from our team would do it, and roughly what it would take.',
       },
       {
-        id: 'senior',
-        title: 'Senior people, start to finish',
-        body: 'The people who read your Snapshot are the people who would do the work. There is no handoff to a junior team after the pitch.',
+        id: 'same-people',
+        title: 'The same people, start to finish',
+        body: 'The people who read your Snapshot are the people who would do the work. No handoff, no new faces once you sign.',
       },
       {
         id: 'yours',
@@ -93,6 +93,6 @@ export const snapshotPage = {
 
   closing: {
     heading: 'Ready when you are',
-    body: 'Send it in and our senior team will take a proper look. No retainers, no pressure, no deck with your logo pasted on the front.',
+    body: 'Send it in and we will take a proper look. No retainers, no pressure, no deck with your logo pasted on the front.',
   },
 } as const

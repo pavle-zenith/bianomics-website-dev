@@ -11,7 +11,7 @@ import { ClosingCta } from '@/components/sections/ClosingCta'
 import styles from './snapshot.module.css'
 
 const description =
-  'A complimentary senior read of your communications and brand position. What is working, what is not, and what we would do about it. Yours to keep either way.'
+  'A complimentary read of your communications and brand position. What is working, what is not, and what we would do about it. Yours to keep either way.'
 
 export const metadata: Metadata = {
   title: 'Book a Snapshot',
