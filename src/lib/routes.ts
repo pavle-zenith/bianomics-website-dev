@@ -23,6 +23,8 @@ export const anchors = {
 export const routes = {
   snapshot: '/snapshot',
   home: '/',
+  privacy: '/privacy',
+  terms: '/terms',
   firm: '/firm',
   work: '/work',
   workLab: (labId: string) => `/work/${labId}`,

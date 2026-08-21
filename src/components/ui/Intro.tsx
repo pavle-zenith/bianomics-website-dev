@@ -65,7 +65,15 @@ export function Intro() {
       <div className={styles.scrim} />
 
       <div className={styles.lockup}>
-        <Image src={logo} alt="" priority className={styles.logo} />
+        {/* Drawn 2.75rem tall at most, so roughly 254px wide. Same reason
+            as the nav: unhinted, this preloads the 3840w candidate. */}
+        <Image
+          src={logo}
+          alt=""
+          priority
+          sizes="(min-width: 48rem) 254px, 162px"
+          className={styles.logo}
+        />
         <p className={styles.tagline}>
           <span className={styles.taglineInner}>{brand.tagline}</span>
         </p>

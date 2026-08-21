@@ -25,6 +25,9 @@ export type CtaLocation =
   /* The Beyond Duty cohort strip. Off-site, so this is the only record of
      the click we get. */
   | 'program-banner'
+  /* The 404. Worth telling apart: a conversion from here means someone
+     recovered from a broken link rather than arriving on purpose. */
+  | 'not-found'
 
 export type AnalyticsEvents = {
   cta_primary_click: { location: CtaLocation }

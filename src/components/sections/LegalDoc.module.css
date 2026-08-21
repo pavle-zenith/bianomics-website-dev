@@ -1,0 +1,149 @@
+.doc {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* --- Head --- */
+.head {
+  max-width: 46ch;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+}
+
+.lede {
+  margin-top: var(--space-4);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+}
+
+.effective {
+  margin-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+/* --- Contents beside the text --- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  margin-top: var(--space-9);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: 16rem 1fr;
+    gap: var(--space-9);
+    align-items: start;
+  }
+  /* Follows the reader down a long document. */
+  .toc {
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+.tocHead {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+}
+
+.tocLink {
+  display: block;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+.tocLink::before {
+  counter-increment: toc;
+  content: counter(toc, decimal-leading-zero) '  ';
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+}
+.tocLink:hover {
+  color: var(--color-accent-text);
+}
+
+/* --- The document itself --- */
+.body {
+  min-width: 0;
+}
+
+.section + .section {
+  margin-top: var(--space-8);
+}
+/* Clears the floating nav when a contents link jumps here. */
+.section {
+  scroll-margin-top: 7rem;
+}
+
+.heading {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.para {
+  margin-top: var(--space-4);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  /* A legal document is read closely, so it gets a proper measure. */
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+.list {
+  margin-top: var(--space-4);
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 68ch;
+}
+
+.item {
+  position: relative;
+  padding-left: var(--space-5);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+}
+/* A rule rather than a bullet, matching the hairlines the rest of the site
+   separates things with. */
+.item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: var(--space-3);
+  height: 1px;
+  background: var(--color-border-strong);
+}

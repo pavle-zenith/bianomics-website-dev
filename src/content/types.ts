@@ -98,6 +98,26 @@ export interface ResultsContent {
   testimonials: Testimonial[]
 }
 
+/**
+ * One block in a legal document. `body` is a sequence so a section can mix
+ * prose and lists in the order they were written.
+ */
+export interface LegalSection {
+  /** Anchor id, also the key. */
+  id: string
+  heading: string
+  body: readonly (string | { readonly list: readonly string[] })[]
+}
+
+export interface LegalDocument {
+  title: string
+  /** Meta description and the line under the title. */
+  description: string
+  /** Rendered under the title and in the `dateModified` metadata. */
+  effective: string
+  sections: readonly LegalSection[]
+}
+
 export interface NavLink {
   label: string
   /** Phase-1 anchor (e.g. "#what-we-do") or Phase-2 route. */

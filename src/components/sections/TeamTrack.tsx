@@ -27,6 +27,44 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
   const [atEnd, setAtEnd] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
 
+  /**
+   * Whether the section is close enough to be worth loading the portraits.
+   *
+   * Neither of the obvious answers works here. Per-image lazy loading is
+   * wrong because the track scrolls sideways: every card past the first few
+   * is outside the viewport, so the browser declines to fetch it and a reader
+   * swiping the roster meets empty frames. Eager is wrong because this
+   * section sits near the foot of the page and fourteen portraits should not
+   * be on the critical path for people who never reach it.
+   *
+   * So the unit of loading is the section, not the card. Nothing is fetched
+   * until the track is within two viewports; then all of them are, together.
+   */
+  const [near, setNear] = useState(false)
+
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    // No IntersectionObserver: load them rather than risk empty cards. Routed
+    // through a timeout so the state change lands in its own task — setting
+    // it synchronously in an effect body cascades a second render.
+    if (typeof IntersectionObserver === 'undefined') {
+      const id = setTimeout(() => setNear(true), 0)
+      return () => clearTimeout(id)
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setNear(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200% 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const open = members.find((m) => m.id === openId) ?? null
 
   // Both true at once means the track does not overflow, which is the signal
@@ -113,14 +151,9 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
                     alt={`${member.name}, ${member.role}`}
                     fill
                     sizes="(min-width: 48rem) 20rem, 70vw"
-                    /* Eager, not lazy. The track scrolls sideways, so every
-                       card past the fourth is outside the viewport and lazy
-                       loading correctly refuses to fetch it — which means a
-                       reader swiping the roster on a phone met an empty frame
-                       and waited for it. Eleven portraits at a phone's size is
-                       a cheaper trade than that. */
-                    loading="eager"
-                    /* And a blur while the bytes land, so the frame is never
+                    /* Gated on the section, not the card — see `near`. */
+                    loading={near ? 'eager' : 'lazy'}
+                    /* A blur while the bytes land, so the frame is never
                        blank even on a slow connection. */
                     placeholder="blur"
                     className={styles.photo}

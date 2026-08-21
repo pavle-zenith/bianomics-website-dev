@@ -1,6 +1,6 @@
 'use client'
 
-import { anchors } from '@/lib/routes'
+import { anchors, routes } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import styles from './Hero.module.css'
 
@@ -21,7 +21,7 @@ export function HeroCtas() {
         See what we do
       </Button>
       <Button
-        href={anchors.snapshot}
+        href={routes.snapshot}
         variant="primary"
         event="cta_primary_click"
         location="hero"

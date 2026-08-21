@@ -72,16 +72,21 @@ export function Nav({ links }: { links: NavLink[] }) {
             className={styles.logo}
             aria-label={`${brand.name} home`}
           >
+            {/* `sizes` is not optional here. The source lockup is 6873px
+                wide and the nav draws it at 124; without a hint next/image
+                preloads the 3840w candidate — 67KB for a 124px mark. */}
             <Image
               src={logoLight}
               alt=""
               priority
+              sizes="124px"
               className={`${styles.logoImg} ${styles.logoOnLight}`}
             />
             <Image
               src={logoDark}
               alt=""
               priority
+              sizes="124px"
               className={`${styles.logoImg} ${styles.logoOnDark}`}
             />
           </a>

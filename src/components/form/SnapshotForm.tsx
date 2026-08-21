@@ -51,6 +51,17 @@ function reducer(state: State, action: Action): State {
 
 const initialState: State = { status: 'idle', errors: {} }
 
+/** The fields in the order they appear, so "first invalid" means first seen. */
+const FIELD_ORDER: SnapshotField[] = [
+  'name',
+  'org',
+  'email',
+  'orgDoes',
+  'biggestChallenge',
+  'winIn90Days',
+  'workedWithAgency',
+]
+
 export function SnapshotForm() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const formRef = useRef<HTMLFormElement>(null)
@@ -79,6 +90,20 @@ export function SnapshotForm() {
         }
       }
       dispatch({ type: 'validationError', errors })
+
+      // Take the reader to the problem. Without this, someone who missed the
+      // select near the foot of a long form taps Submit, the page does not
+      // move, and nothing appears to have happened — the message is above the
+      // fold they are looking at. Field order comes from the DOM rather than
+      // from the error object, so the first error visually is the one focused.
+      const firstInvalid = FIELD_ORDER.find((name) => errors[name])
+      if (firstInvalid) {
+        const el = form.elements.namedItem(firstInvalid)
+        if (el instanceof HTMLElement) {
+          el.scrollIntoView({ block: 'center', behavior: 'smooth' })
+          el.focus({ preventScroll: true })
+        }
+      }
       return
     }
 

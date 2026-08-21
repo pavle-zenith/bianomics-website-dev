@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { comparison, brand } from '@/content/site'
-import { anchors } from '@/lib/routes'
+import { routes } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import logo from '../../../public/Horizontal_Original_Blue.png'
@@ -20,7 +20,7 @@ export function WhyDifferent() {
 
           <div className={styles.headCta}>
             <Button
-              href={anchors.snapshot}
+              href={routes.snapshot}
               variant="primary"
               event="cta_primary_click"
               location="why-different"

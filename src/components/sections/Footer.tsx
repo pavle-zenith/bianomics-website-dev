@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import type { NavLink } from '@/content/types'
 import { brand, contact } from '@/content/site'
-import { anchors } from '@/lib/routes'
+import { anchors, routes } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
+import { CookieSettingsButton } from '@/components/ui/CookieSettingsButton'
 import logo from '../../../public/Horizontal_Monochrome_White.png'
 import styles from './Footer.module.css'
 
@@ -38,7 +39,7 @@ export function Footer({ links }: { links: NavLink[] }) {
           </p>
 
           <Button
-            href={anchors.snapshot}
+            href={routes.snapshot}
             variant="primary"
             event="cta_secondary_click"
             location="footer"
@@ -117,9 +118,26 @@ export function Footer({ links }: { links: NavLink[] }) {
           priority={false}
         />
 
-        <p className={styles.legal}>
-          &copy; {year} {brand.name}. All rights reserved.
-        </p>
+        <div className={styles.legal}>
+          <p>
+            &copy; {year} {brand.name}. All rights reserved.
+          </p>
+          <ul className={styles.legalLinks}>
+            <li>
+              <a href={routes.privacy} className={styles.link}>
+                Privacy
+              </a>
+            </li>
+            <li>
+              <a href={routes.terms} className={styles.link}>
+                Terms
+              </a>
+            </li>
+            <li>
+              <CookieSettingsButton className={styles.link} />
+            </li>
+          </ul>
+        </div>
       </div>
     </footer>
   )
