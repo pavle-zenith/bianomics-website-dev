@@ -14,6 +14,7 @@ import { Team } from '@/components/sections/Team'
 import { OpportunityLab } from '@/components/sections/OpportunityLab'
 import { Faq } from '@/components/sections/Faq'
 import { ClosingCta } from '@/components/sections/ClosingCta'
+import { anchors } from '@/lib/routes'
 import { Footer } from '@/components/sections/Footer'
 
 export default function LandingPage() {
@@ -35,9 +36,12 @@ export default function LandingPage() {
         <Team />
         <OpportunityLab />
         <Faq items={getFaq()} />
-        <ClosingCta />
+        {/* Explicit rather than relying on the shared default: on this page
+            the Snapshot section is directly below, so the closing action
+            scrolls to it instead of navigating to the standalone copy. */}
+        <ClosingCta primaryHref={anchors.snapshot} />
       </main>
-      <Footer links={nav} />
+      <Footer links={nav} ctaHref={anchors.snapshot} />
       <ScrollDepth />
     </>
   )

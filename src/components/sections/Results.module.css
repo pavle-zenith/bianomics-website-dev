@@ -136,7 +136,6 @@
   transform: scale(1.02);
 }
 
-
 /* --- Services provided ---
    In the copy column, closing the row under the paragraph. They used to ride
    on glass over the artwork, which worked while the frame was half the grid
@@ -209,7 +208,10 @@
   /* The row gives the copy a column of its own, so the title can take the
      size it wants: `lg` was set for a half-width card sat under an image. */
   font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
+  /* 400, not 600. Headings carry their tier with size and tracking; the three
+     30px/600 h3 rules on this page sat at the same outline level as four
+     84px/400 ones, which is two type systems in one document. */
+  font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
   /* Tighter than it was: the tracking that suited an 18px card title reads
      loose once the same line is set at 30. */

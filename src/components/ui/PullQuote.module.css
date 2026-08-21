@@ -2,7 +2,11 @@
   margin: 0;
 }
 
+/* The one place the secondary serif is used outside the intro overlay. The
+   family was named in the component's contract but never declared here, so the
+   quote had been setting in Causten like everything else. */
 .quote {
+  font-family: var(--font-quote);
   font-weight: var(--weight-regular);
   font-size: var(--text-2xl);
   line-height: var(--leading-snug);

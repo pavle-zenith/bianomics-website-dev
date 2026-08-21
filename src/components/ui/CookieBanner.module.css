@@ -1,20 +1,28 @@
-/* Sits on the page rather than over it: no scrim, nothing blocked. Above the
-   nav so it cannot be hidden behind the floating shell. */
+/* A bounded card in the corner, not a bar across the foot of the viewport.
+   As a full-width band it covered the hero's primary CTA on load at every
+   width; held to the left and to its own measure, it clears the CTA, which
+   sits right from 52rem and above the card's reach below it.
+
+   Separation is a hairline and the canvas behind it, per the No-Shadow Rule:
+   the blurred offset shadow this used to carry was the one elevation in the
+   system. */
 .banner {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: var(--container-pad);
+  right: auto;
+  bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  width: min(30rem, calc(100vw - 2 * var(--container-pad)));
   z-index: var(--z-overlay);
-  padding: var(--space-4) var(--container-pad) max(var(--space-4), env(safe-area-inset-bottom));
+  padding: var(--space-5);
   background: var(--color-surface-raised);
-  border-top: 1px solid var(--color-border);
-  box-shadow: 0 -12px 32px rgb(6 7 9 / 0.08);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
   animation: rise var(--dur-base) var(--ease-standard) both;
 }
 @keyframes rise {
   from {
-    transform: translateY(100%);
+    transform: translateY(calc(100% + var(--space-4)));
+    opacity: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -28,16 +36,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: var(--space-4);
-  width: min(100%, var(--container-max));
-  margin-inline: auto;
-}
-@media (min-width: 48rem) {
-  .inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-6);
-  }
+  width: 100%;
 }
 
 .copy {
@@ -53,7 +52,7 @@
 .body {
   margin-top: var(--space-1);
   font-size: var(--text-sm);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
   color: var(--color-text-muted);
   max-width: 68ch;
   text-wrap: pretty;
@@ -86,12 +85,6 @@
     background-color var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard);
 }
-@media (min-width: 48rem) {
-  .accept,
-  .decline {
-    flex: none;
-  }
-}
 
 .accept {
   background: var(--color-cta-bg);
@@ -108,4 +101,27 @@
 }
 .decline:hover {
   background: var(--color-cta-secondary-bg-hover);
+}
+
+/* --- Phones ---
+   At the desktop measure the card stood 229px tall on a 390px screen, a
+   quarter of the viewport, and still reached the hero's action row. Tighter
+   padding, the label size, and a closer inset bring it to roughly 180px
+   without shortening a word of the notice. */
+@media (max-width: 47.99rem) {
+  .banner {
+    bottom: max(var(--space-3), env(safe-area-inset-bottom));
+    padding: var(--space-3) var(--space-4);
+  }
+  .inner {
+    gap: var(--space-2);
+  }
+  .body {
+    font-size: var(--text-xs);
+  }
+  .accept,
+  .decline {
+    min-height: 2.5rem;
+    font-size: var(--text-xs);
+  }
 }

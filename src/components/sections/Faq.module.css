@@ -76,7 +76,7 @@
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
   color: var(--color-text);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
   transition: color var(--dur-fast) var(--ease-standard);
 }
 .question:hover .questionText {

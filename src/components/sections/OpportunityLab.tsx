@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { opportunityLab } from '@/content/site'
-import { routes } from '@/lib/routes'
+import { anchors } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './OpportunityLab.module.css'
@@ -56,7 +56,7 @@ export function OpportunityLab() {
               <p className={styles.footText}>{ethos.footText}</p>
             </div>
             <Button
-              href={routes.snapshot}
+              href={anchors.snapshot}
               event="cta_secondary_click"
               location="opportunity-lab"
               className={styles.cta}

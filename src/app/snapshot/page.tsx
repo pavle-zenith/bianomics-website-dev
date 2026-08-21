@@ -68,7 +68,7 @@ export default function SnapshotPage() {
             </Reveal>
 
             {/* The form is the page. Everything below it is a follow-up. */}
-            <Reveal delay={0.12} className={styles.formCard}>
+            <Reveal delay={0.12} id="snapshot-form" className={styles.formCard}>
               <SnapshotForm />
             </Reveal>
           </div>
@@ -141,13 +141,13 @@ export default function SnapshotPage() {
         <ClosingCta
           heading={closing.heading}
           body={closing.body}
-          primaryHref={`${routes.snapshot}#top`}
+          primaryHref={anchors.snapshotForm}
           secondaryHref={`/${anchors.whatWeDo}`}
           location="snapshot-page-closing"
           headingId="snapshot-closing-heading"
         />
       </main>
-      <Footer links={nav} />
+      <Footer links={nav} ctaHref={anchors.snapshotForm} />
     </>
   )
 }

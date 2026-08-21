@@ -42,13 +42,12 @@
    below the headings elsewhere because it is a paragraph, not a title. */
 .headDesc {
   font-size: var(--text-xl);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
   letter-spacing: var(--tracking-snug);
   color: var(--tone-text);
   max-width: 46ch;
   text-wrap: pretty;
 }
-
 
 /* --- Track: rows with the progress rail down the left margin --- */
 .track {
@@ -212,11 +211,10 @@
   background: var(--step-fill);
 }
 
-
-
 .stepTitle {
   font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
+  /* 400 plus tracking, not 600 — see the Single Weight Rule. */
+  font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
   color: var(--tone-text);

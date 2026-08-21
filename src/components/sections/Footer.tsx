@@ -13,7 +13,16 @@ import styles from './Footer.module.css'
  * bottom edge. It takes the same dark grain as the projects section, so the
  * two dark bands read as one material.
  */
-export function Footer({ links }: { links: NavLink[] }) {
+export function Footer({
+  links,
+  /* Defaults to the standalone page because the footer also renders on the
+     legal pages and the 404, where an in-page #snapshot would resolve to
+     nothing. The landing page and /snapshot pass their own in-page target. */
+  ctaHref = routes.snapshot,
+}: {
+  links: NavLink[]
+  ctaHref?: string
+}) {
   const year = 2026
 
   return (
@@ -39,7 +48,7 @@ export function Footer({ links }: { links: NavLink[] }) {
           </p>
 
           <Button
-            href={routes.snapshot}
+            href={ctaHref}
             variant="primary"
             event="cta_secondary_click"
             location="footer"

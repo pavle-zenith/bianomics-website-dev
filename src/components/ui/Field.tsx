@@ -38,8 +38,14 @@ function Labelled({
         </p>
       ) : null}
       {children}
+      {/* Deliberately not role="alert". Every field carries one, so an invalid
+          submit fired seven live regions at once and a screen reader read seven
+          interruptions over each other. The message is already wired through
+          aria-describedby, and the form moves focus to the first invalid field,
+          so it is announced on arrival — then each remaining one as the visitor
+          reaches it. */}
       {error ? (
-        <p id={`${id}-error`} className={styles.error} role="alert">
+        <p id={`${id}-error`} className={styles.error}>
           {error}
         </p>
       ) : null}

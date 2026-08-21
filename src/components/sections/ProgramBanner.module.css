@@ -61,7 +61,7 @@
 .message {
   font-size: var(--text-base);
   font-weight: var(--weight-bold);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
 }
 
 .cta {

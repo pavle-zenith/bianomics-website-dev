@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { about } from '@/content/site'
-import { routes } from '@/lib/routes'
+import { anchors } from '@/lib/routes'
 import type { AboutStat } from '@/content/types'
 import { Reveal } from '@/components/ui/Reveal'
 import { ProgramBanner } from './ProgramBanner'
@@ -33,7 +33,7 @@ export function About() {
 
           <Reveal delay={0.12} className={styles.headCta}>
             <Button
-              href={routes.snapshot}
+              href={anchors.snapshot}
               variant="primary"
               event="cta_primary_click"
               location="snapshot"

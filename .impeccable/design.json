@@ -1,0 +1,652 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T13:17:57.580Z",
+  "title": "Design System: Bianomics",
+  "extensions": {
+    "colorMeta": {
+      "bondi-blue": {
+        "role": "primary",
+        "displayName": "Bondi Blue",
+        "canonical": "#0094b3",
+        "tonalRamp": [
+          "#004250",
+          "#005b6e",
+          "#00738b",
+          "#00849f",
+          "#0094b3",
+          "#36a5be",
+          "#6bb5ca",
+          "#a1c6d5"
+        ]
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "Accent Ink",
+        "canonical": "#00738b",
+        "tonalRamp": [
+          "#004250",
+          "#005b6e",
+          "#00738b",
+          "#00849f",
+          "#0094b3",
+          "#36a5be",
+          "#6bb5ca",
+          "#a1c6d5"
+        ]
+      },
+      "accent-ink-deep": {
+        "role": "primary",
+        "displayName": "Accent Ink Deep",
+        "canonical": "#005b6e",
+        "tonalRamp": [
+          "#004250",
+          "#005b6e",
+          "#00738b",
+          "#00849f",
+          "#0094b3",
+          "#36a5be",
+          "#6bb5ca",
+          "#a1c6d5"
+        ]
+      },
+      "first-love": {
+        "role": "secondary",
+        "displayName": "First Love",
+        "canonical": "#ef4457",
+        "tonalRamp": [
+          "#6b1e27",
+          "#8a2632",
+          "#a92f3d",
+          "#c43647",
+          "#d93c4f",
+          "#ef4457",
+          "#f26b7a",
+          "#f5949d"
+        ]
+      },
+      "gooseberry": {
+        "role": "secondary",
+        "displayName": "Gooseberry",
+        "canonical": "#cfde56",
+        "tonalRamp": [
+          "#5d6326",
+          "#70782e",
+          "#838d37",
+          "#96a23f",
+          "#a7b346",
+          "#b4c14b",
+          "#c2d051",
+          "#cfde56"
+        ]
+      },
+      "trendy-orange": {
+        "role": "secondary",
+        "displayName": "Trendy Orange",
+        "canonical": "#f28820",
+        "tonalRamp": [
+          "#6c3d0e",
+          "#8c4f12",
+          "#ab6017",
+          "#c66f1a",
+          "#dc7c1d",
+          "#f28820",
+          "#f49f54",
+          "#f6b689"
+        ]
+      },
+      "vision-ink": {
+        "role": "secondary",
+        "displayName": "Vision Ink",
+        "canonical": "#c43647",
+        "tonalRamp": [
+          "#6b1e27",
+          "#8a2632",
+          "#a92f3d",
+          "#c43647",
+          "#d93c4f",
+          "#ef4457",
+          "#f26b7a",
+          "#f5949d"
+        ]
+      },
+      "stage-ink": {
+        "role": "secondary",
+        "displayName": "Stage Ink",
+        "canonical": "#70782e",
+        "tonalRamp": [
+          "#5d6326",
+          "#70782e",
+          "#838d37",
+          "#96a23f",
+          "#a7b346",
+          "#b4c14b",
+          "#c2d051",
+          "#cfde56"
+        ]
+      },
+      "blueprint-ink": {
+        "role": "secondary",
+        "displayName": "Blueprint Ink",
+        "canonical": "#005b6e",
+        "tonalRamp": [
+          "#004250",
+          "#005b6e",
+          "#00738b",
+          "#00849f",
+          "#0094b3",
+          "#36a5be",
+          "#6bb5ca",
+          "#a1c6d5"
+        ]
+      },
+      "groundwork-ink": {
+        "role": "secondary",
+        "displayName": "Groundwork Ink",
+        "canonical": "#ab6017",
+        "tonalRamp": [
+          "#6c3d0e",
+          "#8c4f12",
+          "#ab6017",
+          "#c66f1a",
+          "#dc7c1d",
+          "#f28820",
+          "#f49f54",
+          "#f6b689"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4",
+          "#d8dade",
+          "#ececee",
+          "#ffffff"
+        ]
+      },
+      "paper-subtle": {
+        "role": "neutral",
+        "displayName": "Paper Subtle",
+        "canonical": "#f6f7f8",
+        "tonalRamp": [
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4",
+          "#d8dade",
+          "#ececee",
+          "#f6f7f8"
+        ]
+      },
+      "ink-canvas": {
+        "role": "neutral",
+        "displayName": "Ink Canvas",
+        "canonical": "#060709",
+        "tonalRamp": [
+          "#060709",
+          "#0d0e11",
+          "#1a1c21",
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4"
+        ]
+      },
+      "ink-text": {
+        "role": "neutral",
+        "displayName": "Ink Text",
+        "canonical": "#0d0e11",
+        "tonalRamp": [
+          "#060709",
+          "#0d0e11",
+          "#1a1c21",
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted",
+        "canonical": "#444851",
+        "tonalRamp": [
+          "#060709",
+          "#0d0e11",
+          "#1a1c21",
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4"
+        ]
+      },
+      "ink-subtle": {
+        "role": "neutral",
+        "displayName": "Ink Subtle",
+        "canonical": "#626772",
+        "tonalRamp": [
+          "#060709",
+          "#0d0e11",
+          "#1a1c21",
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4"
+        ]
+      },
+      "ink-inverse": {
+        "role": "neutral",
+        "displayName": "Ink Inverse",
+        "canonical": "#f6f7f8",
+        "tonalRamp": [
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4",
+          "#d8dade",
+          "#ececee",
+          "#f6f7f8"
+        ]
+      },
+      "ink-inverse-muted": {
+        "role": "neutral",
+        "displayName": "Ink Inverse Muted",
+        "canonical": "#b8bcc4",
+        "tonalRamp": [
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4",
+          "#d8dade",
+          "#ececee",
+          "#ffffff"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#d8dade",
+        "tonalRamp": [
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4",
+          "#d8dade",
+          "#ececee",
+          "#f6f7f8"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "#b8bcc4",
+        "tonalRamp": [
+          "#2c2f36",
+          "#444851",
+          "#626772",
+          "#8b909b",
+          "#b8bcc4",
+          "#d8dade",
+          "#ececee",
+          "#f6f7f8"
+        ]
+      },
+      "focus-ring": {
+        "role": "primary",
+        "displayName": "Focus Ring",
+        "canonical": "#00849f",
+        "tonalRamp": [
+          "#004250",
+          "#005b6e",
+          "#00738b",
+          "#00849f",
+          "#0094b3",
+          "#36a5be",
+          "#6bb5ca",
+          "#a1c6d5"
+        ]
+      },
+      "error": {
+        "role": "tertiary",
+        "displayName": "Error Red",
+        "canonical": "#c43647",
+        "tonalRamp": [
+          "#6b1e27",
+          "#8a2632",
+          "#a92f3d",
+          "#c43647",
+          "#d93c4f",
+          "#ef4457",
+          "#f26b7a",
+          "#f5949d"
+        ]
+      },
+      "success": {
+        "role": "tertiary",
+        "displayName": "Success Green",
+        "canonical": "#70782e",
+        "tonalRamp": [
+          "#5d6326",
+          "#70782e",
+          "#838d37",
+          "#96a23f",
+          "#a7b346",
+          "#b4c14b",
+          "#c2d051",
+          "#cfde56"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The page\u2019s single largest statement. Hero only, one per page. Weight 400 with -0.04em tracking."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Major section openers \u2014 What We Do, How It Works, Results, closing CTA."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Standard section openers."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading copy. Measure caps around 65\u201375ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "The mono margin voice: counters, section markers, tags, metadata. Never a headline, never body, never an eyebrow above a title."
+      },
+      "quote": {
+        "displayName": "Quote",
+        "purpose": "HV Fitzgerald serif. The rarest thing in the system \u2014 elevated statements only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "none",
+        "value": "none",
+        "purpose": "The system ships zero elevation shadows. Shadow tokens were removed from the scale deliberately. Depth is canvas contrast plus a 1px hairline."
+      },
+      {
+        "name": "focus-ring",
+        "value": "0 0 0 3px #cee0e8",
+        "purpose": "Form control focus. A ring, not elevation: no blur, no offset."
+      },
+      {
+        "name": "focus-ring-invalid",
+        "value": "0 0 0 3px #faced1",
+        "purpose": "Focus ring on a control in the invalid state."
+      },
+      {
+        "name": "nav-glass",
+        "value": "backdrop-filter: blur(14px)",
+        "purpose": "Not a shadow. The only spatial effect in the system: the floating nav shells read as glass, changing tint rather than altitude."
+      }
+    ],
+    "motion": [
+      {
+        "name": "dur-fast",
+        "value": "160ms",
+        "purpose": "State changes: hover lift, color and border transitions."
+      },
+      {
+        "name": "dur-base",
+        "value": "280ms",
+        "purpose": "Canvas and tone transitions, including the nav tone flip and disclosure collapse."
+      },
+      {
+        "name": "dur-reveal",
+        "value": "640ms",
+        "purpose": "Scroll reveals, and the arrow flyby \u2014 slow on purpose so the travel actually reads."
+      },
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Restrained ease-out. The default for state transitions."
+      },
+      {
+        "name": "ease-inout",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Symmetric easing, used on disclosure collapse."
+      },
+      {
+        "name": "ease-editorial",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Long, settled reveals. The house curve for anything that arrives rather than reacts."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "52rem"
+      },
+      {
+        "name": "xl",
+        "value": "60rem"
+      },
+      {
+        "name": "nav",
+        "value": "62rem"
+      },
+      {
+        "name": "wide",
+        "value": "72rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one CTA primitive. Arrow variant: the resting glyph flies out along its diagonal while its twin flies in from the opposite corner.",
+      "html": "<button class='ds-btn-primary'><span>Book a Snapshot</span><span class='ds-btn-arrow' aria-hidden='true'><span class='ds-btn-glyph ds-btn-glyph-out'><svg viewBox='0 0 16 16' width='15' height='15' fill='none'><path d='M4.5 11.5 11.5 4.5M6 4.5h5.5V10' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg></span><span class='ds-btn-glyph ds-btn-glyph-in'><svg viewBox='0 0 16 16' width='15' height='15' fill='none'><path d='M4.5 11.5 11.5 4.5M6 4.5h5.5V10' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg></span></span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; padding: 0.5rem 0.5rem 0.5rem 1.5rem; min-block-size: 3.5rem; border: none; border-radius: var(--radius-control, 0.5rem); background-color: var(--color-cta-bg, #00738b); color: var(--color-cta-fg, #ffffff); font-family: var(--font-body, 'Causten', system-ui, sans-serif); font-size: 1.125rem; font-weight: 600; line-height: 1; cursor: pointer; transition: transform 160ms cubic-bezier(0.22,1,0.36,1), background-color 160ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-primary:hover { background-color: var(--color-cta-bg-hover, #005b6e); transform: translateY(-2px); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 3px solid var(--color-focus-ring, #00849f); outline-offset: 2px; } .ds-btn-arrow { position: relative; display: inline-flex; width: 2.5rem; height: 2.5rem; flex: none; overflow: hidden; border-radius: calc(var(--radius-control, 0.5rem) - 0.125rem); background: var(--color-bg-inverse, #060709); color: #ffffff; } .ds-btn-glyph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transition: transform 640ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-glyph-in { transform: translate(-130%, 130%); } .ds-btn-primary:hover .ds-btn-glyph-out, .ds-btn-primary:focus-visible .ds-btn-glyph-out { transform: translate(130%, -130%); } .ds-btn-primary:hover .ds-btn-glyph-in, .ds-btn-primary:focus-visible .ds-btn-glyph-in { transform: translate(0, 0); } @media (prefers-reduced-motion: reduce) { .ds-btn-glyph-in { display: none; } }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A filled white plate, not a transparent outline \u2014 it appears over the hero photograph where a hairline would disappear. Reads correctly on either canvas, so there is no inverse variant.",
+      "html": "<button class='ds-btn-secondary'>See the work</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; padding: 0.85em 1.5em; min-block-size: 3.5rem; border: 1.5px solid var(--color-border, #d8dade); border-radius: var(--radius-control, 0.5rem); background-color: #ffffff; color: var(--color-cta-secondary-fg, #0d0e11); font-family: var(--font-body, 'Causten', system-ui, sans-serif); font-size: 1.125rem; font-weight: 600; line-height: 1; cursor: pointer; transition: transform 160ms cubic-bezier(0.22,1,0.36,1), background-color 160ms cubic-bezier(0.22,1,0.36,1), border-color 160ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-secondary:hover { background-color: var(--color-cta-secondary-bg-hover, #f6f7f8); border-color: var(--color-border-strong, #b8bcc4); transform: translateY(-2px); } .ds-btn-secondary:active { transform: translateY(0); } .ds-btn-secondary:focus-visible { outline: 3px solid var(--color-focus-ring, #00849f); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field-control",
+      "description": "Label at weight 600, 1.5px hairline control, focus shifts the border and adds a 3px ring. The ring replaces the outline rather than removing focus feedback.",
+      "html": "<div class='ds-field'><label class='ds-field-label' for='ds-field-org'>Organization</label><input class='ds-field-control' id='ds-field-org' type='text' placeholder='Where you work'></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-body, 'Causten', system-ui, sans-serif); } .ds-field-label { font-size: 1rem; font-weight: 600; color: var(--color-text, #0d0e11); } .ds-field-control { width: 100%; padding: 0.75em 0.9em; font: inherit; font-size: 1.125rem; color: var(--color-text, #0d0e11); background: #ffffff; border: 1.5px solid var(--color-field-border, #b8bcc4); border-radius: var(--radius-field, 0.375rem); transition: border-color 160ms cubic-bezier(0.22,1,0.36,1), box-shadow 160ms cubic-bezier(0.22,1,0.36,1); } .ds-field-control::placeholder { color: var(--color-field-placeholder, #8b909b); } .ds-field-control:focus { outline: none; border-color: var(--color-field-border-focus, #00849f); box-shadow: 0 0 0 3px #cee0e8; } .ds-field-control[aria-invalid='true'] { border-color: var(--color-error, #c43647); } .ds-field-control[aria-invalid='true']:focus { box-shadow: 0 0 0 3px #faced1; }"
+    },
+    {
+      "name": "Margin Label",
+      "kind": "custom",
+      "refersTo": "badge-lockup",
+      "description": "The drafting-room signature: a monospace section counter and marker set out in the margin, over a single hairline rule. This is the only place the mono voice is allowed to appear.",
+      "html": "<div class='ds-margin-label'><span class='ds-label'>01 / 04</span><span class='ds-label'>Our process</span><hr class='ds-rule'></div>",
+      "css": ".ds-margin-label { display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 0.75rem; } .ds-label { font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace); font-size: 0.9375rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-subtle, #626772); } .ds-rule { flex: 1; border: 0; border-top: 1px solid var(--color-border, #d8dade); margin: 0; align-self: center; }"
+    },
+    {
+      "name": "Lockup Badge",
+      "kind": "chip",
+      "refersTo": "badge-lockup",
+      "description": "The hairline pill carrying a brand lockup in the mono voice, with a Bondi dot. On a phone the tracking drops to normal, because the width came from the tracking rather than the size.",
+      "html": "<span class='ds-badge'><span class='ds-badge-dot'></span><span class='ds-badge-text'>A Human Systems Company</span></span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5em 1em; border: 1px solid var(--color-border-strong, #b8bcc4); border-radius: 999px; background: #ffffff; } .ds-badge-dot { width: 0.5em; height: 0.5em; flex: none; border-radius: 50%; background: var(--color-accent-fill, #0094b3); } .ds-badge-text { font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace); font-size: 0.9375rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text, #0d0e11); }"
+    },
+    {
+      "name": "Place Chip",
+      "kind": "chip",
+      "refersTo": "chip-place",
+      "description": "Hairline pill on a 72% paper wash so a textured bed shows faintly through. The accent variant marks the one entry that is not a place.",
+      "html": "<ul class='ds-chips'><li class='ds-chip'>Texas</li><li class='ds-chip'>New Mexico</li><li class='ds-chip'>Washington D.C.</li><li class='ds-chip ds-chip-accent'>International</li></ul>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0; } .ds-chip { padding: 0.35rem 0.7rem; border: 1px solid var(--color-border-strong, #b8bcc4); border-radius: 999px; background: color-mix(in srgb, #ffffff 72%, transparent); font-family: var(--font-body, 'Causten', system-ui, sans-serif); font-size: 0.9375rem; line-height: 1.16; color: var(--color-text, #0d0e11); } .ds-chip-accent { border-color: var(--color-accent-text, #00738b); color: var(--color-accent-text, #00738b); }"
+    },
+    {
+      "name": "Nav Shell",
+      "kind": "nav",
+      "refersTo": "nav-shell",
+      "description": "Floating glass chrome. There is no bar \u2014 the header spans nothing and the visible elements are independent shells that re-tint against whichever canvas has scrolled underneath.",
+      "html": "<nav class='ds-nav'><a class='ds-nav-link' href='#'>About</a><a class='ds-nav-link' href='#'>Services</a><a class='ds-nav-link' href='#'>Process</a><a class='ds-nav-cta' href='#'>Book a Snapshot</a></nav>",
+      "css": ".ds-nav { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem; border: 1px solid rgb(13 14 17 / 0.1); border-radius: var(--radius-control, 0.5rem); background: rgb(255 255 255 / 0.72); backdrop-filter: blur(14px); font-family: var(--font-body, 'Causten', system-ui, sans-serif); } .ds-nav-link { padding: 0.6rem 0.9rem; border-radius: calc(var(--radius-control, 0.5rem) - 0.125rem); font-size: 1rem; color: var(--color-text, #0d0e11); text-decoration: none; transition: background-color 280ms cubic-bezier(0.22,1,0.36,1); } .ds-nav-link:hover { background: rgb(13 14 17 / 0.06); } .ds-nav-link:focus-visible { outline: 3px solid var(--color-focus-ring, #00849f); outline-offset: 2px; } .ds-nav-cta { padding: 0.7rem 1.1rem; border-radius: calc(var(--radius-control, 0.5rem) - 0.125rem); background: var(--color-cta-bg, #00738b); color: #ffffff; font-size: 1rem; font-weight: 600; text-decoration: none; transition: background-color 160ms cubic-bezier(0.22,1,0.36,1); } .ds-nav-cta:hover { background: var(--color-cta-bg-hover, #005b6e); }"
+    },
+    {
+      "name": "Practice Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "The coded content surface: 4px corners, a hairline, no shadow, and a practice color that appears only because the content belongs to that practice.",
+      "html": "<article class='ds-card'><span class='ds-card-mark'></span><p class='ds-card-eyebrow'>Groundwork \u00b7 Flagship Program</p><h3 class='ds-card-title'>A veteran program built to thaw a frozen nervous system</h3><p class='ds-card-body'>From first cohort to a program running through 2027.</p></article>",
+      "css": ".ds-card { position: relative; display: flex; flex-direction: column; gap: 0.75rem; max-width: 26rem; padding: 2rem; border: 1px solid var(--color-border, #d8dade); border-radius: var(--radius-card, 4px); background: #ffffff; font-family: var(--font-body, 'Causten', system-ui, sans-serif); } .ds-card-mark { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--lab-groundwork-fill, #f28820); } .ds-card-eyebrow { margin: 0; font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, Menlo, monospace); font-size: 0.9375rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lab-groundwork-text, #ab6017); } .ds-card-title { margin: 0; font-size: 1.875rem; font-weight: 400; line-height: 1.06; letter-spacing: -0.03em; color: var(--color-text, #0d0e11); text-wrap: balance; } .ds-card-body { margin: 0; font-size: 1.125rem; line-height: 1.5; color: var(--color-text-muted, #444851); }"
+    },
+    {
+      "name": "Round Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button-round",
+      "description": "Carousel control. The one place a pill radius lands on something that is not a tag \u2014 a 2.75rem circle that inverts to the CTA color on hover.",
+      "html": "<button class='ds-icon-btn' aria-label='Next'><svg viewBox='0 0 16 16' width='16' height='16' fill='none'><path d='M6 3.5 10.5 8 6 12.5' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg></button>",
+      "css": ".ds-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--color-border-strong, #b8bcc4); border-radius: 999px; background: none; color: var(--color-text, #0d0e11); cursor: pointer; transition: background-color 160ms cubic-bezier(0.22,1,0.36,1), border-color 160ms cubic-bezier(0.22,1,0.36,1), color 160ms cubic-bezier(0.22,1,0.36,1); } .ds-icon-btn:hover { background: var(--color-cta-bg, #00738b); border-color: var(--color-cta-bg, #00738b); color: #ffffff; } .ds-icon-btn:focus-visible { outline: 3px solid var(--color-focus-ring, #00849f); outline-offset: 2px; } .ds-icon-btn:disabled { opacity: 0.3; cursor: default; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Drafting Room",
+    "overview": "Bianomics sells the layer underneath the visible result: everything people notice about you was decided somewhere they can't see. The Drafting Room is that somewhere, made into an interface. The page does not present conclusions the way a portfolio does; it shows the working surface where conclusions get made. Sections carry numbers. Labels sit out in the margin in monospace, annotating rather than announcing. Rules are single hairlines. The four practice colors behave like a legend on a technical drawing: a color appears because the thing it marks belongs to that practice, never because a card needed brightening.\n\nThe material is paper and ink, and it is never perfectly clean. A fine grain sits fixed over the entire viewport so the page reads as a printed surface rather than a rendered one; a blue haze occupies the right side of the light canvas; halftone dot screens fade in and out of section transitions like a press screen. Depth is entirely honest \u2014 there are no shadows anywhere in the system, and the shadow tokens were removed on purpose. What separates one plane from another is canvas contrast and a 1px hairline, nothing else.\n\nType carries the authority. Headings run at a single weight (400) across the whole site and get their hierarchy from size and negative tracking, which is why the display type reads as chiselled rather than shouted. Two weights ship in total: 400 for everything read, 600 for small UI that has to be picked out. Controls are quiet until touched \u2014 flat and still at rest, then answering precisely: a 2px lift, an arrow that flies out of its badge while its twin flies in, glass chrome that re-tints against whichever canvas has scrolled underneath it.",
+    "keyCharacteristics": [
+      "Paper is home; near-black is punctuation that has to earn its place.",
+      "Zero shadows. Depth is canvas contrast plus one hairline.",
+      "One weight for every heading (400). Size and tracking carry the hierarchy.",
+      "Monospace is the margin voice, never the headline and never the body.",
+      "Four practice colors used as a legend, one CTA color site-wide.",
+      "Every surface is textured. A flat, clean plane is off-system.",
+      "Sharp content surfaces (4px), blocky controls (8px), pills reserved for tags."
+    ],
+    "rules": [
+      {
+        "name": "The Legend Rule",
+        "section": "colors",
+        "body": "The four practice colors are an index, not a palette. A color appears on an element because that element belongs to that practice \u2014 a Groundwork case study is orange because it is Groundwork, not because the grid needed variety. Never assign a practice color decoratively, and never introduce a fifth."
+      },
+      {
+        "name": "The Fill / Ink Rule",
+        "section": "colors",
+        "body": "Every practice color exists twice: -fill for shapes you look at, -text for anything you read. Gooseberry and Trendy Orange fail AA on white outright. Setting text in a raw brand color on a light canvas is a contrast bug, not a style choice."
+      },
+      {
+        "name": "The One CTA Rule",
+        "section": "colors",
+        "body": "There is exactly one call-to-action color site-wide (#00738b), and it is the darker ramp step rather than the raw brand blue, because the CTA has to carry white text at AA. A second CTA color anywhere on the site is a defect."
+      },
+      {
+        "name": "The Ink-on-Color Rule",
+        "section": "colors",
+        "body": "All four fills clear 5.8:1 against near-black, which is why a saturated practice panel always takes ink type (#060709 at full, 84%, and 82% alpha for the three tiers) and never flips to white. Those alphas are set by the worst case \u2014 Vision red \u2014 where anything lower drops below AA."
+      },
+      {
+        "name": "The Single Weight Rule",
+        "section": "typography",
+        "body": "Every heading in the system is weight 400. Tiers are set by size, and tracking tightens as size grows. Bolding a heading to make it more important breaks the system \u2014 add a size step or tighten the tracking instead. Only two weights ship: 400 for everything read, 600 for small UI that must be picked out. 500 and 700 were retired deliberately."
+      },
+      {
+        "name": "The Mono Margin Rule",
+        "section": "typography",
+        "body": "The monospace voice annotates; it never leads. It is allowed on counters, section markers, tags, and metadata, and it sits in its own column. Never a headline, never body copy, and never stacked directly above a title where it becomes an eyebrow."
+      },
+      {
+        "name": "The 14px Floor Rule",
+        "section": "typography",
+        "body": "No text on this site is smaller than 14px, including mono labels and legal copy. The floor was raised on purpose and it is why xs and sm sit unusually close together; they stay separate steps because xs is the label size and sm is small copy."
+      },
+      {
+        "name": "The Shared Boundary Rule",
+        "section": "layout",
+        "body": "Where two same-canvas sections meet, both full paddings would stack into a gap twice the intended size, so each halves its padding at the shared edge. Sections that change canvas are excluded. This is automatic; do not hand-tune section padding to compensate for it."
+      },
+      {
+        "name": "The Tone Rule",
+        "section": "layout",
+        "body": "Components reference the contextual --tone-* roles, never absolute colors. That is what makes re-tinting a whole section from light to dark a one-line class change instead of an edit to every color declaration in its module."
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "section": "elevation",
+        "body": "No box-shadow with a blur or offset, anywhere, for any reason. If a surface needs to separate from what is behind it, change the canvas or add a hairline. A card that appears to float is off-system."
+      },
+      {
+        "name": "The Surface / Control Split",
+        "section": "shapes",
+        "body": "If you can read it, it is a surface and it is 4px. If you can click it, it is a control and it is 8px. If it is a token or a tag, it is a pill. There is no fourth case; a new radius value is almost always a mistake."
+      },
+      {
+        "name": "The Matched Height Rule",
+        "section": "components",
+        "body": "Every button is 3.5rem tall, stated on the base class rather than patched per variant, so a primary and a secondary side by side always align \u2014 arrow or no arrow."
+      },
+      {
+        "name": "The Decorative-Only Rule",
+        "section": "components",
+        "body": "Nothing in the texture layer may carry meaning, and nothing may sit above content or intercept a click. A bed is always z-index: -1 and always pointer-events: none."
+      },
+      {
+        "name": "The Tooth Rule",
+        "section": "components",
+        "body": "Grain is meant to be felt, not seen. It is held at 0.035 opacity and must never exceed roughly 0.06, above which it reads as noise sitting on the type rather than as tooth in the paper. It is fixed to the viewport, not scrolled with content, and it deliberately carries no blend mode."
+      },
+      {
+        "name": "The Hairline Rule",
+        "section": "elevation",
+        "body": "The divider vocabulary is exactly one item: 1px solid in #d8dade (or #b8bcc4 when it needs to hold its own). No dashed rules, no double rules, no 2px rules, no gradient dividers."
+      },
+      {
+        "name": "The Practice Marker",
+        "section": "elevation",
+        "body": "The one bar in the system that is not a divider: a 3px band across the top edge of a media frame, filled with the practice colour of the work inside it. A legend mark rather than a rule, which is why it is allowed a width the Hairline Rule forbids. Bounds are exact: 3px, top edge only, a practice -fill colour only, and only on a frame whose content belongs to that practice. Any other edge, width, or colour is the side-tab anti-pattern."
+      }
+    ],
+    "dos": [
+      "Do start a new section on paper. Light is home; the near-black canvas is punctuation that has to earn its place, and it gets full section padding on both sides when it appears.",
+      "Do set every heading at weight 400 and build the tier from size plus tracking.",
+      "Do reach for --tone-* inside components so the section stays re-tintable with one class.",
+      "Do put a texture on every surface. A flat, clean plane is off-system \u2014 pick the bed that fits (haze on light, one of the three dark grains on the inverse canvas, halftone on a transition).",
+      "Do use a practice color only where the content genuinely belongs to that practice, and take the -text step whenever the color carries type on white.",
+      "Do keep the monospace out in the margin, at 14px or above, uppercase, tracked at 0.12em.",
+      "Do separate planes with a single 1px hairline or a canvas change.",
+      "Do extend the reveal grammar to new surfaces, on the editorial easing for long settled reveals and the standard curve for state changes \u2014 always with a prefers-reduced-motion path."
+    ],
+    "donts": [
+      "Don\u2019t add a box-shadow with blur or offset. The tokens were removed on purpose; a floating card is off-system.",
+      "Don\u2019t bold a heading to raise its importance, and don\u2019t reach for weight 500 or 700 \u2014 both are retired and currently unreferenced anywhere in the codebase.",
+      "Don\u2019t put a hex value in a component. Only tokens/palette.css holds hex; the guard is grep -rEn '#[0-9a-fA-F]{6}' src/components returning nothing.",
+      "Don\u2019t set text in Gooseberry or Trendy Orange on a light canvas. Both fail AA outright.",
+      "Don\u2019t introduce a second CTA color, or a fifth practice color.",
+      "Don\u2019t stack a mono label directly above a title as an eyebrow. It belongs in the margin, in its own column.",
+      "Don\u2019t drift toward the SaaS startup template: rounded-everything, purple-to-blue gradients, shadow-lifted cards on gray, or emoji feature icons.",
+      "Don\u2019t drift toward agency showboating: gradient meshes, glow effects, autoplay hero reels, or any gesture whose subject is the firm's own taste.",
+      "Don\u2019t drift toward corporate consultancy: navy-and-gray, stock handshake photography, or dense justified body copy where a story belongs.",
+      "Don\u2019t drift toward brutalism: unstyled system fonts, harsh borders, or layout as provocation. This system's restraint is care, not a stunt.",
+      "Don\u2019t add a new radius value. Surfaces are 4px, controls 8px, tags are pills; there is no fourth case."
+    ]
+  }
+}

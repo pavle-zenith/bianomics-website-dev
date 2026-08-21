@@ -51,7 +51,7 @@
 .accent {
   margin-top: var(--space-5);
   font-size: var(--text-lg);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
   color: var(--tone-text-muted);
   max-width: 46ch;
 }
@@ -60,6 +60,10 @@
    The wrapper is tall; the inner sticks to the viewport while the page scrolls
    through it, and that vertical progress is what moves the track sideways.
    One viewport of scroll per practice, plus a half to settle on the last.
+   Held as a token rather than a literal so the pace is tunable in one place:
+   the lower the number, the further the track travels per pixel scrolled, and
+   below about 0.8 the cards start snapping past faster than they can be
+   read.
 
    No overflow clipping on the section itself: a non-visible overflow on an
    ancestor breaks position: sticky, so the clipping is done on .sticky and
@@ -68,7 +72,8 @@
   position: relative;
 }
 .pinActive {
-  height: calc((var(--slides) + 0.5) * 100vh);
+  --slide-scroll: 1;
+  height: calc((var(--slides) * var(--slide-scroll) + 0.5) * 100vh);
 }
 
 .sticky {

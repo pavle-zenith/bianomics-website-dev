@@ -38,7 +38,4 @@
   --halftone-size: 7px;
   --halftone-dot: 1px;
   --halftone-opacity: 0.18;
-
-  /* How far the haze bed carries before it dissolves into the canvas. */
-  --haze-opacity: 1;
 }

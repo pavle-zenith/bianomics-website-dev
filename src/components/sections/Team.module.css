@@ -10,10 +10,15 @@
 }
 
 /* --- Header row: title left, arrow controls right --- */
+/* `.controls` is `flex: none`, so on a 320px viewport the pair overflowed the
+   row rather than stacking — the measured 300-323px of content inside 280px.
+   Wrapping lets the controls drop to their own line instead of pushing the
+   page wider than the screen. */
 .head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--space-5);
 }
 

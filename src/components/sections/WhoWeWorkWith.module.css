@@ -122,8 +122,10 @@
 
 .cardTitle {
   font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
+  /* 400 plus tracking, not 600 — see the Single Weight Rule. */
+  font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
   color: var(--white);
 }
 

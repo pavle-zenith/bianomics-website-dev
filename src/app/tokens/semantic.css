@@ -58,8 +58,9 @@
   --color-cta-bg-hover: var(--blue-900);
   --color-cta-fg: var(--white);
 
-  /* --- Secondary call-to-action (outline on light) --- */
-  --color-cta-secondary-border: var(--ink-300);
+  /* --- Secondary call-to-action ---
+     No border token: the variant is a filled white plate and takes
+     --color-border like every other hairline. */
   --color-cta-secondary-fg: var(--ink-900);
   --color-cta-secondary-bg-hover: var(--ink-50);
 
@@ -74,7 +75,7 @@
   --color-field-placeholder: var(--ink-400);
   --color-error: var(--red-700); /* AA on white */
   --color-error-bg: var(--red-50);
-  --color-success: var(--green-800); /* AA on white */
+  --color-success: var(--green-900); /* 4.75:1 on white; green-800 was 3.60 */
 
   /* --- The four labs, as a coded system (brandbook mapping) ---
      Bianomics primary is Bondi Blue; the labs take the accents.
@@ -83,7 +84,11 @@
   --lab-vision-fill: var(--first-love); /* Vision Lab: First Love pink */
   --lab-vision-text: var(--red-700);
   --lab-stage-fill: var(--gooseberry); /* Stage: Gooseberry green */
-  --lab-stage-text: var(--green-800);
+  /* green-900, not green-800. This file's contract is that every `-text` role
+     is AA-safe on white, and green-800 (#838d37) measures 3.60:1 there — the
+     HowItWorks step numeral "02" was sampling at 3.54:1 in the browser.
+     green-900 (#70782e) clears at 4.75:1. */
+  --lab-stage-text: var(--green-900);
   --lab-blueprint-fill: var(--bondi-blue); /* Blueprint: Bondi (#0094B3) */
   --lab-blueprint-text: var(--blue-900);
   --lab-groundwork-fill: var(--trendy-orange); /* Groundwork: Trendy Orange */
@@ -91,5 +96,7 @@
 
   /* Opportunity Lab (nonprofit arm) — Gooseberry accent per handoff */
   --opportunity-fill: var(--gooseberry);
-  --opportunity-text: var(--green-800);
+  /* Same correction as --lab-stage-text: this is the other Gooseberry text
+     role, and green-800 fails AA on white for the same reason. */
+  --opportunity-text: var(--green-900);
 }

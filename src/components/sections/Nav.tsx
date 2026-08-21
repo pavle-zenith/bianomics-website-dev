@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import type { NavLink } from '@/content/types'
 import { brand } from '@/content/site'
-import { anchors, routes } from '@/lib/routes'
+import { anchors, routes, snapshotCtaHref } from '@/lib/routes'
 import { track } from '@/lib/analytics'
 import logoLight from '../../../public/Horizontal_Original_Blue.png'
 import logoDark from '../../../public/Horizontal_Monochrome_White.png'
@@ -19,6 +20,7 @@ import styles from './Nav.module.css'
 export function Nav({ links }: { links: NavLink[] }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [onDark, setOnDark] = useState(true)
+  const ctaHref = snapshotCtaHref(usePathname())
 
   // Watch a 1px band at the nav's own line: whichever region crosses it
   // decides the tone. Cheaper and steadier than reading pixels on scroll.
@@ -109,7 +111,7 @@ export function Nav({ links }: { links: NavLink[] }) {
               {/* The Snapshot is the only ask in the chrome: a general
                   "Contact" competed with it and won nothing. */}
               <a
-                href={routes.snapshot}
+                href={ctaHref}
                 className={styles.cta}
                 onClick={() => track('cta_primary_click', { location: 'nav' })}
               >
@@ -150,7 +152,7 @@ export function Nav({ links }: { links: NavLink[] }) {
               ))}
               <li>
                 <a
-                  href={routes.snapshot}
+                  href={ctaHref}
                   className={styles.mobileCta}
                   onClick={() => {
                     track('cta_primary_click', { location: 'nav' })

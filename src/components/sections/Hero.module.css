@@ -181,7 +181,7 @@
 .clarifier {
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
   color: color-mix(in srgb, var(--tone-text) 92%, transparent);
   max-width: 48ch;
 }
@@ -219,4 +219,28 @@
   color: color-mix(in srgb, var(--tone-text) 82%, transparent);
   text-decoration: none;
   cursor: help;
+}
+
+/* --- Phones: 28px so the CTA clears the consent card ---
+   The hero keeps its full viewport; this only closes the gap between the
+   headline block and the base, and the rule above the subline. Measured at
+   390x844 the base ran to 680 against a card starting at 664, so the shortfall
+   is small and the trim is proportionate — enough to clear it, not enough to
+   read as a tighter hero. Desktop is untouched: there the base row puts the
+   CTA on the right and the card is bounded to the left, so they never meet. */
+@media (max-width: 51.99rem) {
+  .inner {
+    gap: var(--space-6);
+    /* Plus whatever the consent card is currently standing at, so the base row
+       comes to rest just above it instead of underneath it. `--consent-h` is
+       published by CookieBanner while the card is up and removed the moment
+       the visitor answers, at which point the hero returns to its natural
+       composition exactly. */
+    padding-bottom: calc(
+      clamp(1.75rem, 1.25rem + 2.5vw, 3rem) + var(--consent-h, 0px)
+    );
+  }
+  .bottom {
+    padding-top: var(--space-3);
+  }
 }

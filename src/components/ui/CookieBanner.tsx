@@ -1,6 +1,6 @@
 'use client'
 
-import { useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react'
 import { routes } from '@/lib/routes'
 import { readConsent, subscribeConsent, writeConsent } from '@/lib/consent'
 import styles from './CookieBanner.module.css'
@@ -14,6 +14,13 @@ import styles from './CookieBanner.module.css'
  * in localStorage, and rendering it during hydration would make the markup
  * disagree with the HTML. A brief absence is the correct trade, since no
  * analytics runs while we wait either.
+ *
+ * While it is up it publishes its own height as `--consent-h` on the document
+ * element. The card is fixed to the foot of the viewport, which on a phone is
+ * the same band the hero's CTA sits in; the hero reserves that height rather
+ * than being recomposed around a dialog most visitors dismiss in a second.
+ * Measured, not assumed — the height depends on how the notice wraps at the
+ * current width. The property is removed the moment the card goes.
  */
 export function CookieBanner() {
   // `undefined` on the server and for the hydrating render; `null` once the
@@ -25,12 +32,36 @@ export function CookieBanner() {
     () => undefined,
   )
 
-  if (consent !== null) return null
+  const ref = useRef<HTMLDivElement>(null)
+  const visible = consent === null
+
+  const publish = useCallback(() => {
+    const el = ref.current
+    if (!el) return
+    document.documentElement.style.setProperty(
+      '--consent-h',
+      `${Math.ceil(el.getBoundingClientRect().height)}px`,
+    )
+  }, [])
+
+  useEffect(() => {
+    if (!visible) return
+    publish()
+    const observer = new ResizeObserver(publish)
+    if (ref.current) observer.observe(ref.current)
+    return () => {
+      observer.disconnect()
+      document.documentElement.style.removeProperty('--consent-h')
+    }
+  }, [visible, publish])
+
+  if (!visible) return null
 
   const decide = (value: 'granted' | 'denied') => () => writeConsent(value)
 
   return (
     <div
+      ref={ref}
       className={styles.banner}
       role="dialog"
       aria-labelledby="cookie-heading"

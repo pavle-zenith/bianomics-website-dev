@@ -52,7 +52,7 @@
   align-items: flex-start;
   gap: var(--space-3);
   color: var(--color-text);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-normal);
 }
 
 .pointMark {

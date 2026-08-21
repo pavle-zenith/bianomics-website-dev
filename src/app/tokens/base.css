@@ -94,6 +94,21 @@ button {
   border: none;
 }
 
+/* --- Browser surfaces ---
+   Selection and the caret ship in the browser's own blue, which belongs to no
+   design system. Both take the CTA step: white on it clears AA at 5.49:1, so a
+   selected run stays readable on either canvas. */
+::selection {
+  background-color: var(--color-cta-bg);
+  color: var(--color-cta-fg);
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--color-field-border-focus);
+}
+
 ul,
 ol {
   list-style: none;

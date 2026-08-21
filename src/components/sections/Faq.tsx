@@ -1,6 +1,6 @@
 import type { FaqItem } from '@/content/types'
 import { faqIntro } from '@/content/site'
-import { routes } from '@/lib/routes'
+import { anchors } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './Faq.module.css'
@@ -25,7 +25,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
             {/* Sits on the foot of the column, level with the last question
                 rather than tucked under the heading. */}
             <Button
-              href={routes.snapshot}
+              href={anchors.snapshot}
               variant="secondary"
               event="cta_secondary_click"
               location="faq"

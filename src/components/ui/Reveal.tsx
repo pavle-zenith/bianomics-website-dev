@@ -20,6 +20,8 @@ interface RevealProps {
    */
   variant?: Variant
   as?: 'div' | 'section' | 'li' | 'span' | 'h1' | 'h2'
+  /** Anchor target, when a link needs to reach this element. */
+  id?: string
   className?: string
   /** Inline style, in practice the custom properties a caller codes an item with. */
   style?: CSSProperties
@@ -35,6 +37,7 @@ export function Reveal({
   distance = 24,
   variant = 'rise',
   as = 'div',
+  id,
   className,
   style,
 }: RevealProps) {
@@ -43,7 +46,7 @@ export function Reveal({
   if (reduce) {
     const Tag = as
     return (
-      <Tag className={className} style={style}>
+      <Tag id={id} className={className} style={style}>
         {children}
       </Tag>
     )
@@ -57,6 +60,7 @@ export function Reveal({
   if (variant === 'mask') {
     return (
       <MotionTag
+        id={id}
         className={className}
         style={{ ...style, willChange: 'clip-path, transform' }}
         initial={{ clipPath: 'inset(0 0 100% 0)', y: '0.18em' }}
@@ -75,6 +79,7 @@ export function Reveal({
 
   return (
     <MotionTag
+      id={id}
       className={className}
       style={style}
       initial={{ opacity: 0, y: variant === 'fade' ? 0 : distance }}

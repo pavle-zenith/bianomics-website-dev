@@ -14,6 +14,11 @@
    tone comes from the observer rather than from an ancestor. */
 .onDark {
   --nav-shell: rgb(255 255 255 / 0.1);
+  /* The sheet is near-opaque where the shells are glass. Opened over a
+     saturated practice card the 10% shell let the card through as a colour
+     wash and the links went with it; a menu is the one surface that has to
+     read over whatever it lands on. */
+  --nav-sheet: rgb(6 7 9 / 0.94);
   --nav-border: rgb(255 255 255 / 0.16);
   --nav-ink: var(--color-text-inverse);
   --nav-hover: rgb(255 255 255 / 0.14);
@@ -21,6 +26,7 @@
 }
 .onLight {
   --nav-shell: rgb(255 255 255 / 0.72);
+  --nav-sheet: rgb(255 255 255 / 0.96);
   --nav-border: rgb(13 14 17 / 0.1);
   --nav-ink: var(--color-text);
   --nav-hover: rgb(13 14 17 / 0.06);
@@ -78,11 +84,13 @@
 /* --- Logo ---
    Carries its own shell so it stays legible once the page scrolls and the
    mark sits over light sections rather than the dark hero. */
+/* `flex: 0 1 auto` rather than `none`: the lockup is the one item here that
+   can afford to give width back, and on a 320px viewport it has to. */
 .logo {
   display: inline-flex;
   align-items: center;
   min-width: 0;
-  flex: none;
+  flex: 0 1 auto;
   padding: 0.7rem 1rem;
   border-radius: var(--radius-control);
   background: var(--nav-shell);
@@ -92,6 +100,8 @@
 .logoImg {
   height: 1.35rem;
   width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* --- Floating group: the links and the CTA share one rounded shell --- */
@@ -147,12 +157,16 @@
   background: var(--nav-hover);
 }
 
-/* --- Right actions --- */
+/* --- Right actions ---
+   `min-width: 0` lets the group give ground before the shell overflows. The
+   toggle inside it never shrinks (see `.menuToggle`), so the width comes off
+   the CTA label instead of off the only control that opens the menu. */
 .actions {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   flex: none;
+  min-width: 0;
 }
 
 /* The solid block at the end of the group — the one filled element up here. */
@@ -167,6 +181,11 @@
   color: var(--color-cta-fg);
   background: var(--color-cta-bg);
   white-space: nowrap;
+  /* Truncates as a last resort. Losing the tail of a label the visitor can
+     still read and press beats losing the menu toggle off-screen. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition:
     background-color var(--dur-fast) var(--ease-standard),
     transform var(--dur-fast) var(--ease-standard);
@@ -187,10 +206,14 @@
 }
 
 /* --- Mobile menu toggle --- */
+/* Never shrinks and never gets pushed out: this is the only way into the menu
+   below 62rem, and `overflow-x: clip` on the body means anything forced past
+   the right edge is silently unreachable rather than scrollable to. */
 .menuToggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: none;
   width: 2.5rem;
   height: 2.5rem;
   border-radius: calc(var(--radius-control) - 0.15rem);
@@ -243,7 +266,7 @@
 .mobileNav {
   padding: var(--space-2) var(--space-5) var(--space-5);
   border-radius: var(--radius-control);
-  background: var(--nav-shell);
+  background: var(--nav-sheet);
   border: 1px solid var(--nav-border);
   backdrop-filter: blur(18px);
 }
@@ -271,5 +294,30 @@
   }
   .menuToggle {
     display: none;
+  }
+}
+
+/* --- Very narrow phones (below ~344px) ---
+   Measured at 320px: shell content came to 329px inside 259px of usable width.
+   These four reclaim about 70px so the whole row fits without truncating.
+   Kept at the foot of the file because they override declarations above, and
+   at equal specificity source order decides. */
+@media (max-width: 21.5rem) {
+  .inner {
+    padding-inline: var(--space-3);
+  }
+  .shell {
+    gap: var(--space-2);
+    padding: 0.35rem 0.35rem 0.35rem 0.55rem;
+  }
+  .logoImg {
+    height: 1.05rem;
+  }
+  .cta {
+    padding: 0.5rem 0.6rem;
+    font-size: var(--text-xs);
+  }
+  .actions {
+    gap: var(--space-2);
   }
 }
