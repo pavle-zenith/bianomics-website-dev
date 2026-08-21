@@ -132,12 +132,17 @@
   margin-top: var(--space-4);
 }
 /* Stacked and full width on a phone, where the wide gap read as two unrelated
-   controls rather than a primary and its alternative. */
+   controls rather than a primary and its alternative.
+
+   `width: 100%` is the load-bearing line: this is a flex item of `.ctaSlot`,
+   so it sizes to its content, and the buttons' own `width: 100%` was
+   resolving against 167px of shrink-to-fit rather than the 350px column. */
 @media (max-width: 47.99rem) {
   .ctas {
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-3);
+    width: 100%;
   }
 }
 
