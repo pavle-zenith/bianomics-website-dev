@@ -9,9 +9,9 @@ import type { Lab } from './types'
 export const labs: Lab[] = [
   {
     id: 'vision',
-    // NOTE: ™ is applied to all four practices for now. Bianca is confirming
-    // which of them should actually carry it (Section 3 of the copy doc).
-    name: 'Vision Lab™',
+    // Confirmed by the client: Groundwork is the only practice that carries
+    // the mark. The other three had it provisionally and no longer do.
+    name: 'Vision Lab',
     mode: 'Express',
     description:
       "The story underneath, brought to the surface and aimed at the people who need to hear it. Brand, campaigns, press, and creative built on what's true about you, then sharpened until it performs.",
@@ -28,7 +28,7 @@ export const labs: Lab[] = [
   },
   {
     id: 'stage',
-    name: 'Stage™',
+    name: 'Stage',
     mode: 'Resonate',
     description:
       'The room where it lands. Conferences, launches, press moments, and community events people are still talking about on Monday.',
@@ -45,7 +45,7 @@ export const labs: Lab[] = [
   },
   {
     id: 'blueprint',
-    name: 'Blueprint™',
+    name: 'Blueprint',
     mode: 'Structure',
     description:
       'The systems underneath the work. Project management, workflow, and operations built so everything runs on time without you holding it up.',

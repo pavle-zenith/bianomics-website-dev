@@ -139,7 +139,7 @@
   grid-template-columns: 1fr;
   align-content: start;
   gap: var(--space-6);
-  padding: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
+  padding: clamp(1.5rem, 1.05rem + 2vw, 2.75rem);
   border-radius: var(--radius-card);
   background: var(--slide-fill);
   overflow: hidden;
@@ -228,9 +228,10 @@
      derived a width off it, so the frame sat narrow in a wide column. */
   width: 100%;
   aspect-ratio: 1 / 1;
-  /* Safety on short viewports, where a square off a full-width column would
-     otherwise run past the fold on its own. */
-  max-height: 62vh;
+  /* Also the card's main lever: the frame is square, so its height is what
+     the card mostly is. Trimmed from 62vh, which put an 780px card in a 950px
+     viewport and left it fighting the floating nav. */
+  max-height: 54vh;
   overflow: hidden;
   border-radius: var(--radius-card);
   background: var(--ink-900);

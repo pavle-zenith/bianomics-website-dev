@@ -105,20 +105,21 @@ export function Footer({ links }: { links: NavLink[] }) {
         </div>
       </div>
 
-      <p className={`${styles.legal} container`}>
-        &copy; {year} {brand.name}. All rights reserved.
-      </p>
-
-      {/* The brand lockup, spanning the foot of the page. The asset is
-          white-on-transparent, so it sits directly on the texture. */}
-      <div className={`${styles.wordmarkWrap} container`}>
+      {/* The foot: lockup on the left, legal line on the right, both on the
+          same baseline. The asset is white-on-transparent, so it sits
+          directly on the texture. */}
+      <div className={`${styles.foot} container`}>
         <Image
           src={logo}
           alt={brand.name}
           className={styles.wordmark}
-          sizes="100vw"
+          sizes="(min-width: 48rem) 14rem, 40vw"
           priority={false}
         />
+
+        <p className={styles.legal}>
+          &copy; {year} {brand.name}. All rights reserved.
+        </p>
       </div>
     </footer>
   )

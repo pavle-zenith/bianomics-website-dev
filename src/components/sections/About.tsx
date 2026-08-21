@@ -25,7 +25,6 @@ export function About() {
       <div className="container">
         <div className={styles.head}>
           <Reveal className={styles.headMain} variant="mask">
-            <p className={styles.eyebrow}>{about.introLabel}</p>
             <h2 id="about-heading" className={styles.heading}>
               {about.introBody}
             </h2>

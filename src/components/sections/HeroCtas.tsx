@@ -1,36 +1,25 @@
 'use client'
 
 import { anchors } from '@/lib/routes'
-import { track } from '@/lib/analytics'
 import { Button } from '@/components/ui/Button'
 import styles from './Hero.module.css'
 
-function ArrowUpRight() {
-  return (
-    <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden="true">
-      <path
-        d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-/** Hero CTAs — the shared Button primitive plus a plain text secondary. */
+/**
+ * Hero CTAs. Both are the shared Button: the secondary used to be a bespoke
+ * underlined text link, which made a third button treatment on the page for
+ * no reason other than that it was the hero.
+ */
 export function HeroCtas() {
   return (
     <div className={styles.ctas}>
-      <a
+      <Button
         href={anchors.whatWeDo}
-        className={styles.secondaryCta}
-        onClick={() => track('cta_secondary_click', { location: 'hero' })}
+        variant="secondary"
+        event="cta_secondary_click"
+        location="hero"
       >
         See what we do
-        <ArrowUpRight />
-      </a>
+      </Button>
       <Button
         href={anchors.snapshot}
         variant="primary"

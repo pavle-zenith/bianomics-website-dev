@@ -129,21 +129,6 @@
   margin-top: var(--space-4);
 }
 
-.secondaryCta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding-bottom: 0.25rem;
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  color: var(--tone-text);
-  border-bottom: 1.5px solid var(--tone-border-strong);
-  transition: border-color var(--dur-fast) var(--ease-standard);
-}
-.secondaryCta:hover {
-  border-color: var(--tone-text);
-}
-
 /* --- Base: recognition, a rule, then the subline and CTA --- */
 .base {
   display: flex;

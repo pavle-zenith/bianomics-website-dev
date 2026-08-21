@@ -21,6 +21,12 @@ const jobs = [
   { from: 'process/Totebag (1).jpg', to: 'process/build.webp', width: 1600 },
   // Full-bleed behind the hero.
   { from: 'hero/underlay.jpg', to: 'hero/underlay.webp', width: 2400 },
+  // One thumbnail per practice. The frame is square and never wider than
+  // half a card, so 1000 covers it at 2x.
+  { from: 'labs/Vision Lab.png', to: 'labs/visionlab.webp', width: 1000 },
+  { from: 'labs/Stage.png', to: 'labs/stage.webp', width: 1000 },
+  { from: 'labs/BluePrint.png', to: 'labs/blueprint.webp', width: 1000 },
+  { from: 'labs/Groundwork.png', to: 'labs/groundwork.webp', width: 1000 },
 ]
 
 for (const job of jobs) {

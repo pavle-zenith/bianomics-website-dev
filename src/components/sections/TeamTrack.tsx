@@ -108,6 +108,16 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
                     alt={`${member.name}, ${member.role}`}
                     fill
                     sizes="(min-width: 48rem) 20rem, 70vw"
+                    /* Eager, not lazy. The track scrolls sideways, so every
+                       card past the fourth is outside the viewport and lazy
+                       loading correctly refuses to fetch it — which means a
+                       reader swiping the roster on a phone met an empty frame
+                       and waited for it. Eleven portraits at a phone's size is
+                       a cheaper trade than that. */
+                    loading="eager"
+                    /* And a blur while the bytes land, so the frame is never
+                       blank even on a slow connection. */
+                    placeholder="blur"
                     className={styles.photo}
                   />
                 ) : (
@@ -223,6 +233,7 @@ function BioPanel({
                     alt=""
                     fill
                     sizes="(min-width: 48rem) 34rem, 100vw"
+                    placeholder="blur"
                     className={styles.panelImg}
                   />
                 ) : (

@@ -47,14 +47,12 @@ export function OpportunityLab() {
 
           {/* The ethos. */}
           <div className={styles.panel}>
-            <p className={styles.ethosEyebrow}>{ethos.eyebrow}</p>
             <p className={styles.statement}>{ethos.statement}</p>
           </div>
 
           {/* The way in, in its own tile. */}
           <div className={`${styles.panel} ${styles.ctaPanel}`}>
             <div className={styles.ctaCopy}>
-              <p className={styles.footEyebrow}>{ethos.footEyebrow}</p>
               <p className={styles.footText}>{ethos.footText}</p>
             </div>
             <Button

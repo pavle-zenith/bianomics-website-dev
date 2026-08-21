@@ -22,19 +22,17 @@ export function Faq({ items }: { items: FaqItem[] }) {
               {faqIntro.heading}
             </h2>
 
-            <div className={styles.support}>
-              <p className={styles.supportHeading}>{faqIntro.support.heading}</p>
-              <p className={styles.supportText}>{faqIntro.support.description}</p>
-              <Button
-                href={anchors.snapshot}
-                variant="secondary"
-                event="cta_secondary_click"
-                location="faq"
-                className={styles.supportCta}
-              >
-                {faqIntro.support.ctaLabel}
-              </Button>
-            </div>
+            {/* Sits on the foot of the column, level with the last question
+                rather than tucked under the heading. */}
+            <Button
+              href={anchors.snapshot}
+              variant="secondary"
+              event="cta_secondary_click"
+              location="faq"
+              className={styles.supportCta}
+            >
+              {faqIntro.support.ctaLabel}
+            </Button>
           </Reveal>
 
           {/* Right: accordion */}

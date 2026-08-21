@@ -343,7 +343,7 @@ export const team = {
       ],
     },
   ],
-  collaboratorsHeading: 'Comms collaborators',
+  collaboratorsHeading: 'Creative collaborators',
   /**
    * Not staff. Consultants who work alongside the team often enough to
    * belong on the page, kept in their own group so the roster does not
@@ -353,7 +353,7 @@ export const team = {
     {
       id: 'kandolite',
       name: 'Kandolite Carson',
-      role: 'Strategic Communications',
+      role: 'Executive Producer',
       photo: 'kandolite',
       bio: [
         'By day she is the Queen of the In-Between. By every other hour she is an ultimate boy mom. For 18 plus years, she has built brands, told stories, and turned bold ideas into real ones across journalism, PR, media, marketing, nonprofit leadership, and creative strategy.',
@@ -436,13 +436,11 @@ export const opportunityLab = {
   eyebrow: 'The nonprofit arm',
   /** Full-width, two-line section title above the split. */
   heading: 'We fund the work for organizations doing good in the world.',
-  /** Dark content panel (60%): the ethos statement and the way in. */
+  /** Content panel: the ethos statement and the way in. */
   ethos: {
-    eyebrow: 'Our ethos',
     statement:
       "Good communications shouldn't be a luxury. Opportunity Lab, our nonprofit arm, closes the cost gap for organizations that couldn't otherwise take this work on.",
     /** Who qualifies, set at the foot of the panel. */
-    footEyebrow: "Who it's for",
     footText:
       'Organizations doing good that cannot otherwise afford this work. If that sounds like you, or like someone you know, tell us.',
     ctaLabel: 'Start with a Snapshot',
@@ -455,10 +453,9 @@ export const faqIntro = {
   heading: 'The things people usually ask',
   description:
     'Short answers to the real hesitations. If your question is not here, the free Snapshot is the simplest way to get a straight answer.',
-  /** Small support prompt under the heading, beside the accordion. */
+  /** The one action beside the accordion. The prompt that used to introduce
+      it was cut: the heading above already asks the question it answered. */
   support: {
-    heading: 'Still have questions?',
-    description: 'Ask us directly and we will give you a straight answer.',
     ctaLabel: 'Get in touch',
   },
 } as const

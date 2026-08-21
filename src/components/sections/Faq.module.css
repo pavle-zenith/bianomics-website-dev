@@ -22,9 +22,11 @@
   gap: var(--space-4);
 }
 @media (min-width: 60rem) {
+  /* Full row height, so the action can sit on its foot. This is what the
+     column used to spend on `position: sticky`; the two cannot both apply,
+     since an element as tall as its container has nothing to stick within. */
   .intro {
-    position: sticky;
-    top: 7rem;
+    align-self: stretch;
   }
 }
 
@@ -33,29 +35,17 @@
   max-width: 14ch;
 }
 
-/* --- Support prompt under the heading --- */
-.support {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
+/* --- The one action beside the accordion --- */
+.supportCta {
+  align-self: flex-start;
   margin-top: var(--space-5);
 }
-
-.supportHeading {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
-
-.supportText {
-  color: var(--color-text-muted);
-  line-height: var(--leading-relaxed);
-  max-width: 34ch;
-}
-
-.supportCta {
-  margin-top: var(--space-3);
+@media (min-width: 60rem) {
+  .supportCta {
+    /* Takes up whatever the heading leaves, which puts it on the baseline of
+       the accordion opposite. */
+    margin-top: auto;
+  }
 }
 
 /* --- Accordion: hairline rules, no cards --- */

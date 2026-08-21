@@ -44,25 +44,20 @@
     linear-gradient(to top, rgb(255 255 255 / 0.75) 0%, transparent 55%);
 }
 
-/* Lockup at the top, the ask and actions at the foot. In normal flow rather
+/* The ask and its actions, on the floor of the band. In normal flow rather
    than stretched over the panel, so the band grows with its content and the
-   `container` class it also carries can do the horizontal work. */
+   `container` class it also carries can do the horizontal work.
+   `flex-end`, not `space-between`: that was distributing two children, and
+   with the lockup gone the single one it has left was pinned to the top. */
 .content {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-8);
   min-height: inherit;
   padding-block: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
-}
-
-.lockup {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-text-subtle);
 }
 
 .foot {

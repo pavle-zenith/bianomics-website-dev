@@ -176,6 +176,16 @@
   transform: translateY(-1px);
 }
 
+/* On a phone the CTA at full size pushed the toggle past the shell's own
+   padding, so the hamburger sat on the rounded edge. Smaller type and tighter
+   padding pull it back inside and close the gap to the toggle. */
+@media (max-width: 47.99rem) {
+  .cta {
+    padding: 0.55rem 0.85rem;
+    font-size: var(--text-sm);
+  }
+}
+
 /* --- Mobile menu toggle --- */
 .menuToggle {
   display: inline-flex;

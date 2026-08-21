@@ -4,10 +4,10 @@ import { brand } from '@/content/site'
 import { WhatWeDoTrack } from './WhatWeDoTrack'
 import styles from './WhatWeDo.module.css'
 
-import visionTexture from '../../../public/labs/visionlab.png'
-import stageTexture from '../../../public/labs/stage.png'
-import blueprintTexture from '../../../public/labs/blueprint.png'
-import groundworkTexture from '../../../public/labs/groundwork.png'
+import visionTexture from '../../../public/labs/visionlab.webp'
+import stageTexture from '../../../public/labs/stage.webp'
+import blueprintTexture from '../../../public/labs/blueprint.webp'
+import groundworkTexture from '../../../public/labs/groundwork.webp'
 
 const textures: Record<LabId, StaticImageData> = {
   vision: visionTexture,

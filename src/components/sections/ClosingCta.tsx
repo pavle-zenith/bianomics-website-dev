@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { brand } from '@/content/site'
 import { anchors, routes } from '@/lib/routes'
 import type { CtaLocation } from '@/lib/analytics'
 import { Reveal } from '@/components/ui/Reveal'
@@ -51,8 +50,6 @@ export function ClosingCta({
         <div className={styles.scrim} aria-hidden="true" />
 
         <div className={`${styles.content} container`}>
-          <p className={styles.lockup}>{brand.lockupClosing}</p>
-
           <div className={styles.foot}>
             <div className={styles.copy}>
               <h2 id={headingId} className={styles.heading}>

@@ -40,6 +40,7 @@
   width: 100%;
 }
 
+
 /* --- Arrow variant: the badge sits inset inside the button --- */
 .hasArrow {
   gap: var(--space-4);
@@ -125,4 +126,24 @@
 :global(.tone-dark) .secondary:hover {
   background-color: var(--white);
   border-color: var(--color-border-strong);
+}
+
+/* --- Phones: one behaviour for both variants ---
+   Kept at the foot of the file deliberately: these override declarations
+   that appear above, and at equal specificity source order decides.
+   Full width, and the primary drops its arrow badge. The badge is an inset
+   black square sized for a button that hugs its label; on a button spanning
+   the viewport it sits marooned at the far edge, a long way from the words it
+   belongs to. Padding goes back to the plain symmetric value with it. */
+@media (max-width: 47.99rem) {
+  .button {
+    width: 100%;
+  }
+  .hasArrow {
+    gap: var(--space-2);
+    padding: 0.85em 1.5em;
+  }
+  .arrow {
+    display: none;
+  }
 }

@@ -8,7 +8,7 @@ import type { NavLink } from './types'
 export const navLinks: NavLink[] = [
   { label: 'About', href: '#about' },
   { label: 'Services', href: '#what-we-do' },
-  { label: 'How it works', href: '#how-it-works' },
+  { label: 'Process', href: '#how-it-works' },
   { label: 'Results', href: '#results' },
   { label: 'FAQ', href: '#faq' },
   // Phase 2 destinations (hidden in Phase 1):

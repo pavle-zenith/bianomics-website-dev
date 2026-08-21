@@ -22,15 +22,6 @@
   min-width: 0;
 }
 
-.eyebrow {
-  margin-bottom: var(--space-4);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-}
-
 /* Weight 400; tracking does the work the weight used to. Given a measure so
    it breaks into three or four lines rather than running edge to edge. */
 .heading {

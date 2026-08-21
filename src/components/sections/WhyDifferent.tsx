@@ -3,7 +3,6 @@ import { comparison, brand } from '@/content/site'
 import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
-import { AntiAgencyBadge } from '@/components/ui/AntiAgencyBadge'
 import logo from '../../../public/Horizontal_Original_Blue.png'
 import styles from './WhyDifferent.module.css'
 
@@ -14,9 +13,6 @@ export function WhyDifferent() {
         {/* Title left, CTA right, both above the comparison. */}
         <Reveal className={styles.head}>
           <div className={styles.headMain}>
-            <div className={styles.badgeRow}>
-              <AntiAgencyBadge label={brand.lockupComparison} />
-            </div>
             <h2 id="why-heading" className={styles.heading}>
               The same team runs it all, and stays as long as you need us.
             </h2>

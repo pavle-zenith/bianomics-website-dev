@@ -14,7 +14,8 @@ export type LabColorKey = 'vision' | 'stage' | 'blueprint' | 'groundwork'
 
 export interface Lab {
   id: LabId
-  /** Display name, includes any trademark mark, e.g. "Blueprint™". */
+  /** Display name, including the trademark mark where one applies, e.g.
+      "Groundwork™" — currently the only practice that carries one. */
   name: string
   /** One-word mode from the brandbook, e.g. "Express". */
   mode: string

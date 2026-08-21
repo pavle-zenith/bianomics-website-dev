@@ -164,10 +164,12 @@
   border-top: 1px solid var(--color-border);
   list-style: none;
   padding: 0;
+  column-gap: var(--space-7);
 }
 @media (min-width: 48rem) {
   .coverGrid {
     grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--space-8);
   }
 }
 @media (min-width: 72rem) {
@@ -176,11 +178,15 @@
   }
 }
 
+/* The number holds the top of the cell and the copy sits on its floor, so the
+   twelve cells read as a numbered sequence on one line rather than each one
+   starting wherever its own text happens to. */
 .coverItem {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-6) var(--space-5) var(--space-7);
+  justify-content: space-between;
+  gap: var(--space-7);
+  padding: var(--space-7) var(--space-6) var(--space-8);
   border-bottom: 1px solid var(--color-border);
 }
 @media (min-width: 48rem) {
@@ -199,33 +205,31 @@
   }
 }
 
-/* Icon left, counter right, centred on each other so the cell opens on one
-   line rather than two stacked marks. */
-.coverTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-/* The one filled shape in the cell, so the grid has an entry point before the
-   type. Square-ish rather than a pill: this is a mark, not a control. */
-.coverIcon {
+/* The number is the mark now. It carries what the icon did — one filled shape
+   to open the cell — and says which step it is at the same time, which the
+   icon and a separate mono counter were splitting between them. Set in the
+   page's own face, not the mono: at this size the mono read as a label rather
+   than a numeral. */
+.coverIndex {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-start;
   width: 2.75rem;
   height: 2.75rem;
   border-radius: var(--radius-control);
   background: var(--color-bg-inverse);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-snug);
   color: var(--color-bg);
 }
 
-.coverIndex {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wider);
-  color: var(--color-accent-text);
+/* Held together so `space-between` has two children to push apart. */
+.coverCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 .coverTitle {

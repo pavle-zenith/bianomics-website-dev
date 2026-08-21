@@ -9,7 +9,6 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { SnapshotForm } from '@/components/form/SnapshotForm'
 import { ClosingCta } from '@/components/sections/ClosingCta'
-import { CoverIcon } from './CoverIcons'
 import styles from './snapshot.module.css'
 
 const description =
@@ -94,16 +93,14 @@ export default function SnapshotPage() {
                   delay={(i % 3) * 0.06}
                   className={styles.coverItem}
                 >
-                  <div className={styles.coverTop}>
-                    <span className={styles.coverIcon}>
-                      <CoverIcon name={item.id} />
-                    </span>
-                    <p className={styles.coverIndex}>
-                      {String(i + 1).padStart(2, '0')}
-                    </p>
+                  <span className={styles.coverIndex} aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+
+                  <div className={styles.coverCopy}>
+                    <h3 className={styles.coverTitle}>{item.title}</h3>
+                    <p className={styles.coverBody}>{item.body}</p>
                   </div>
-                  <h3 className={styles.coverTitle}>{item.title}</h3>
-                  <p className={styles.coverBody}>{item.body}</p>
                 </Reveal>
               ))}
             </ul>

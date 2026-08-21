@@ -67,6 +67,7 @@
 .tagline {
   margin-top: var(--space-4);
   font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
   color: var(--color-accent-text);
 }
 

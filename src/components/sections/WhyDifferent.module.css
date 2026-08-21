@@ -17,10 +17,6 @@
   min-width: 0;
 }
 
-.badgeRow {
-  margin-bottom: var(--space-4);
-}
-
 /* Section titles all sit on the same tier; only the two majors step up. */
 .heading {
   font-size: var(--text-3xl);

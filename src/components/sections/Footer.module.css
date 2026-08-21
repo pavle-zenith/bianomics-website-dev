@@ -14,9 +14,9 @@
   --bed-opacity: 0.55;
 }
 
-/* The legal line and wordmark hold the base; the gap absorbs the extra
-   height so the top block stays put rather than drifting to the middle. */
-.footer > .legal {
+/* The foot row holds the base; the gap absorbs the extra height so the top
+   block stays put rather than drifting to the middle. */
+.footer > .foot {
   margin-top: auto;
 }
 
@@ -137,30 +137,36 @@
   border-color: var(--tone-text);
 }
 
-/* --- Legal line, above the wordmark --- */
-.legal {
+/* --- Foot row: lockup left, legal right ---
+   The lockup used to run the full width of the container as a display
+   element. It is a mark at its own size now, so the row can carry the legal
+   line opposite it instead of stacking. */
+.foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
   margin-top: var(--space-9);
+  padding-bottom: var(--space-8);
+}
+@media (min-width: 48rem) {
+  .foot {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+}
+
+.wordmark {
+  display: block;
+  width: clamp(9rem, 18vw, 14rem);
+  height: auto;
+  user-select: none;
+}
+
+.legal {
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-normal);
   color: var(--tone-text-muted);
-}
-
-/* --- Oversized wordmark across the foot ---
-   Bounded by the container, so its left and right edges line up with the
-   statement and the link columns above it rather than the viewport. */
-.wordmarkWrap {
-  margin-top: var(--space-4);
-  /* Crop the lockup's own baseline padding so it sits on the page edge. */
-  margin-bottom: -1.5%;
-}
-
-/* Was the full container width, which put the wordmark at display scale
-   across the foot of every page. Held to two thirds and centred, so it still
-   closes the page without being the largest thing on it. */
-.wordmark {
-  display: block;
-  width: min(100%, 62%);
-  height: auto;
-  margin-inline: auto;
-  user-select: none;
 }
