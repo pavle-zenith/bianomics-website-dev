@@ -8,9 +8,8 @@ import type { ResultsContent } from './types'
  * other seven, and a broken clause in Driven Against Silence ("then sat down
  * and are supporting") rewritten to hold one tense.
  *
- * Way Out West has no image yet. `texture` is left off rather than pointed at
- * a neighbour's, which draws the lettered fallback frame instead; add
- * `way-out-west` to scripts/build-portfolio.mjs and set the key when it lands.
+ * Every engagement has its artwork now. The lettered fallback frame in
+ * Results.tsx stays for the next one that arrives without it.
  *
  * Testimonials remain empty until approved quotes land.
  */
@@ -118,8 +117,6 @@ export const results: ResultsContent = {
       ],
     },
     {
-      // No image yet: the frame falls back to a lettered panel in the
-      // engagement's own colour until one lands.
       id: 'way-out-west',
       client: 'Way Out West',
       category: 'Stage',
@@ -127,6 +124,7 @@ export const results: ResultsContent = {
       summary: 'The press and the production, handled by Bianomics.',
       intro:
         'We supported the production campaign end to end and ran the public relations alongside it, so the work and the story of the work moved at the same pace.',
+      texture: 'way-out-west',
       color: 'stage',
       services: ['Production Support', 'Public Relations'],
     },

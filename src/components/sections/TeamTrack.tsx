@@ -95,8 +95,13 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
           const photo = member.photo ? photos[member.photo] : undefined
           const openable = Boolean(member.bio?.length)
 
+          // Wrapped in a span rather than laid out by the button itself:
+          // WebKit does not treat a <button>'s children as real flex items,
+          // which collapsed the aspect-ratio box holding each portrait. It
+          // renders correctly in Blink, so DevTools device emulation cannot
+          // reproduce it — only a real iOS browser shows the empty cards.
           const inner = (
-            <>
+            <span className={styles.cardLayout}>
               <span className={styles.label}>
                 <span className={styles.name}>{member.name}</span>
                 <span className={styles.role}>{member.role}</span>
@@ -129,7 +134,7 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
                   </span>
                 ) : null}
               </span>
-            </>
+            </span>
           )
 
           return (

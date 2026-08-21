@@ -101,11 +101,14 @@
 /* The whole card is the control that opens the bio. The padding reset is load
    bearing: the UA puts 1px 6px on every button and the global reset only
    clears background and border, which left the portrait inset inside its own
-   card and a card without a button sitting wider than its neighbours. */
+   card and a card without a button sitting wider than its neighbours.
+
+   Deliberately NOT a flex container. WebKit does not lay out a <button>'s
+   children as flex items, so the portrait's aspect-ratio box collapsed and
+   the photographs disappeared on real iOS while rendering correctly in every
+   Blink-based device emulator. `.cardLayout` inside does the flexing. */
 .cardButton {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  display: block;
   width: 100%;
   padding: 0;
   text-align: left;
@@ -114,6 +117,12 @@
 
 /* Same card, minus the affordance: used while a member has no bio to open. */
 .cardStatic {
+  display: block;
+  width: 100%;
+}
+
+/* The card's actual layout, one level in from the control. */
+.cardLayout {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);

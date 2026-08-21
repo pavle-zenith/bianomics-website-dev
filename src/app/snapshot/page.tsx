@@ -6,7 +6,6 @@ import { anchors, routes } from '@/lib/routes'
 import { Nav } from '@/components/sections/Nav'
 import { Footer } from '@/components/sections/Footer'
 import { Reveal } from '@/components/ui/Reveal'
-import { Button } from '@/components/ui/Button'
 import { SnapshotForm } from '@/components/form/SnapshotForm'
 import { ClosingCta } from '@/components/sections/ClosingCta'
 import styles from './snapshot.module.css'
@@ -116,24 +115,6 @@ export default function SnapshotPage() {
                   {faq.heading}
                 </h2>
                 <p className={styles.faqText}>{faq.intro}</p>
-                <div className={styles.faqActions}>
-                  <Button
-                    href={`${routes.snapshot}#top`}
-                    variant="primary"
-                    event="cta_primary_click"
-                    location="snapshot-page-faq"
-                  >
-                    Apply now
-                  </Button>
-                  <Button
-                    href={`/${anchors.faq}`}
-                    variant="secondary"
-                    event="cta_secondary_click"
-                    location="snapshot-page-faq"
-                  >
-                    More questions
-                  </Button>
-                </div>
               </Reveal>
 
               <div className={styles.faqList}>

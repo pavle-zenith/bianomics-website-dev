@@ -14,11 +14,12 @@ import sharp from 'sharp'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 const jobs = [
-  // One frame per process step, in step order.
-  { from: 'process/Laptop Screen.jpg', to: 'process/snapshot.webp', width: 1600 },
-  { from: 'process/Billboard (1).jpg', to: 'process/story.webp', width: 1600 },
-  { from: 'process/Signage.jpg', to: 'process/plan.webp', width: 1600 },
-  { from: 'process/Totebag (1).jpg', to: 'process/build.webp', width: 1600 },
+  // One frame per process step, in step order. The client's own mockups
+  // replaced the stock brand photography that stood in for them.
+  { from: 'process/step-1.png', to: 'process/snapshot.webp', width: 1600 },
+  { from: 'process/step-2.png', to: 'process/story.webp', width: 1600 },
+  { from: 'process/step-3.png', to: 'process/plan.webp', width: 1600 },
+  { from: 'process/step-4.png', to: 'process/build.webp', width: 1600 },
   // Full-bleed behind the hero.
   { from: 'hero/underlay.jpg', to: 'hero/underlay.webp', width: 2400 },
   // One thumbnail per practice. The frame is square and never wider than

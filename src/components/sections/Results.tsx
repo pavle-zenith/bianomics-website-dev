@@ -11,6 +11,7 @@ import challengeFoundation from '../../../public/results/challenge-foundation.we
 import epla from '../../../public/results/epla.webp'
 import readyone from '../../../public/results/readyone.webp'
 import drivenAgainstSilence from '../../../public/results/driven-against-silence.webp'
+import wayOutWest from '../../../public/results/way-out-west.webp'
 
 /** Keyed by `study.texture`. Derived from _source/ by `npm run build-portfolio`. */
 const textures: Record<string, StaticImageData> = {
@@ -21,6 +22,7 @@ const textures: Record<string, StaticImageData> = {
   epla,
   readyone,
   'driven-against-silence': drivenAgainstSilence,
+  'way-out-west': wayOutWest,
 }
 
 /**

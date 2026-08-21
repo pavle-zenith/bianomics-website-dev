@@ -23,6 +23,7 @@ const jobs = [
   { from: 'EPLA.png', to: 'epla' },
   { from: 'READYONE INDUSTRIES.png', to: 'readyone' },
   { from: 'DRIVEN AGAINST SILENCE.png', to: 'driven-against-silence' },
+  { from: 'WAY OUT WEST.png', to: 'way-out-west' },
 ]
 
 await mkdir(join(root, 'public', 'results'), { recursive: true })
