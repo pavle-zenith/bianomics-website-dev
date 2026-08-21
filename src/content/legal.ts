@@ -91,6 +91,7 @@ export const privacyPolicy: LegalDocument = {
             'monday.com, where Snapshot submissions are held so we can work through them.',
             'Resend, which delivers the email copy of a submission to us.',
             'PostHog, for the site analytics described above, where enabled.',
+            'Google Analytics, for the site analytics described above, where enabled.',
           ],
         },
         'We do not give your information to anyone else unless you ask us to, or unless the law requires it.',
@@ -100,7 +101,7 @@ export const privacyPolicy: LegalDocument = {
       id: 'cookies',
       heading: 'Cookies and similar technologies',
       body: [
-        'Where analytics are enabled, our analytics provider sets cookies to recognise a returning browser and to join a sequence of page views into one visit. Nothing on this site requires cookies to function.',
+        'Where analytics are enabled, our analytics providers set cookies to recognise a returning browser and to join a sequence of page views into one visit. Nothing on this site requires cookies to function.',
         'You can block or delete cookies in your browser settings. We honour Global Privacy Control signals where your browser sends one.',
       ],
     },

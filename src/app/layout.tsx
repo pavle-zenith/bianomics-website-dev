@@ -7,6 +7,7 @@ import type { Metadata, Viewport } from 'next'
 import { causten, fitzgerald, jetbrainsMono } from './fonts'
 import { brand } from '@/content/site'
 import { PostHogProvider } from '@/components/PostHogProvider'
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/ui/CookieBanner'
 import { Intro } from '@/components/ui/Intro'
 
@@ -103,6 +104,9 @@ export default function RootLayout({
             defocus puts a filter on that wrapper, and a filtered ancestor
             becomes the containing block for anything fixed inside it. */}
         <CookieBanner />
+
+        {/* Renders nothing until consent is granted. */}
+        <GoogleAnalytics />
       </body>
     </html>
   )
