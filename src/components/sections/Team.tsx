@@ -17,6 +17,17 @@ import greg from '../../../public/team/greg.jpg'
 import nova from '../../../public/team/nova.jpg'
 import talha from '../../../public/team/talha.jpg'
 
+/**
+ * Photos served as-is, skipping /_next/image. The Vercel image-optimization
+ * quota is exhausted, and the optimizer answers any UNCACHED transformation
+ * with 402 OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED — a broken frame on the
+ * page. Every headshot that predates the limit still renders from the CDN's
+ * cached transforms, so only new or replaced photos belong here; drop a key
+ * once the quota resets or the plan changes, and keep any file listed here
+ * web-sized at the source, because it ships byte-for-byte.
+ */
+const unoptimizedPhotos = new Set(['milan'])
+
 /** Keyed by `member.photo`. Add an entry here when a new headshot lands. */
 const photos: Record<string, StaticImageData> = {
   bianca,
@@ -49,6 +60,7 @@ export function Team() {
       <TeamTrack
         members={team.members}
         photos={photos}
+        unoptimizedPhotos={unoptimizedPhotos}
         heading={team.heading}
         headingId="team-heading"
       />
@@ -57,6 +69,7 @@ export function Team() {
         <TeamTrack
           members={team.collaborators}
           photos={photos}
+          unoptimizedPhotos={unoptimizedPhotos}
           heading={team.collaboratorsHeading}
           headingId="collaborators-heading"
         />

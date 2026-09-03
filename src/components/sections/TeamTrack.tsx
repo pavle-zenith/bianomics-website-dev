@@ -10,6 +10,8 @@ import styles from './Team.module.css'
 interface TeamTrackProps {
   members: readonly TeamMember[]
   photos: Record<string, StaticImageData>
+  /** Photo keys that skip /_next/image — see the note in Team.tsx. */
+  unoptimizedPhotos?: ReadonlySet<string>
   heading: string
   /** Unique per track: the section renders more than one of these. */
   headingId: string
@@ -21,7 +23,7 @@ interface TeamTrackProps {
  * scroll-snap does the movement, so it stays swipeable on touch. Selecting a
  * card opens the full bio in a panel that slides in from the right.
  */
-export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProps) {
+export function TeamTrack({ members, photos, unoptimizedPhotos, heading, headingId }: TeamTrackProps) {
   const trackRef = useRef<HTMLUListElement>(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
@@ -156,6 +158,7 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
                     /* A blur while the bytes land, so the frame is never
                        blank even on a slow connection. */
                     placeholder="blur"
+                    unoptimized={member.photo ? unoptimizedPhotos?.has(member.photo) : undefined}
                     className={styles.photo}
                   />
                 ) : (
@@ -191,7 +194,12 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
         })}
       </ul>
 
-      <BioPanel member={open} photos={photos} onClose={() => setOpenId(null)} />
+      <BioPanel
+        member={open}
+        photos={photos}
+        unoptimizedPhotos={unoptimizedPhotos}
+        onClose={() => setOpenId(null)}
+      />
     </>
   )
 }
@@ -200,10 +208,12 @@ export function TeamTrack({ members, photos, heading, headingId }: TeamTrackProp
 function BioPanel({
   member,
   photos,
+  unoptimizedPhotos,
   onClose,
 }: {
   member: TeamMember | null
   photos: Record<string, StaticImageData>
+  unoptimizedPhotos?: ReadonlySet<string>
   onClose: () => void
 }) {
   const reduce = useReducedMotion()
@@ -272,6 +282,7 @@ function BioPanel({
                     fill
                     sizes="(min-width: 48rem) 34rem, 100vw"
                     placeholder="blur"
+                    unoptimized={unoptimizedPhotos?.has(member.photo)}
                     className={styles.panelImg}
                   />
                 ) : (
