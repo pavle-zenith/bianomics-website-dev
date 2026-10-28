@@ -6,9 +6,8 @@ import './globals.css'
 import type { Metadata, Viewport } from 'next'
 import { causten, fitzgerald, jetbrainsMono } from './fonts'
 import { draftMode } from 'next/headers'
-import { VisualEditing } from 'next-sanity/visual-editing'
+import { SanityVisualEditing } from '@/components/SanityVisualEditing'
 import { brand } from '@/content/brand'
-import { SanityLive } from '@/sanity/live'
 import { PostHogProvider } from '@/components/PostHogProvider'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/ui/CookieBanner'
@@ -121,10 +120,8 @@ export default async function RootLayout({
         {/* Renders nothing until consent is granted. */}
         <GoogleAnalytics />
 
-        {/* Revalidates pages the moment content is published in Sanity. */}
-        <SanityLive />
-        {/* Click-to-edit overlays, only in the Studio preview. */}
-        {isDraftMode && <VisualEditing />}
+        {/* Click-to-edit overlays and live refresh, only in the Studio preview. */}
+        {isDraftMode && <SanityVisualEditing />}
       </body>
     </html>
   )

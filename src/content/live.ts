@@ -1,9 +1,9 @@
 /**
  * What pages render: the code defaults with the current Sanity copy laid over.
  *
- * Fetched once per request (React `cache`), from Sanity's Live Content API:
- * published copy for visitors, drafts with Visual Editing markers inside the
- * Studio's Presentation view. If Sanity can't be reached, the committed
+ * Fetched once per render (React `cache`): published copy for visitors
+ * (cached, refreshed on publish via /api/revalidate), drafts with Visual
+ * Editing markers inside the Studio's visual editor. If Sanity can't be reached, the committed
  * snapshot in cms.json is used instead, so the site never renders empty.
  */
 import { cache } from 'react'
@@ -56,10 +56,10 @@ const CMS_QUERY = '*[_id in $ids]'
 
 async function fetchDocs(): Promise<Docs> {
   try {
-    const { data } = await sanityFetch({ query: CMS_QUERY, params: { ids: [...CMS_DOC_IDS] } })
+    const data = await sanityFetch<Record<string, unknown>[]>(CMS_QUERY, { ids: [...CMS_DOC_IDS] })
     if (!Array.isArray(data) || data.length === 0) return snapshotDocs
     const live: Docs = {}
-    for (const doc of data as Record<string, unknown>[]) {
+    for (const doc of data) {
       live[stegaClean(String(doc._id)).replace(/^drafts\./, '')] = doc
     }
     // A section missing from Sanity keeps its snapshot copy.

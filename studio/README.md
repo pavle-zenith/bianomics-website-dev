@@ -20,7 +20,7 @@ The Sanity Studio for the website's copy (project `tx3mrc2w`, dataset `productio
 ```bash
 cd studio
 npm install
-npm run dev       # http://localhost:3333; preview targets bianomics.com
+npm run dev       # http://localhost:3333; preview targets www.bianomics.com
 SANITY_STUDIO_PREVIEW_URL=http://localhost:3000 npm run dev   # preview your local site instead
 npm run deploy    # first time: log in, pick a hostname (e.g. "bianomics")
 ```
@@ -29,11 +29,14 @@ npm run deploy    # first time: log in, pick a hostname (e.g. "bianomics")
 
 ## How the site reads it
 
-- **Fetching:** `src/sanity/live.ts` defines `sanityFetch` and `<SanityLive />`, which use the Live Content API.
+- **Fetching:** `src/sanity/live.ts` has the client and `sanityFetch()`.
+  - Visitors get published content, cached under the `sanity` tag, and pages stay static.
+  - Draft mode (the visual editor) gets uncached drafts with stega markers.
 - **Mapping:** `src/content/live.ts` (`getContent()`) fetches the 14 section documents and lays them over the code defaults through `src/content/cms.ts`. Sections render with `await getContent()`.
-- **Live updates:** pages are static for visitors. `<SanityLive />` revalidates them the moment something is published, so no webhook or rebuild is needed.
-- **Visual Editing:** the Presentation tool calls `/api/draft-mode/enable`. In draft mode the site fetches drafts with stega markers, and `<VisualEditing />` draws the click-to-edit overlays. `cms.ts` strips the markers from ids, colors, photo and image keys and links.
+- **Publishing:** a Sanity webhook POSTs to `/api/revalidate`, which is signed with `SANITY_REVALIDATE_SECRET`. That route expires the `sanity` tag, so the next visit shows the change within seconds, with no rebuild.
+- **Visual Editing:** the Presentation tool calls `/api/draft-mode/enable`. `<SanityVisualEditing />` then draws the click-to-edit overlays and refreshes the preview as she types. `cms.ts` strips the markers from ids, colors, photo and image keys, and links.
 - **Fallback:** if Sanity can't be reached, the site renders `src/content/cms.json`. That's a snapshot refreshed by `npm run content:pull`, which also runs before every build.
+- **Why not `defineLive` / `<SanityLive />`:** in `next-sanity` v13 it needs Next.js Cache Components, which this app doesn't enable.
 
 ## Changing the content model
 

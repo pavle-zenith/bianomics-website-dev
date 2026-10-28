@@ -7,8 +7,12 @@ import {resolve} from './presentation'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'tx3mrc2w'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
-/** The site the Presentation tool previews. Point at http://localhost:3000 for local work. */
-const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL || 'https://bianomics.com'
+/**
+ * The site the Presentation tool previews. Must be the canonical host (www):
+ * the apex redirects to www, which would drop the draft-mode cookie.
+ * Point at http://localhost:3000 for local work.
+ */
+const previewUrl = process.env.SANITY_STUDIO_PREVIEW_URL || 'https://www.bianomics.com'
 
 export default defineConfig({
   name: 'default',
