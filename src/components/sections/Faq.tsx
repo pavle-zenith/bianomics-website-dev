@@ -1,5 +1,5 @@
 import type { FaqItem } from '@/content/types'
-import { faqIntro } from '@/content/site'
+import { getContent } from '@/content/live'
 import { anchors } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
@@ -11,7 +11,8 @@ import styles from './Faq.module.css'
  * Uses native <details>/<summary> — accessible, keyboard-friendly, no JS.
  * The `disclosure` class animates the open/close (see utilities.css).
  */
-export function Faq({ items }: { items: FaqItem[] }) {
+export async function Faq({ items }: { items: FaqItem[] }) {
+  const { faqIntro } = await getContent()
   return (
     <section id="faq" className={`${styles.faq} section`} aria-labelledby="faq-heading">
       <div className="container">

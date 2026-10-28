@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { NavLink } from '@/content/types'
-import { brand, contact } from '@/content/site'
+import { brand } from '@/content/site'
+import { getContent } from '@/content/live'
 import { anchors, routes } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import { CookieSettingsButton } from '@/components/ui/CookieSettingsButton'
@@ -13,7 +14,7 @@ import styles from './Footer.module.css'
  * bottom edge. It takes the same dark grain as the projects section, so the
  * two dark bands read as one material.
  */
-export function Footer({
+export async function Footer({
   links,
   /* Defaults to the standalone page because the footer also renders on the
      legal pages and the 404, where an in-page #snapshot would resolve to
@@ -23,6 +24,7 @@ export function Footer({
   links: NavLink[]
   ctaHref?: string
 }) {
+  const { contact } = await getContent()
   const year = 2026
 
   return (

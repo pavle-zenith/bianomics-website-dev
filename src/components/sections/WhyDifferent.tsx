@@ -1,12 +1,14 @@
 import Image from 'next/image'
-import { comparison, brand } from '@/content/site'
+import { brand } from '@/content/site'
+import { getContent } from '@/content/live'
 import { anchors } from '@/lib/routes'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import logo from '../../../public/Horizontal_Original_Blue.png'
 import styles from './WhyDifferent.module.css'
 
-export function WhyDifferent() {
+export async function WhyDifferent() {
+  const { comparison } = await getContent()
   return (
     <section id="why-different" className="section" aria-labelledby="why-heading">
       <div className="container">

@@ -1,5 +1,5 @@
 import type { StaticImageData } from 'next/image'
-import { team } from '@/content/site'
+import { getContent } from '@/content/live'
 import { TeamTrack } from './TeamTrack'
 import styles from './Team.module.css'
 
@@ -54,7 +54,8 @@ const photos: Record<string, StaticImageData> = {
  * and a single roster would read as though they were on the payroll. Same
  * component either way, so the two groups behave identically.
  */
-export function Team() {
+export async function Team() {
+  const { team } = await getContent()
   return (
     <section id="team" className={`${styles.team} section`} aria-labelledby="team-heading">
       <TeamTrack

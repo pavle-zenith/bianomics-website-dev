@@ -1,11 +1,12 @@
 import type { FaqItem } from './types'
+import { withFaqItems } from './cms'
 
 /**
  * FAQ — short answers to the real hesitations. The client-size answer
  * is pending final confirmation (open item #6 in the plan); the copy
  * here is a safe, plain placeholder marked for review.
  */
-export const faqItems: FaqItem[] = [
+export const faqItemsDefault: FaqItem[] = [
   {
     id: 'one-or-all',
     question: 'Can we hire you for just one thing, or do we have to buy everything?',
@@ -33,3 +34,10 @@ export const faqItems: FaqItem[] = [
       'It depends on what you need and how much of the system you bring in. The Snapshot is complimentary and comes with a clear read of where you stand, so you can decide with real information before any numbers come up.',
   },
 ]
+
+// ---------------------------------------------------------------------------
+// What the site renders: the literals above are only the fallback. The copy
+// itself is edited in Sanity (https://bianomics.sanity.studio) and laid over
+// them at build time, see cms.ts. Editing a string above changes nothing
+// while Sanity has a value for it.
+export const faqItems: FaqItem[] = withFaqItems(faqItemsDefault)

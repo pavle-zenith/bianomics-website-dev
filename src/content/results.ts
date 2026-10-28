@@ -1,4 +1,5 @@
 import type { ResultsContent } from './types'
+import { withResults } from './cms'
 
 /**
  * Results content. These are the real engagements, in the client's order, with
@@ -13,7 +14,7 @@ import type { ResultsContent } from './types'
  *
  * Testimonials remain empty until approved quotes land.
  */
-export const results: ResultsContent = {
+export const resultsDefault: ResultsContent = {
   caseStudies: [
     {
       id: 'groundwork-youth',
@@ -149,3 +150,10 @@ export const results: ResultsContent = {
   ],
   testimonials: [],
 }
+
+// ---------------------------------------------------------------------------
+// What the site renders: the literals above are only the fallback. The copy
+// itself is edited in Sanity (https://bianomics.sanity.studio) and laid over
+// them at build time, see cms.ts. Editing a string above changes nothing
+// while Sanity has a value for it.
+export const results: ResultsContent = withResults(resultsDefault)

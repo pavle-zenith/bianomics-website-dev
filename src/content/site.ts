@@ -7,37 +7,12 @@ import type {
   Step,
   TeamMember,
 } from './types'
+import { withAbout, withComparison, withContact, withFaqIntro, withFitSituations, withFounder, withHowItWorks, withOpportunityLab, withProgramBanner, withReachStatement, withRecognitionMarks, withSteps, withTeam } from './cms'
 
-/** Locked brand language — used verbatim, never paraphrased. */
-export const brand = {
-  name: 'Bianomics',
-  anchor:
-    "You're building something real. We align everything it needs to move.",
-  /**
-   * The anchor as the hero sets it, one line per beat. Split here rather than
-   * in the component so the H1 and the metadata title cannot drift apart.
-   */
-  anchorLines: [
-    "You're building something real.",
-    'We align everything it needs to move.',
-  ],
-  descriptor: 'We find the reason you started, and make the world fluent in it.',
-  tagline: 'Your purpose is our power source.',
-  framework:
-    "Everything people notice about you was decided somewhere they can't see. That's where we work.",
-  method:
-    "Everything people notice about you was decided somewhere they can't see. That's where we work.",
-  /** Each eyebrow does a different job, so the three never repeat. */
-  lockupHero: 'A HUMAN SYSTEMS COMPANY',
-  lockupComparison: "HOW WE'RE BUILT",
-  lockupClosing: 'YOUR PURPOSE IS OUR POWER SOURCE',
-  /** The hero subhead, under the anchor. */
-  clarifier:
-    'Bianomics brings strategy, story, people, and operations into one coherent system, so ambitious work can earn belief, build momentum, and last.',
-} as const
+export { brand } from './brand'
 
 /** Contact + external links. */
-export const contact = {
+export const contactDefault = {
   /** Footer headline, set in two tones: muted lead-in, then bright. */
   invitationLead: "Let's build something",
   invitationRest: 'worth talking about',
@@ -51,7 +26,7 @@ export const contact = {
 } as const
 
 /** Trust strip — recognition marks + reach. */
-export const recognitionMarks: RecognitionMark[] = [
+export const recognitionMarksDefault: RecognitionMark[] = [
   { label: 'TEDC', full: 'Texas Economic Development Council' },
   { label: 'IEDC', full: 'International Economic Development Council' },
   { label: 'NAWB', full: 'National Association of Workforce Boards' },
@@ -64,10 +39,10 @@ export const recognitionMarks: RecognitionMark[] = [
  * rather than "states", which would be a false claim on a public page. The
  * FAQ answer names the two categories outright.
  */
-export const reachStatement = 'Working across eight markets'
+export const reachStatementDefault = 'Working across eight markets'
 
 /** About section — the statement, the supporting line, and two headline stats. */
-export const about = {
+export const aboutDefault = {
   eyebrow: 'About us',
   intro:
     "Everything people notice about you, your brand, your team, your career, is the result of something underneath that nobody's looking at directly. We work that part. We find the pattern that's already working, build the structure around it, and make it run without you needing us. Most partners keep us anyway.",
@@ -136,7 +111,7 @@ export const about = {
  * Each card now has its own photograph of the work it names, so the three
  * stock portraits the section opened with are gone from the repo.
  */
-export const fitSituations: FitSituation[] = [
+export const fitSituationsDefault: FitSituation[] = [
   {
     id: 'social-impact',
     lead: 'Marketing, PR, and infrastructure guidance for',
@@ -166,14 +141,14 @@ export const fitSituations: FitSituation[] = [
  * building alongside you". It predates the instruction to take "senior" out
  * of the site, so the substitutions from that pass are applied here too.
  */
-export const howItWorks = {
+export const howItWorksDefault = {
   label: 'Our process',
   description:
     'Four steps to align it. The same people through all of them. It starts with a Snapshot, a straight read of where your story, systems, and people actually stand, and ends with that same team building alongside you.',
 } as const
 
 /** How it works — four plain steps, starting with the free Snapshot. */
-export const steps: Step[] = [
+export const stepsDefault: Step[] = [
   {
     n: 1,
     title: 'Start with a free Snapshot',
@@ -205,7 +180,7 @@ export const steps: Step[] = [
 ]
 
 /** Why we're different — typical agency vs Bianomics. */
-export const comparison: ComparisonRow[] = [
+export const comparisonDefault: ComparisonRow[] = [
   {
     dimension: 'Scope',
     typical: 'One slice: brand, or events, or training',
@@ -231,7 +206,7 @@ export const comparison: ComparisonRow[] = [
 ]
 
 /** Founder. */
-export const founder = {
+export const founderDefault = {
   name: 'Bianca Cervantes',
   role: 'Founder',
   promise:
@@ -255,7 +230,7 @@ export const founder = {
  * authored below in `teamPending` and is not rendered; move an entry up once
  * its photo is in public/team/.
  */
-export const team = {
+export const teamDefault = {
   eyebrow: 'Team',
   heading: 'Leadership, start to finish',
   /** The people who run the work, in the order the client set. */
@@ -439,7 +414,7 @@ export const teamPending = [
 ] satisfies TeamMember[]
 
 /** Opportunity Lab — the nonprofit funding arm. */
-export const opportunityLab = {
+export const opportunityLabDefault = {
   name: 'Opportunity Lab',
   description:
     'Our nonprofit arm funds this work for organizations that are doing good in the world and could not otherwise afford it. When you work with us, you help make that possible.',
@@ -462,7 +437,7 @@ export const opportunityLab = {
  * comes off the page rather than going stale, so it is authored as one block
  * that can be removed in a single edit.
  */
-export const programBanner = {
+export const programBannerDefault = {
   program: 'Beyond Duty',
   message: 'Veteran workforce readiness cohort starts September 1.',
   ctaLabel: 'Apply Now',
@@ -471,7 +446,7 @@ export const programBanner = {
 } as const
 
 /** FAQ section intro copy. */
-export const faqIntro = {
+export const faqIntroDefault = {
   eyebrow: 'Questions',
   heading: 'The things people usually ask',
   description:
@@ -493,3 +468,22 @@ export const snapshot = {
   success:
     "Every submission is reviewed personally. If you're a fit, you'll hear from us within 3 business days.",
 } as const
+
+// ---------------------------------------------------------------------------
+// What the site renders: the literals above are only the fallback. The copy
+// itself is edited in Sanity (https://bianomics.sanity.studio) and laid over
+// them at build time, see cms.ts. Editing a string above changes nothing
+// while Sanity has a value for it.
+export const contact = withContact(contactDefault)
+export const recognitionMarks = withRecognitionMarks(recognitionMarksDefault)
+export const reachStatement = withReachStatement(reachStatementDefault)
+export const about = withAbout(aboutDefault)
+export const fitSituations = withFitSituations(fitSituationsDefault)
+export const howItWorks = withHowItWorks(howItWorksDefault)
+export const steps = withSteps(stepsDefault)
+export const comparison = withComparison(comparisonDefault)
+export const founder = withFounder(founderDefault)
+export const team = withTeam(teamDefault)
+export const opportunityLab = withOpportunityLab(opportunityLabDefault)
+export const programBanner = withProgramBanner(programBannerDefault)
+export const faqIntro = withFaqIntro(faqIntroDefault)

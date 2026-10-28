@@ -1,3 +1,5 @@
+import { withSnapshotPage } from './cms'
+
 /**
  * Copy for the standalone /snapshot page. Written in-house pending Bianca's
  * pass, so treat every string here as a draft rather than approved brand copy.
@@ -5,7 +7,7 @@
  * hardcode.
  */
 
-export const snapshotPage = {
+export const snapshotPageDefault = {
   eyebrow: 'Free read',
 
   /** The page's single H1, set in two lines. */
@@ -96,3 +98,10 @@ export const snapshotPage = {
     body: 'Send it in and we will take a proper look. No retainers, no pressure, no deck with your logo pasted on the front.',
   },
 } as const
+
+// ---------------------------------------------------------------------------
+// What the site renders: the literals above are only the fallback. The copy
+// itself is edited in Sanity (https://bianomics.sanity.studio) and laid over
+// them at build time, see cms.ts. Editing a string above changes nothing
+// while Sanity has a value for it.
+export const snapshotPage = withSnapshotPage(snapshotPageDefault)

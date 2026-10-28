@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import Image, { type StaticImageData } from 'next/image'
 import type { FitSituation } from '@/content/types'
-import { fitSituations } from '@/content/site'
+import { getContent } from '@/content/live'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './WhoWeWorkWith.module.css'
 
@@ -25,7 +25,8 @@ const photos: Record<FitSituation['photo'], StaticImageData> = {
  * Who we serve — tall photo cards, one per half of the offer, with the copy
  * set over a gradient at the foot of each image.
  */
-export function WhoWeWorkWith() {
+export async function WhoWeWorkWith() {
+  const { fitSituations } = await getContent()
   return (
     <section
       id="who-we-work-with"

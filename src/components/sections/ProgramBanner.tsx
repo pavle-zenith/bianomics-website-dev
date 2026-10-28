@@ -1,4 +1,4 @@
-import { programBanner } from '@/content/site'
+import { getContent } from '@/content/live'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './ProgramBanner.module.css'
@@ -17,7 +17,8 @@ import styles from './ProgramBanner.module.css'
  * Time-bound by nature — when the cohort closes this comes off the page, so
  * it is one component and one content block to remove.
  */
-export function ProgramBanner() {
+export async function ProgramBanner() {
+  const { programBanner } = await getContent()
   return (
     <aside
       className={styles.banner}

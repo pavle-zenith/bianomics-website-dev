@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { about } from '@/content/site'
+import { getContent } from '@/content/live'
 import { anchors } from '@/lib/routes'
 import type { AboutStat } from '@/content/types'
 import { Reveal } from '@/components/ui/Reveal'
@@ -16,7 +16,8 @@ import styles from './About.module.css'
  * colour on hover, so the section previews the coding that the practices
  * block further down uses at full strength.
  */
-export function About() {
+export async function About() {
+  const { about } = await getContent()
   // Only the first number is shown here now; the row reads as one supporting
   // figure beside the pills rather than a wall of cards.
   const [stat] = about.stats

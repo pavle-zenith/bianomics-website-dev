@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { founder } from '@/content/site'
+import { getContent } from '@/content/live'
 import { Reveal } from '@/components/ui/Reveal'
 import portrait from '../../../public/team/bianca.jpg'
 import styles from './Founder.module.css'
@@ -8,7 +8,8 @@ import styles from './Founder.module.css'
  * Founder card: portrait on the left with the attribution on glass at its
  * foot, a word from the founder on the right.
  */
-export function Founder() {
+export async function Founder() {
+  const { founder } = await getContent()
   return (
     <section id="founder" className="section" aria-labelledby="founder-heading">
       <div className="container">

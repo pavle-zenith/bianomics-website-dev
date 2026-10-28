@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { getNav } from '@/content'
-import { snapshotPage } from '@/content/snapshotPage'
+import { getContent } from '@/content/live'
 import { brand } from '@/content/site'
 import { anchors, routes } from '@/lib/routes'
 import { Nav } from '@/components/sections/Nav'
@@ -32,7 +32,8 @@ export const metadata: Metadata = {
  * thing on the haze so the form is the only thing on screen, then answers the
  * questions people have before they send one in.
  */
-export default function SnapshotPage() {
+export default async function SnapshotPage() {
+  const { snapshotPage } = await getContent()
   const nav = getNav()
   const { eyebrow, headingLead, headingRest, intro, assurances, cover, faq, closing } =
     snapshotPage

@@ -1,4 +1,5 @@
 import type { Lab } from './types'
+import { withLabs } from './cms'
 
 /**
  * The four service labs, as one connected system. Descriptions are in
@@ -6,7 +7,7 @@ import type { Lab } from './types'
  * map each lab to its brand color (see tokens/semantic.css). Subservices
  * render as pills within each lab's card.
  */
-export const labs: Lab[] = [
+export const labsDefault: Lab[] = [
   {
     id: 'vision',
     // Confirmed by the client: Groundwork is the only practice that carries
@@ -78,3 +79,10 @@ export const labs: Lab[] = [
     href: '#what-we-do',
   },
 ]
+
+// ---------------------------------------------------------------------------
+// What the site renders: the literals above are only the fallback. The copy
+// itself is edited in Sanity (https://bianomics.sanity.studio) and laid over
+// them at build time, see cms.ts. Editing a string above changes nothing
+// while Sanity has a value for it.
+export const labs: Lab[] = withLabs(labsDefault)

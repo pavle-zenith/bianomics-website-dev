@@ -1,4 +1,5 @@
-import { getLabs, getFaq, getResults, getNav } from '@/content'
+import { getNav } from '@/content'
+import { getContent } from '@/content/live'
 import { ScrollDepth } from '@/components/ScrollDepth'
 import { Nav } from '@/components/sections/Nav'
 import { Hero } from '@/components/sections/Hero'
@@ -17,8 +18,9 @@ import { ClosingCta } from '@/components/sections/ClosingCta'
 import { anchors } from '@/lib/routes'
 import { Footer } from '@/components/sections/Footer'
 
-export default function LandingPage() {
+export default async function LandingPage() {
   const nav = getNav()
+  const { labs, faqItems, results } = await getContent()
 
   return (
     <>
@@ -26,16 +28,16 @@ export default function LandingPage() {
       <main id="main">
         <Hero />
         <About />
-        <WhatWeDo labs={getLabs()} />
+        <WhatWeDo labs={labs} />
         <WhoWeWorkWith />
         <HowItWorks />
         <WhyDifferent />
-        <Results results={getResults()} />
+        <Results results={results} />
         <Snapshot />
         <Founder />
         <Team />
         <OpportunityLab />
-        <Faq items={getFaq()} />
+        <Faq items={faqItems} />
         {/* Explicit rather than relying on the shared default: on this page
             the Snapshot section is directly below, so the closing action
             scrolls to it instead of navigating to the standalone copy. */}

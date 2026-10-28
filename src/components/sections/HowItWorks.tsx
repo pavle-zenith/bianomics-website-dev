@@ -1,5 +1,5 @@
 import type { StaticImageData } from 'next/image'
-import { steps, howItWorks } from '@/content/site'
+import { getContent } from '@/content/live'
 import { Reveal } from '@/components/ui/Reveal'
 import { ProcessRows } from './ProcessRows'
 import styles from './HowItWorks.module.css'
@@ -17,7 +17,8 @@ const photos: StaticImageData[] = [snapshot, story, plan, build]
  * progress rail down the margin that runs through the four practice colours in
  * the order the steps take them.
  */
-export function HowItWorks() {
+export async function HowItWorks() {
+  const { steps, howItWorks } = await getContent()
   return (
     <section
       id="how-it-works"

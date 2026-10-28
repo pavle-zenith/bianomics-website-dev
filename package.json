@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/pull-content.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -11,12 +12,15 @@
     "convert-fonts": "node scripts/convert-fonts.mjs",
     "build-textures": "node scripts/build-textures.mjs",
     "build-photos": "node scripts/build-photos.mjs",
-    "build-portfolio": "node scripts/build-portfolio.mjs"
+    "build-portfolio": "node scripts/build-portfolio.mjs",
+    "content:pull": "node scripts/pull-content.mjs"
   },
   "dependencies": {
+    "@sanity/client": "^8.13.0",
     "better-icons": "^1.0.4",
     "framer-motion": "^12.42.2",
     "next": "16.2.11",
+    "next-sanity": "^13.4.0",
     "posthog-js": "^1.407.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",

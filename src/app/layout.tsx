@@ -5,7 +5,10 @@ import './globals.css'
 
 import type { Metadata, Viewport } from 'next'
 import { causten, fitzgerald, jetbrainsMono } from './fonts'
-import { brand } from '@/content/site'
+import { draftMode } from 'next/headers'
+import { VisualEditing } from 'next-sanity/visual-editing'
+import { brand } from '@/content/brand'
+import { SanityLive } from '@/sanity/live'
 import { PostHogProvider } from '@/components/PostHogProvider'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/ui/CookieBanner'
@@ -66,9 +69,13 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // True only inside the Studio's Presentation view (or after visiting
+  // /api/draft-mode/enable). Visitors always get the static published site.
+  const isDraftMode = (await draftMode()).isEnabled
+
   return (
     <html
       lang="en"
@@ -86,6 +93,12 @@ export default function RootLayout({
             {`[data-intro]{display:none !important}.page-shell{animation:none !important;filter:none !important}`}
           </style>
         </noscript>
+        {/* No intro animation while editing in the Studio preview. */}
+        {isDraftMode && (
+          <style>
+            {`[data-intro]{display:none !important}.page-shell{animation:none !important;filter:none !important}`}
+          </style>
+        )}
       </head>
       <body>
         <a href="#main" className="skip-link">
@@ -107,6 +120,11 @@ export default function RootLayout({
 
         {/* Renders nothing until consent is granted. */}
         <GoogleAnalytics />
+
+        {/* Revalidates pages the moment content is published in Sanity. */}
+        <SanityLive />
+        {/* Click-to-edit overlays, only in the Studio preview. */}
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   )

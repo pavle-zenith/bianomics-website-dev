@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { opportunityLab } from '@/content/site'
+import { getContent } from '@/content/live'
 import { anchors } from '@/lib/routes'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
@@ -17,7 +17,8 @@ import labImage from '../../../public/about/team.png'
  * The gaps are the design. They run in the arm's own Gooseberry, so the three
  * cells read as tiles on a coloured field rather than as one split band.
  */
-export function OpportunityLab() {
+export async function OpportunityLab() {
+  const { opportunityLab } = await getContent()
   const { ethos } = opportunityLab
 
   return (
